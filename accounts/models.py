@@ -30,6 +30,7 @@ class User(AbstractUser):
     dwolla_customer_url = models.URLField(max_length=255, null=True, blank=True)
     master_account_url = models.URLField(max_length=255, null=True, blank=True)
     ssn = models.CharField(max_length=50, null=True, blank=True)
+    date_of_birth = models.DateField(null=True, blank=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

@@ -12,9 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(min_length=8)
     first_name = serializers.CharField(max_length=120, required=True)
     user_type = serializers.ChoiceField(choices=User.USER_TYPES, required=True)
-
     last_name = serializers.CharField(max_length=120, required=True)
-
     city = serializers.CharField(max_length=120, required=True)
     business_name = serializers.CharField(max_length=120, required=True)
     state = serializers.CharField(max_length=2, required=True)
@@ -34,15 +32,16 @@ class UserSerializer(serializers.ModelSerializer):
         user.last_name = validated_data.get('last_name')
         user.business_name = validated_data.get('business_name')
         user.ssn = validated_data.get('ssn')
+        user.date_of_birth = validated_data.get('date_of_birth')
         if validated_data.get('user_type'):
             user.user_type = validated_data.get('user_type')
-
+        user.save()
         return user
 
     class Meta:
         model = User
         fields = ('id', 'full_name', 'city', 'state', 'street_address', 'zip_code', 'email', 'password', 'phone_number',
-                  'first_name', 'last_name', 'business_name', 'user_type', 'ssn')
+                  'first_name', 'last_name', 'business_name', 'user_type', 'ssn', 'date_of_birth')
 
 
 class UserUpdateSerializer(serializers.ModelSerializer):

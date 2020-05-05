@@ -49,10 +49,13 @@ class DwollaPayment(object):
         if not user.state:
             request_body['state'] = 'NY'
         else:
-            request_body['state'] = user.state
+            request_body['state'] = user.state.upper()
         request_body['postalCode'] = str(user.zip_code)
         request_body['ssn'] = user.ssn
-        request_body['dateOfBirth'] = (datetime.now() - timedelta(days=7200)).strftime('%Y-%m-%d')
+        if user.date_of_birth:
+            request_body['dateOfBirth'] = user.date_of_birth.strftime('%Y-%m-%d')
+        else:
+            request_body['dateOfBirth'] = (datetime.now() - timedelta(days=7200)).strftime('%Y-%m-%d')
 
         # request_body['businessName'] = user.business_name,
 
