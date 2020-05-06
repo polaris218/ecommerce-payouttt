@@ -21,5 +21,6 @@ urlpatterns = [
     path('set/master/account/', views.ListFeaturedProducts.as_view()),
     path("list-products/", views.ListProducts.as_view()),
     path("list-bids/", views.ListBidsView.as_view()),
-    path("pay/<int:id>/bid/", views.PayBidView.as_view())
+    path("pay/<int:id>/bid/", views.PayBidView.as_view()),
+    path("bid/<int:id>/stripe/key/", views.StripeBidPaymentKey.as_view())
 ]

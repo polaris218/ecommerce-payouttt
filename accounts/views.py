@@ -1,15 +1,52 @@
+import stripe
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render
 from django.views.generic import TemplateView
 from rest_framework import status, permissions
+from rest_framework.generics import UpdateAPIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from accounts.Dwolla_payment_management import DwollaPayment
 from accounts.models import User, FundingSource
 from accounts.serializers import UserSerializer, UserUpdateSerializer, IAVTokenSerializer, FundingSourceSerializer, \
-    PersonalAccount
+    PersonalAccount, ChangePasswordSerializer
 from core import EmailHelper
 from core.views import BaseView
+from django.conf import settings
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
+
+class ChangePasswordView(UpdateAPIView):
+    serializer_class = ChangePasswordSerializer
+    model = User
+    permission_classes = (IsAuthenticated,)
+
+    def get_object(self, queryset=None):
+        obj = self.request.user
+        return obj
+
+    def update(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        serializer = self.get_serializer(data=request.data)
+
+        if serializer.is_valid():
+            if not self.object.check_password(serializer.data.get("old_password")):
+                return Response({"old_password": ["Wrong password."]}, status=status.HTTP_400_BAD_REQUEST)
+            self.object.set_password(serializer.data.get("new_password"))
+            self.object.save()
+            response = {
+                'status': 'success',
+                'code': status.HTTP_200_OK,
+                'message': 'Password updated successfully',
+                'data': []
+            }
+
+            return Response(response)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserCreate(APIView):
@@ -93,3 +130,28 @@ class VerifiedBuyerAccountView(APIView):
 
 class AddAccountView(TemplateView):
     template_name = 'add-account.html'
+
+
+class StripePaymentView(TemplateView):
+    template_name = 'stripe_payments.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs.setdefault('view', self)
+        kwargs['key'] = settings.STRIPE_PUBLISHABLE_KEY
+        if self.extra_context is not None:
+            kwargs.update(self.extra_context)
+        return kwargs
+
+
+def charge(request):  # new
+    if request.method == 'POST':
+        charge = stripe.Charge.create(
+            amount=500,
+            currency='usd',
+            description='A Django charge',
+            source=request.POST['stripeToken']
+        )
+        return render(request, 'charge.html')
+
+# charge.to_dict().get('receipt_url')
+# charge.to_dict().get('amount')

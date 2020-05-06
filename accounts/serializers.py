@@ -85,3 +85,12 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     def get_funding_sources(self, obj):
         return BidFundingSourceSerializer(obj.fundingsource_set.all(), many=True).data
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
+
+    class Meta:
+        model = User
+        fields = ('old_password', 'new_password')

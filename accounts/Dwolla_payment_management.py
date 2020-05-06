@@ -104,7 +104,7 @@ class DwollaPayment(object):
                                                         buyer_url=bid.user.get_fund_source().source_url,
                                                         success_url=transfer.headers['location'], bid=bid)
                 try:
-                    Email.send_buyer_email(bid)
+                    Email().send_buyer_email(bid)
                 except:
                     pass
                 return bid_payment
@@ -135,7 +135,7 @@ class DwollaPayment(object):
                 bid_payment.seller_success_url = transfer.headers['location']
                 bid_payment.save()
                 try:
-                    Email.send_buyer_email(bid_payment.bid)
+                    Email().send_buyer_email(bid_payment.bid)
                 except:
                     pass
                 return bid_payment

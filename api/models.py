@@ -121,6 +121,12 @@ class ContactUs(models.Model):
 
 
 class BidPayment(models.Model):
+    STRIPE = 'stripe'
+    DWOLLA = 'dwolla'
+    PAYMENT_METHODS = (
+        (STRIPE, 'Stripe'),
+        (DWOLLA, 'Dwolla'),
+    )
     amount = models.FloatField()
     admin_url = models.URLField(null=True, blank=True)
     seller_url = models.URLField(null=True, blank=True)
@@ -136,6 +142,7 @@ class BidPayment(models.Model):
 
     buyer_shippo_error = models.CharField(max_length=1000, null=True, blank=True)
     seller_shippo_error = models.CharField(max_length=1000, null=True, blank=True)
+    payment_method = models.CharField(max_length=10, choices=PAYMENT_METHODS, default=DWOLLA)
 
     def __str__(self):
         return str(self.id)

@@ -160,3 +160,11 @@ EMAIL_HOST_USER = 'payouttt.sender@gmail.com'
 EMAIL_HOST_PASSWORD = 'Po123411!'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+
+# settings.py
+STRIPE_SECRET_KEY = 'sk_test_PRQ3OpN6ADb9IT9dQIR706ZN00s8ngJ1vK'
+STRIPE_PUBLISHABLE_KEY = 'pk_test_dY7fDe4zV4vlrTthyFZ3YTky00d23hieBY'
+
+
+
