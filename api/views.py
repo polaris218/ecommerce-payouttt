@@ -296,3 +296,18 @@ class CreateBidViewset(viewsets.ModelViewSet):
 class FeedbackViewset(viewsets.ModelViewSet):
     serializer_class = serializers.FeedbackSerializer
     queryset = models.Feedback.objects.all()
+
+class HistoryBidsView(APIView):
+    serializer_class = serializers.BidSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_objects(self, pending):
+        bids = Bid.objects.filter(user=self.request.user).order_by('id')
+        if pending:
+            bids.filter(paid=False)
+        return bids
+
+    def get(self, request, *args, **kwargs):
+        pending = request.GET.get('pending', None)
+        bids = self.get_objects(pending)
+        return Response(self.serializer_class(bids, many=True).data, status=status.HTTP_200_OK)
