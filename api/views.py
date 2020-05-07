@@ -16,6 +16,7 @@ from accounts.Dwolla_payment_management import DwollaPayment
 from .models import Bid
 import shippo
 from django.conf import settings
+from api.models import ShoeSize
 
 shippo.config.api_key = "shippo_test_48803b138ac2f2cb91e20d674886102386a45920"
 shippo.config.api_version = "2018-02-08"
@@ -63,7 +64,11 @@ class CreateProductViewset(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         if serializer.is_valid():
-            serializer.save()
+            product = serializer.save()
+            shoe_sizes = ShoeSize.objects.filter(id__in=self.request.data.get('shoe_sizes', '').split(','))
+            for shoe in shoe_sizes:
+                if shoe not in product.shoe_sizes.all():
+                    product.shoe_sizes.add(shoe)
 
 
 class CreateSellerViewset(viewsets.ModelViewSet):
@@ -83,6 +88,12 @@ class ListProducts(generics.ListAPIView):
     filter_backends = (filters.SearchFilter,)
     search_fields = (
         'title', 'shoe_size__shoe_size', 'colorway', 'brand', 'listing_price', 'sku_number',)
+
+
+class ListAllShoeSizes(generics.ListAPIView):
+    queryset = models.ShoeSize.objects.all()
+    serializer_class = serializers.ShoeSizeSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class ListBidsView(generics.ListAPIView):

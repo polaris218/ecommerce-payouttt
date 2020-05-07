@@ -3,10 +3,15 @@ from . import models
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    shoe_sizes = serializers.SerializerMethodField()
+
     class Meta:
         model = models.Product
-        fields = ('id', 'seller', 'title', 'sku_number', 'colorway', 'shoe_size', 'brand', 'listing_price',
+        fields = ('id', 'seller', 'title', 'sku_number', 'colorway', 'shoe_sizes', 'brand', 'listing_price',
                   'url', 'release_date', 'total_sales', 'type', 'image', 'sold',)
+
+    def get_shoe_sizes(self, obj):
+        return ShoeSizeSerializer(obj.shoe_sizes.all(), many=True).data
 
 
 class BidPaymentSerializer(serializers.ModelSerializer):
@@ -87,3 +92,9 @@ class ContactSerializer(serializers.ModelSerializer):
         extra_kwargs = {"email": {"write_only": True},
                         "subject": {"write_only": True},
                         "question": {"write_only": True}}
+
+
+class ShoeSizeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.ShoeSize
+        fields = ('id', 'country', 'shoe_size')

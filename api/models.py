@@ -25,11 +25,25 @@ class Seller(models.Model):
 
 
 class ShoeSize(models.Model):
-    country = models.CharField(max_length=50)
-    shoe_size = models.IntegerField(primary_key=True)
+    UK = 'UK'
+    USA = 'USA'
+    EU = 'EU'
+    CM = 'CM'
+    COUNTRIES_CHOICES = (
+        (USA, 'USA'),
+        (UK, 'UK'),
+        (EU, 'EU'),
+        (CM, 'CM'),
+    )
+
+    country = models.CharField(max_length=50, choices=COUNTRIES_CHOICES, default=UK)
+    shoe_size = models.FloatField(default=7)
+
+    class Meta:
+        unique_together = ('country', 'shoe_size')
 
     def __str__(self):
-        return self.country
+        return '{}-{}'.format(self.country, str(self.shoe_size))
 
 
 class Product(models.Model):
@@ -39,7 +53,7 @@ class Product(models.Model):
 
     sku_number = models.CharField(max_length=120)
     colorway = models.CharField(max_length=120)
-    shoe_size = models.ForeignKey(ShoeSize, on_delete=models.CASCADE)
+    shoe_sizes = models.ManyToManyField(ShoeSize, null=True, blank=True)
 
     brand = models.CharField(max_length=120)
     listing_price = models.FloatField()
@@ -50,7 +64,7 @@ class Product(models.Model):
     total_sales = models.IntegerField(default=0)
     type = models.CharField(max_length=120)
 
-    image = models.FileField()
+    image = models.FileField(null=True, blank=True)
     sold = models.BooleanField(default=False)
 
     def __str__(self):
