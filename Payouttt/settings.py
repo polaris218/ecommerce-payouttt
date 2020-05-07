@@ -146,10 +146,10 @@ REST_FRAMEWORK = {
     ],
 }
 
-CORS_ORIGIN_WHITELIST = [
-    'http://127.0.0.1:8000',
-    'http://0.0.0.0:8000'
-]
+#CORS_ORIGIN_WHITELIST = [
+#    'http://127.0.0.1:8000',
+#    'http://0.0.0.0:8000'
+#]
 
 AUTH_USER_MODEL = 'accounts.User'
 
