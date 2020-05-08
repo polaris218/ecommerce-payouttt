@@ -24,6 +24,7 @@ urlpatterns = [
     path("list-bids/", views.ListBidsView.as_view()),
     path("pay/<int:id>/bid/", views.PayBidView.as_view()),
     path("bid/<int:id>/stripe/key/", views.StripeBidPaymentKey.as_view()),
-    path("history/", views.HistoryBidsView.as_view())
+    path("history/", views.HistoryBidsView.as_view()),
+    path("seller/history/", views.SellerHistoryBidsView.as_view())
 
 ]

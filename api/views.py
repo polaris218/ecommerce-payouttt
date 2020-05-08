@@ -297,6 +297,7 @@ class FeedbackViewset(viewsets.ModelViewSet):
     serializer_class = serializers.FeedbackSerializer
     queryset = models.Feedback.objects.all()
 
+
 class HistoryBidsView(APIView):
     serializer_class = serializers.BidSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -310,4 +311,23 @@ class HistoryBidsView(APIView):
     def get(self, request, *args, **kwargs):
         pending = request.GET.get('pending', None)
         bids = self.get_objects(pending)
+        return Response(self.serializer_class(bids, many=True).data, status=status.HTTP_200_OK)
+
+
+class SellerHistoryBidsView(APIView):
+    serializer_class = serializers.BidSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_objects(self, pending, product_id):
+        bids = Bid.objects.filter(product_to_bid_on__seller=self.request.user).order_by('id')
+        if product_id:
+            bids = bids.filter(product_to_bid_on__id=product_id)
+        if pending:
+            bids = bids.filter(paid=False)
+        return bids
+
+    def get(self, request, *args, **kwargs):
+        pending = request.GET.get('pending', None)
+        product_id = request.GET.get('product_id', None)
+        bids = self.get_objects(pending, product_id)
         return Response(self.serializer_class(bids, many=True).data, status=status.HTTP_200_OK)

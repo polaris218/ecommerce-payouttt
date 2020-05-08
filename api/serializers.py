@@ -24,6 +24,7 @@ class BidSerializer(serializers.ModelSerializer):
     can_pay = serializers.SerializerMethodField()
     product = serializers.SerializerMethodField()
     bid_payment = serializers.SerializerMethodField()
+    product_to_bid_on = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Bid
@@ -35,6 +36,9 @@ class BidSerializer(serializers.ModelSerializer):
         if obj.product_to_bid_on.listing_price <= obj.bid_amount:
             return True
         return False
+
+    def get_product_to_bid_on(self, obj):
+        return ProductSerializer(obj.product_to_bid_on, many=False).data
 
     def get_bid_payment(self, obj):
         bid_payment = obj.bidpayment_set.all().order_by('-id').first()
