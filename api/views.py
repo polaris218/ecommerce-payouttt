@@ -149,11 +149,11 @@ class PayBidView(APIView):
 
     def get_parcel(self):
         parcel = {
-            "length": "7",
-            "width": "7",
-            "height": "5",
+            "length": "14",
+            "width": "10",
+            "height": "6",
             "distance_unit": "in",
-            "weight": "1.5",
+            "weight": "3",
             "mass_unit": "lb",
         }
         return parcel
