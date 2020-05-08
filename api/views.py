@@ -305,7 +305,7 @@ class HistoryBidsView(APIView):
     def get_objects(self, pending):
         bids = Bid.objects.filter(user=self.request.user).order_by('id')
         if pending:
-            bids.filter(paid=False)
+            bids = bids.filter(paid=False)
         return bids
 
     def get(self, request, *args, **kwargs):
