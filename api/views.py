@@ -1,3 +1,4 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.parsers import FileUploadParser, MultiPartParser
 from django.shortcuts import render
 from rest_framework.views import APIView
@@ -84,10 +85,8 @@ class ListProducts(generics.ListAPIView):
     queryset = models.Product.objects.all()
     serializer_class = serializers.ProductSerializer
     permission_classes = []
-
-    filter_backends = (filters.SearchFilter,)
-    search_fields = (
-        'title', 'shoe_size__shoe_size', 'colorway', 'brand', 'listing_price', 'sku_number',)
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['title', 'sku_number', ]
 
 
 class ListAllShoeSizes(generics.ListAPIView):

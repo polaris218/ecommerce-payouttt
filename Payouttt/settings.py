@@ -141,18 +141,18 @@ REST_FRAMEWORK = {
         'api': '10000/day',
         'api': '10000/day',
     },
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
 }
 
-#CORS_ORIGIN_WHITELIST = [
+# CORS_ORIGIN_WHITELIST = [
 #    'http://127.0.0.1:8000',
 #    'http://0.0.0.0:8000'
-#]
+# ]
 
 AUTH_USER_MODEL = 'accounts.User'
-
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -161,10 +161,6 @@ EMAIL_HOST_PASSWORD = 'Po123411!'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-
 # settings.py
 STRIPE_SECRET_KEY = 'sk_test_PRQ3OpN6ADb9IT9dQIR706ZN00s8ngJ1vK'
 STRIPE_PUBLISHABLE_KEY = 'pk_test_dY7fDe4zV4vlrTthyFZ3YTky00d23hieBY'
-
-
-
