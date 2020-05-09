@@ -270,7 +270,7 @@ class ListFeaturedProducts(generics.ListAPIView):
 
 
 class CreateBidViewset(viewsets.ModelViewSet):
-    serializer_class = serializers.BidSerializer
+    serializer_class = serializers.CreateBidSerializer
     queryset = models.Bid.objects.all()
 
     filter_backends = (filters.SearchFilter,)

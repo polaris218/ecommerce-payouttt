@@ -20,6 +20,33 @@ class BidPaymentSerializer(serializers.ModelSerializer):
         exclude = ('id',)
 
 
+class CreateBidSerializer(serializers.ModelSerializer):
+    can_pay = serializers.SerializerMethodField()
+    product = serializers.SerializerMethodField()
+    bid_payment = serializers.SerializerMethodField()
+
+    class Meta:
+        model = models.Bid
+        fields = ('id', 'product_to_bid_on', 'user', 'bid_amount', 'shoe_size', 'can_pay', 'product', 'bid_payment')
+
+        extra_kwargs = {"verified_account": {"read_only": True}}
+
+    def get_can_pay(self, obj):
+        if obj.product_to_bid_on.listing_price <= obj.bid_amount:
+            return True
+        return False
+
+    def get_product_to_bid_on(self, obj):
+        return ProductSerializer(obj.product_to_bid_on, many=False).data
+
+    def get_bid_payment(self, obj):
+        bid_payment = obj.bidpayment_set.all().order_by('-id').first()
+        return BidPaymentSerializer(bid_payment, many=False).data
+
+    def get_product(self, obj):
+        return ProductSerializer(obj.product_to_bid_on, many=False).data
+
+
 class BidSerializer(serializers.ModelSerializer):
     can_pay = serializers.SerializerMethodField()
     product = serializers.SerializerMethodField()
