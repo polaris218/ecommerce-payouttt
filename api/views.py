@@ -282,16 +282,20 @@ class CreateBidViewset(viewsets.ModelViewSet):
         request_data['user'] = self.request.user.pk
         serializer = self.get_serializer(data=request_data)
         serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        obj = self.perform_create(serializer)
+        if obj:
+            headers = self.get_success_headers(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+        return Response({"message": "You have already bid on this product."}, status=status.HTTP_400_BAD_REQUEST)
 
     def perform_create(self, serializer):
         if serializer.is_valid():
             product_to_bid_on = serializer.validated_data['product_to_bid_on']
             existing_bid = Bid.objects.filter(product_to_bid_on=product_to_bid_on, user=self.request.user).exists()
             if not existing_bid:
-                serializer.save()
+                return serializer.save()
+            return False
 
 
 class FeedbackViewset(viewsets.ModelViewSet):
