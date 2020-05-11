@@ -37,12 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'phonenumber_field',
-    # 'corsheaders',
+    'corsheaders',
     'api', 'accounts', 'core','django_filters'
 ]
 
 MIDDLEWARE = [
-    # 'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -54,7 +54,7 @@ MIDDLEWARE = [
 ]
 
 SECURE_BROWSER_XSS_FILTER = True
-# CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL = True
 ROOT_URLCONF = 'Payouttt.urls'
 
 TEMPLATES = [
