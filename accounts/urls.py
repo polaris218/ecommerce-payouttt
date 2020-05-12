@@ -16,4 +16,5 @@ urlpatterns = [
     path('add/account/', views.AddAccountView.as_view(), name='add_account'),
     path('pay/stripe/', views.StripePaymentView.as_view(), name='stripe'),
     path('charge/', views.charge, name='charge'),
+    path('tes/stripe/', views.confirmCard, name='test-stripe'),
 ]

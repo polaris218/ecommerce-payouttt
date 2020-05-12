@@ -153,5 +153,15 @@ def charge(request):  # new
         )
         return render(request, 'charge.html')
 
+def confirmCard(request):  # new
+    # if request.method == 'POST':
+    #     charge = stripe.Charge.create(
+    #         amount=500,
+    #         currency='usd',
+    #         description='A Django charge',
+    #         source=request.POST['stripeToken']
+    #     )
+    return render(request, 'test_stripe.html')
+
 # charge.to_dict().get('receipt_url')
 # charge.to_dict().get('amount')

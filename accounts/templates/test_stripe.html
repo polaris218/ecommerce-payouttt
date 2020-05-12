@@ -1,0 +1,94 @@
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://js.stripe.com/v3/"></script>
+<main class="main">
+    <div class="container">
+        <div class="subPage">
+            <h1 class="whiteBoxTitle">Payment</h1>
+            <div class="whiteBox">
+                <div class="tab-content">
+                    <div id="step3" class="tab-pane fade in active show settingsTab">
+                        <h2 class="whiteBoxTitle">Details</h2>
+                        <div id="error-div" style="display: none;">
+                            <p class="dragPar">Please fix following errors.</p>
+                            <p class="dragPar text-danger" id="error-message"></p>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group fieldWrap">
+                                        <input type="text" name="" placeholder="Card Holder Name" class="form-control"
+                                               id="cardholder-name">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form id="setup-form" data-secret="seti_1Gi7ipFEQRUJPgPDbh9J388h_secret_HGf2VEVgMhdtynvjAm801yrfSbgXpex">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div id="card-element"></div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button id="card-button" type="submit" class="btn logBtn">
+                                            Save Card
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                        <!--                        </div>-->
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+    var stripe = Stripe('pk_test_dY7fDe4zV4vlrTthyFZ3YTky00d23hieBY');
+    var elements = stripe.elements();
+    var cardElement = elements.create('card');
+    cardElement.mount('#card-element');
+
+
+    var cardholderName = document.getElementById('cardholder-name');
+    var cardButton = document.getElementById('card-button');
+    var clientSecret = "seti_1Gi7ipFEQRUJPgPDbh9J388h_secret_HGf2VEVgMhdtynvjAm801yrfSbgXpex";
+
+    function addPaymentMethod(payment_method_id) {
+        console.log(payment_method_id)
+    }
+
+    $('#setup-form').on('submit', function (e) {
+        e.preventDefault();
+        $('#card-button').prop('disabled', true);
+        stripe.confirmCardSetup(
+            clientSecret,
+            {
+                payment_method: {
+                    card: cardElement,
+                    billing_details: {
+                        name: cardholderName.value,
+                    },
+                },
+            }
+        ).then(function (result) {
+            $('#card-button').prop('disabled', false);
+            if (result.error) {
+                // Display error.message in your UI.
+                console.log(result.error);
+                $('#error-div').css({'display': 'block'});
+                $('#error-message').text(result.error.message)
+            } else {
+                $('#error-div').css({'display': 'none'});
+                addPaymentMethod(result.setupIntent.payment_method)
+
+            }
+        });
+    });
+
+
+</script>
