@@ -247,17 +247,20 @@ class PayBidView(APIView):
                         error_message = "Both of you must have account linked."
                 elif request.data.get('method') == 'stripe':
                     bid_payment = self.get_bid_payment(bid)
-                    if not bid_payment:
-                        bid_payment = StripePayment().bid_payment(bid, request)
+                    if request.user.stripe_customer_id and request.user.stripe_payment_method:
+                        if not bid_payment:
+                            bid_payment = StripePayment().bid_payment(bid, request)
 
-                    if bid_payment:
-                        self.set_user_tracking(bid.user, bid_payment, seller=False)
-                        self.set_user_tracking(bid.product_to_bid_on.seller, bid_payment, seller=True)
-                        return Response(self.serializer_class(bid, many=False).data, status=status.HTTP_200_OK)
+                        if bid_payment:
+                            self.set_user_tracking(bid.user, bid_payment, seller=False)
+                            self.set_user_tracking(bid.product_to_bid_on.seller, bid_payment, seller=True)
+                            return Response(self.serializer_class(bid, many=False).data, status=status.HTTP_200_OK)
+                        else:
+                            bid.paid = False
+                            bid.save()
+                            error_message = "Payment not successful. Please try again later"
                     else:
-                        bid.paid = False
-                        bid.save()
-                        error_message = "Payment not successful. Please try again later"
+                        error_message = "Please add stripe payment method first"
                 else:
                     error_message = "Please specify 'method' of payment, <stripe>/<dwolla>"
         else:
@@ -336,3 +339,28 @@ class SellerHistoryBidsView(APIView):
         product_id = request.GET.get('product_id', None)
         bids = self.get_objects(pending, product_id)
         return Response(self.serializer_class(bids, many=True).data, status=status.HTTP_200_OK)
+
+
+class StripePaymentKeyView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        key = StripePayment().get_customer_secret(self.request.user)
+        return Response({"key": key}, status=status.HTTP_200_OK)
+
+
+class AddStripePaymentMethodView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        payment_method = request.data.get('payment_method', None)
+        user = self.request.user
+        error = "Please create stripe customer first"
+        if payment_method:
+            if user.stripe_customer_id:
+                user.stripe_payment_method = payment_method
+                user.save()
+                return Response({"message": "Payment Method successfully added."}, status=status.HTTP_200_OK)
+        else:
+            error = "Please provide payment_method"
+        return Response({"message": error}, status=status.HTTP_400_BAD_REQUEST)
