@@ -224,7 +224,7 @@ class PayBidView(APIView):
 
     def verify_payment_method(self, payment_method):
         try:
-            return eval(payment_method).get('token').get('id')
+            return eval(payment_method).get('paymentMethod').get('id')
         except:
             return False
 
@@ -253,7 +253,8 @@ class PayBidView(APIView):
                         error_message = "Both of you must have account linked."
                 elif request.data.get('method') == 'stripe':
                     bid_payment = self.get_bid_payment(bid)
-                    if request.user.stripe_customer_id and self.verify_payment_method(request.user.stripe_payment_method):
+                    if request.user.stripe_customer_id and self.verify_payment_method(
+                            request.user.stripe_payment_method):
                         if not bid_payment:
                             bid_payment = StripePayment().bid_payment(bid, request)
 
@@ -363,9 +364,10 @@ class AddStripePaymentMethodView(APIView):
         user = self.request.user
         error = "Please create stripe customer first"
         if payment_method:
-            if user.stripe_customer_id:
+            if user.stripe_customer_id and payment_method.get('paymentMethod').get('id'):
                 user.stripe_payment_method = payment_method
                 user.save()
+                StripePayment().link_paymentmethod_with_customer(user)
                 return Response({"message": "Payment Method successfully added."}, status=status.HTTP_200_OK)
         else:
             error = "Please provide payment_method"

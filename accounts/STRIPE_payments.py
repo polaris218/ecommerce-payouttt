@@ -10,21 +10,27 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 class StripePayment(object):
 
     def bid_payment(self, bid, request):
-        payment_token = eval(request.user.stripe_payment_method).get('token').get('id')
-        charge = stripe.Charge.create(
+        payment_token = eval(request.user.stripe_payment_method).get('paymentMethod').get('id')
+        charge = stripe.PaymentIntent.create(
             amount=int(bid.bid_amount * 100),
             currency='usd',
+            customer=request.user.stripe_customer_id,
             description=bid.product_to_bid_on.title,
-            source=payment_token,
+            payment_method=payment_token,
+            off_session=True,
+            confirm=True,
         )
+
         if charge:
             admin_funding_source = DwollaPayment().get_admin_account_funding_resource()
             bid.paid = True
             bid.save()
             bid_payment = BidPayment.objects.create(amount=bid.bid_amount,
                                                     admin_url=admin_funding_source,
-                                                    buyer_url=charge.to_dict().get('receipt_url'),
-                                                    success_url=charge.to_dict().get('receipt_url')
+                                                    buyer_url=charge.to_dict().get('charges').get('data')[0].get(
+                                                        'receipt_url'),
+                                                    success_url=charge.to_dict().get('charges').get('data')[0].get(
+                                                        'receipt_url')
                                                     , bid=bid,
                                                     payment_method=BidPayment.STRIPE)
             return bid_payment
@@ -41,3 +47,7 @@ class StripePayment(object):
             customer=self.get_customer(user)
         )
         return intent.client_secret
+
+    def link_paymentmethod_with_customer(self, user):
+        stripe.PaymentMethod.attach(eval(user.stripe_payment_method.get('paymentMethod').get('id')),
+                                    customer=user.stripe_customer_id)
