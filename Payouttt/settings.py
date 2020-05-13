@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from datetime import timedelta
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
@@ -38,7 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'phonenumber_field',
     'corsheaders',
-    'api', 'accounts', 'core','django_filters'
+    'api', 'accounts', 'core', 'django_filters'
 ]
 
 MIDDLEWARE = [
@@ -89,10 +91,10 @@ WSGI_APPLICATION = 'Payouttt.wsgi.application'
 #  }
 
 DATABASES = {
-   'default': {
-       'ENGINE': 'django.db.backends.sqlite3',
-       'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-   }
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
 
 # Password validation
@@ -164,3 +166,8 @@ EMAIL_USE_TLS = True
 # settings.py
 STRIPE_SECRET_KEY = 'sk_test_PRQ3OpN6ADb9IT9dQIR706ZN00s8ngJ1vK'
 STRIPE_PUBLISHABLE_KEY = 'pk_test_dY7fDe4zV4vlrTthyFZ3YTky00d23hieBY'
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=50),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=100),
+}
