@@ -222,12 +222,18 @@ class PayBidView(APIView):
     def get_bid_payment(self, bid):
         return bid.bidpayment_set.all().first()
 
+    def verify_payment_method(self, payment_method):
+        try:
+            return eval(payment_method).get('token').get('id')
+        except:
+            return False
+
     def post(self, request, *args, **kwargs):
         error_message = ''
         bid = self.get_object()
         if bid:
             if not bid.can_pay():
-                error_message = "You can't pay for this bid as your bid amount is more than the original price."
+                error_message = "You can't pay for this bid as your bid amount is less than the original price."
             else:
                 if request.data.get('method') == 'dwolla':
                     if bid.user.get_fund_source() and bid.product_to_bid_on.seller.get_fund_source():
@@ -247,7 +253,7 @@ class PayBidView(APIView):
                         error_message = "Both of you must have account linked."
                 elif request.data.get('method') == 'stripe':
                     bid_payment = self.get_bid_payment(bid)
-                    if request.user.stripe_customer_id and request.user.stripe_payment_method:
+                    if request.user.stripe_customer_id and self.verify_payment_method(request.user.stripe_payment_method):
                         if not bid_payment:
                             bid_payment = StripePayment().bid_payment(bid, request)
 
