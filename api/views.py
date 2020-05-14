@@ -83,7 +83,7 @@ class CreateSellerViewset(viewsets.ModelViewSet):
 
 
 class ListProducts(generics.ListAPIView):
-    queryset = models.Product.objects.all()
+    queryset = models.Product.objects.all().order_by('-id')
     serializer_class = serializers.ProductSerializer
     permission_classes = []
     filter_backends = [DjangoFilterBackend, SearchFilter]
