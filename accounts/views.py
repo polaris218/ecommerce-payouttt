@@ -71,10 +71,16 @@ class UserCreate(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class UserProfileView(BaseView):
+class UserProfileView(BaseView, UpdateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = UserUpdateSerializer
     model_class = User
+
+    def get_queryset(self):
+        return User.objects.filter(id=self.request.user.id)
+
+    def get_object(self):
+        return self.request.user
 
     def post(self, request):
         serializer = self.serializer_class(self.request.user, data=request.data)
@@ -152,6 +158,7 @@ def charge(request):  # new
             source=request.POST['stripeToken']
         )
         return render(request, 'charge.html')
+
 
 def confirmCard(request):  # new
     # if request.method == 'POST':

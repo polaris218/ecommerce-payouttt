@@ -86,9 +86,10 @@ class ListProducts(generics.ListAPIView):
     queryset = models.Product.objects.all().order_by('-id')
     serializer_class = serializers.ProductSerializer
     permission_classes = []
-    filter_backends = [DjangoFilterBackend, SearchFilter]
-    filterset_fields = ['title', 'sku_number', 'brand', 'listing_price', 'url', 'sold']
+    filter_backends = [DjangoFilterBackend, SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['title', 'sku_number', 'brand', 'listing_price', 'url', 'sold', 'shoe_sizes']
     search_fields = ['title', 'sku_number', 'brand']
+    ordering_fields = ['listing_price', ]
 
 
 class ListAllShoeSizes(generics.ListAPIView):
@@ -372,3 +373,40 @@ class AddStripePaymentMethodView(APIView):
         else:
             error = "Please provide payment_method"
         return Response({"message": error}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class BidDeleteView(APIView):
+    serializer_class = serializers.BidSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self):
+        return Bid.objects.filter(id=self.kwargs.get('id'), user=self.request.user, paid=False)
+
+    def get(self, request, *args, **kwargs):
+        bid = self.get_object()
+        if bid:
+            bid.delete()
+            return Response({"message": "Bid deleted Successfully"}, status=status.HTTP_200_OK)
+        else:
+            error = "No bid found"
+        return Response({"error": error}, status=status.HTTP_404_NOT_FOUND)
+
+
+class HighLowBidsView(APIView):
+    serializer_class = serializers.BidSerializer
+    permission_classes = []
+
+    def get_objects(self):
+        bids = Bid.objects.filter(product_to_bid_on_id=self.kwargs.get('id'),
+                                  shoe_size=self.kwargs.get('size_id')).order_by('-bid_amount')
+        data =[]
+        if bids.first():
+            data.append(bids.first())
+        if bids.last() and bids.last() not in data:
+            data.append(bids.last())
+        return data
+
+    def get(self, request, *args, **kwargs):
+        bids = self.get_objects()
+        return Response(self.serializer_class(bids, many=True).data, status=status.HTTP_200_OK)
+
