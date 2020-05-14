@@ -10,31 +10,30 @@ class UserSerializer(serializers.ModelSerializer):
         validators=[UniqueValidator(queryset=User.objects.all())]
     )
     password = serializers.CharField(min_length=8)
-    first_name = serializers.CharField(max_length=120, required=True)
-    user_type = serializers.ChoiceField(choices=User.USER_TYPES, required=True)
-    last_name = serializers.CharField(max_length=120, required=True)
-    city = serializers.CharField(max_length=120, required=True)
-    business_name = serializers.CharField(max_length=120, required=True)
-    state = serializers.CharField(max_length=2, required=True)
-    street_address = serializers.CharField(max_length=120, required=True)
-    ssn = serializers.CharField(max_length=50, required=True)
-    zip_code = serializers.IntegerField(required=True)
+    # first_name = serializers.CharField(max_length=120, required=True)
+    # user_type = serializers.ChoiceField(choices=User.USER_TYPES, required=True)
+    # last_name = serializers.CharField(max_length=120, required=True)
+    # city = serializers.CharField(max_length=120, required=True)
+    # business_name = serializers.CharField(max_length=120, required=True)
+    # state = serializers.CharField(max_length=2, required=True)
+    # street_address = serializers.CharField(max_length=120, required=True)
+    # ssn = serializers.CharField(max_length=50, required=True)
+    # zip_code = serializers.IntegerField(required=True)
 
     def create(self, validated_data):
-        user = User.objects.create_user(validated_data['email'], validated_data['password'],
-                                        zip_code=validated_data.get('zip_code'))
-        user.city = validated_data['city']
-        user.state = validated_data['state']
-        user.street_address = validated_data['street_address']
-        user.full_name = validated_data.get('full_name')
-        user.phone_number = validated_data.get('phone_number')
-        user.first_name = validated_data.get('first_name')
-        user.last_name = validated_data.get('last_name')
-        user.business_name = validated_data.get('business_name')
-        user.ssn = validated_data.get('ssn')
-        user.date_of_birth = validated_data.get('date_of_birth')
-        if validated_data.get('user_type'):
-            user.user_type = validated_data.get('user_type')
+        user = User.objects.create_user(validated_data['email'], validated_data['password'])
+        # user.city = validated_data['city']
+        # user.state = validated_data['state']
+        # user.street_address = validated_data['street_address']
+        # user.full_name = validated_data.get('full_name')
+        # user.phone_number = validated_data.get('phone_number')
+        # user.first_name = validated_data.get('first_name')
+        # user.last_name = validated_data.get('last_name')
+        # user.business_name = validated_data.get('business_name')
+        # user.ssn = validated_data.get('ssn')
+        # user.date_of_birth = validated_data.get('date_of_birth')
+        # if validated_data.get('user_type'):
+        #     user.user_type = validated_data.get('user_type')
         user.save()
         return user
 
@@ -47,7 +46,7 @@ class UserSerializer(serializers.ModelSerializer):
 class UserUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        exclude = ['email', 'password', 'is_staff', 'is_active', 'date_joined']
+        exclude = ['password', 'is_staff', 'is_active', 'date_joined']
 
 
 class FundingSourceSerializer(serializers.ModelSerializer):

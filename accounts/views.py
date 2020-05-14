@@ -60,8 +60,8 @@ class UserCreate(APIView):
         if serializer.is_valid():
             user = serializer.save()
             if user:
-                payment = DwollaPayment()
-                payment.create_customer(user)
+                # payment = DwollaPayment()
+                # payment.create_customer(user)
                 try:
                     EmailHelper.Email().send_welcome_email(user)
                 except:
