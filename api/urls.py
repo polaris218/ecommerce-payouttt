@@ -30,5 +30,6 @@ urlpatterns = [
     path("stripe/payment/key/", views.StripePaymentKeyView.as_view()),
     path("stripe/add/payment/method/", views.AddStripePaymentMethodView.as_view()),
     path("product/<int:id>/size/<int:size_id>/high_low/", views.HighLowBidsView.as_view()),
-
+    path("stripe/my/payment/method/", views.StripePaymentMethodView.as_view()),
+    path("stripe/<str:payment_id>/delete/", views.StripeDeletePaymentMethodView.as_view()),
 ]

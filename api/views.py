@@ -161,10 +161,11 @@ class PayBidView(APIView):
         return parcel
 
     def set_user_tracking(self, user, bid_payment, seller=True):
+
         try:
             if seller:
                 seller_addr = {
-                    "name": user.full_name,
+                    "name": user.full_name or 'Payoutttt',
                     "street1": user.street_address,
                     "city": user.city,
                     "state": str(user.state),
@@ -181,7 +182,7 @@ class PayBidView(APIView):
                 )
             else:
                 buyer_addr = {
-                    "name": user.full_name,
+                    "name": user.full_name or 'Payoutttt',
                     "street1": user.street_address,
                     "city": user.city,
                     "state": str(user.state),
@@ -399,7 +400,7 @@ class HighLowBidsView(APIView):
     def get_objects(self):
         bids = Bid.objects.filter(product_to_bid_on_id=self.kwargs.get('id'),
                                   shoe_size=self.kwargs.get('size_id')).order_by('-bid_amount')
-        data =[]
+        data = []
         if bids.first():
             data.append(bids.first())
         if bids.last() and bids.last() not in data:
@@ -410,3 +411,49 @@ class HighLowBidsView(APIView):
         bids = self.get_objects()
         return Response(self.serializer_class(bids, many=True).data, status=status.HTTP_200_OK)
 
+
+class StripePaymentMethodView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def verify_payment_method(self, payment_method):
+        try:
+            payment_data = eval(payment_method).get('paymentMethod')
+            card_data = payment_data.get('card')
+            data = {"payment_id": payment_data.get('id'), "brand": card_data.get('brand'),
+                    "country": card_data.get('country'),
+                    "exp_month": card_data.get('exp_month'), "exp_year": card_data.get('exp_year'),
+                    "funding": card_data.get('funding'), "last4": card_data.get('last4')}
+            return data
+        except:
+            return False
+
+    def get(self, request, *args, **kwargs):
+        payment_method = self.verify_payment_method(self.request.user.stripe_payment_method)
+        if not payment_method:
+            return Response({"message": 'No Stripe Payment method Linked'}, status=status.HTTP_404_NOT_FOUND)
+        return Response(payment_method, status=status.HTTP_200_OK)
+
+
+class StripeDeletePaymentMethodView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def verify_payment_method(self, payment_method):
+        message = "You don't have payment method integrated"
+        try:
+            payment_data = eval(payment_method).get('paymentMethod')
+            if payment_data.get('id') == self.kwargs.get('payment_id'):
+                StripePayment().detach_account(self.kwargs.get('payment_id'))
+                user = self.request.user
+                user.stripe_payment_method = ""
+                user.save()
+                message = "Successfully Detach payment method."
+            else:
+                message = "Invalid Payment Id."
+        except:
+            pass
+
+        return message
+
+    def post(self, request, *args, **kwargs):
+        payment_method_message = self.verify_payment_method(self.request.user.stripe_payment_method)
+        return Response({"message": payment_method_message}, status=status.HTTP_200_OK)
