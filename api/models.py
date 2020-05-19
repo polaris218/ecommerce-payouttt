@@ -50,7 +50,7 @@ class Product(models.Model):
     # seller = models.ForeignKey(User, on_delete=models.CASCADE)
     seller = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=120)
-
+    retail_price = models.FloatField(default=0)
     sku_number = models.CharField(max_length=120)
     colorway = models.CharField(max_length=120)
     shoe_sizes = models.ManyToManyField(ShoeSize, null=True, blank=True)

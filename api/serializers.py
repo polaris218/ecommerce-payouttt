@@ -8,7 +8,7 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Product
         fields = ('id', 'seller', 'title', 'sku_number', 'colorway', 'shoe_sizes', 'brand', 'listing_price',
-                  'url', 'release_date', 'total_sales', 'type', 'image', 'sold',)
+                  'url', 'release_date', 'total_sales', 'type', 'image', 'sold', 'retail_price',)
 
     def get_shoe_sizes(self, obj):
         return ShoeSizeSerializer(obj.shoe_sizes.all(), many=True).data
