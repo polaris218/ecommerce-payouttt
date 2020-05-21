@@ -139,11 +139,11 @@ class PayBidView(APIView):
     def get_admin_address(self):
         admin_addr = {
             "name": "Payouttt Team",
-            "street1": "965 Mission St",
-            "street2": "Unit 480",
-            "city": "San Francisco",
-            "state": "CA",
-            "zip": "94103",
+            "street1": "1262 Appalachian road",
+            "street2": "",
+            "city": "Ambler",
+            "state": "PA",
+            "zip": "19002",
             "country": "US",
             "phone": "+1 123 456 789",
         }
