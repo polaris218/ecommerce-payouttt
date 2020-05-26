@@ -10,7 +10,9 @@ from rest_framework import filters
 from rest_framework import generics
 from rest_framework.response import Response
 
+from accounts.PLAID_payments import PalidPayments
 from accounts.STRIPE_payments import StripePayment
+from accounts.models import Plaid
 from . import serializers
 from . import models
 
@@ -230,6 +232,12 @@ class PayBidView(APIView):
         except:
             return False
 
+    def verify_plaid_payment_method(self):
+        plaid = Plaid.objects.filter(user=self.request.user).first()
+        if plaid.account_id and plaid.access_token:
+            return True
+        return False
+
     def post(self, request, *args, **kwargs):
         error_message = ''
         bid = self.get_object()
@@ -270,8 +278,26 @@ class PayBidView(APIView):
                             error_message = "Payment not successful. Please try again later"
                     else:
                         error_message = "Please add stripe payment method first"
+
+
+                elif request.data.get('method') == 'plaid':
+                    bid_payment = self.get_bid_payment(bid)
+                    if self.verify_plaid_payment_method():
+                        if not bid_payment:
+                            bid_payment = PalidPayments().pay_for_order(bid, request)
+
+                        if bid_payment:
+                            self.set_user_tracking(bid.user, bid_payment, seller=False)
+                            self.set_user_tracking(bid.product_to_bid_on.seller, bid_payment, seller=True)
+                            return Response(self.serializer_class(bid, many=False).data, status=status.HTTP_200_OK)
+                        else:
+                            bid.paid = False
+                            bid.save()
+                            error_message = "Payment not successful. Please try again later"
+                    else:
+                        error_message = "Please link account with plaid first."
                 else:
-                    error_message = "Please specify 'method' of payment, <stripe>/<dwolla>"
+                    error_message = "Please specify 'method' of payment, <stripe>/<dwolla>/<plaid>"
         else:
             error_message = "No bid Found"
         return Response({"error": error_message}, status=status.HTTP_400_BAD_REQUEST)

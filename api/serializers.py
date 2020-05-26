@@ -1,4 +1,6 @@
 from rest_framework import serializers
+
+from accounts.models import Plaid
 from . import models
 
 
@@ -129,3 +131,9 @@ class ShoeSizeSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.ShoeSize
         fields = ('id', 'country', 'shoe_size')
+
+
+class PlaidSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Plaid
+        fields = '__all__'

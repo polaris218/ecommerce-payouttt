@@ -137,16 +137,18 @@ class ContactUs(models.Model):
 class BidPayment(models.Model):
     STRIPE = 'stripe'
     DWOLLA = 'dwolla'
+    PLAID = 'plaid'
     PAYMENT_METHODS = (
         (STRIPE, 'Stripe'),
         (DWOLLA, 'Dwolla'),
+        (PLAID, 'Plaid'),
     )
     amount = models.FloatField()
     admin_url = models.URLField(null=True, blank=True)
     seller_url = models.URLField(null=True, blank=True)
     seller_success_url = models.URLField(null=True, blank=True)
-    buyer_url = models.URLField()
-    success_url = models.URLField()
+    buyer_url = models.URLField(null=True, blank=True)
+    success_url = models.URLField(null=True, blank=True)
     bid = models.ForeignKey(Bid, on_delete=models.CASCADE)
     purchase_tracking = models.CharField(max_length=500, null=True, blank=True)
     purchase_label = models.CharField(max_length=500, null=True, blank=True)

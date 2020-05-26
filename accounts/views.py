@@ -170,5 +170,20 @@ def confirmCard(request):  # new
     #     )
     return render(request, 'test_stripe.html')
 
+
 # charge.to_dict().get('receipt_url')
 # charge.to_dict().get('amount')
+from django.conf import settings
+
+
+class PlaidPaymentLink(TemplateView):
+    template_name = 'plaid_account_linking.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs.setdefault('view', self)
+        if self.extra_context is not None:
+            kwargs.update(self.extra_context)
+        kwargs['client_id'] = settings.PLAID_CLIENT_ID
+        kwargs['public_key'] = settings.PLAID_PUBLIC_KEY
+        kwargs['secret_key'] = settings.PLAID_SAINDBOX_SECRET
+        return kwargs

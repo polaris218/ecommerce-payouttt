@@ -1,6 +1,7 @@
 from rest_framework.routers import DefaultRouter
 from django.urls import path, include
 from . import views
+from . import plaid_views
 
 router = DefaultRouter()
 
@@ -32,4 +33,6 @@ urlpatterns = [
     path("product/<int:id>/size/<int:size_id>/high_low/", views.HighLowBidsView.as_view()),
     path("stripe/my/payment/method/", views.StripePaymentMethodView.as_view()),
     path("stripe/<str:payment_id>/delete/", views.StripeDeletePaymentMethodView.as_view()),
+    path("plaid/exchange/token/", plaid_views.ExchangePlaidTokenView.as_view()),
+
 ]

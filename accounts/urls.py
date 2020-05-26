@@ -17,4 +17,5 @@ urlpatterns = [
     path('pay/stripe/', views.StripePaymentView.as_view(), name='stripe'),
     path('charge/', views.charge, name='charge'),
     path('tes/stripe/', views.confirmCard, name='test-stripe'),
+    path('test/plaid/', views.PlaidPaymentLink.as_view(), name='test-plaid'),
 ]

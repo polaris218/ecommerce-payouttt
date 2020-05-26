@@ -53,3 +53,13 @@ class FundingSource(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+
+class Plaid(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    access_token = models.CharField(max_length=200)
+    account_id = models.TextField(null=True, blank=True)
+    item_id = models.CharField(max_length=200, null=True, blank=True)
+
+    def __str__(self):
+        return self.access_token
