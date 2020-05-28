@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from django.db.models import Max
 from phonenumber_field.modelfields import PhoneNumberField
@@ -54,7 +56,6 @@ class Product(models.Model):
     sku_number = models.CharField(max_length=120)
     colorway = models.CharField(max_length=120)
     shoe_sizes = models.ManyToManyField(ShoeSize, null=True, blank=True)
-
     brand = models.CharField(max_length=120)
     listing_price = models.FloatField()
 
@@ -90,7 +91,7 @@ class VerifiedSellerApplication(models.Model):
 class Bid(models.Model):
     product_to_bid_on = models.ForeignKey(Product, related_name='product_selection', on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)  # Have to update this one.
-
+    order_id = models.CharField(max_length=100, blank=True, unique=True, default=uuid.uuid4)
     bid_amount = models.FloatField()
     timestamp = models.DateTimeField(auto_now_add=True)
     verified_account = models.BooleanField(default=False)
