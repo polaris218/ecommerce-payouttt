@@ -149,10 +149,14 @@ REST_FRAMEWORK = {
     ],
 }
 
-# CORS_ORIGIN_WHITELIST = [
-#    'http://127.0.0.1:8000',
-#    'http://0.0.0.0:8000'
-# ]
+CORS_ORIGIN_WHITELIST = [
+    'http://157.245.251.164',
+    'http://157.245.251.164',
+    'https://app.payouttt.com',
+    'https://payouttt.com',
+    'http://payouttt.com',
+    'https://payouttt.com',
+]
 
 AUTH_USER_MODEL = 'accounts.User'
 
