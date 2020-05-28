@@ -13,6 +13,7 @@ from rest_framework.response import Response
 from accounts.PLAID_payments import PalidPayments
 from accounts.STRIPE_payments import StripePayment
 from accounts.models import Plaid
+from core.EmailHelper import Email
 from . import serializers
 from . import models
 
@@ -322,6 +323,10 @@ class CreateBidViewset(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         obj = self.perform_create(serializer)
         if obj:
+            try:
+                Email().send_email_to_seller(obj)
+            except:
+                pass
             headers = self.get_success_headers(serializer.data)
             return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
