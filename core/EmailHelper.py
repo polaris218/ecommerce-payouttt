@@ -1,34 +1,54 @@
-from django.core.mail import send_mail
+from django.core.mail import send_mail as main_email_send
 from django.conf import settings
 
 from api.models import Bid
+from django.template.loader import get_template
 
 
 class Email(object):
 
-    def send_email(self, subject, content, user):
-        send_mail(subject, content, settings.EMAIL_HOST_USER, [user.email], fail_silently=False, )
+    def send_email(self, subject, content, user, html_content=None):
+        main_email_send(subject, content, settings.EMAIL_HOST_USER, [user.email], fail_silently=False,
+                        html_message=html_content)
 
-    def send_bulk_email(self, subject, content, user_emails):
-        send_mail(subject, content, settings.EMAIL_HOST_USER, user_emails, fail_silently=False, )
+    def send_bulk_email(self, subject, content, user_emails, html_content=None):
+        main_email_send(subject, content, settings.EMAIL_HOST_USER, user_emails, fail_silently=False,
+                        html_message=html_content)
 
     def send_welcome_email(self, user):
-        self.send_email('Welcome to Payouttt', 'Welcome to Payouttt, you can now buy and sell products.', user)
+        htmly = get_template('email_template.html')
+        d = {'email_body': 'Welcome to Payouttt, you can now buy and sell products.',
+             "email_type": "Welcome to Payouttt"}
+        html_content = htmly.render(d)
+        self.send_email('Welcome to Payouttt', '', user, html_content=html_content)
 
     def send_buyer_email(self, bid):
-        content = 'You have successfully pay for the product, we will email more details'
-        self.send_email('Successfull Payment', content, bid.user)
+        htmly = get_template('email_template.html')
+        d = {'email_body': 'You have successfully pay for the product, we will email more details',
+             "email_type": "Successful Payment"}
+        html_content = htmly.render(d)
+        self.send_email('Successful Payment', '', bid.user, html_content=html_content)
 
     def send_seller_email(self, bid):
-        content = 'Admin successfully pay for the items.'
-        self.send_email('Successful Payment', content, bid.product_to_bid_on.seller)
+        htmly = get_template('email_template.html')
+        d = {'email_body': 'Admin successfully pay for the items.',
+             "email_type": "Successful Payment"}
+        html_content = htmly.render(d)
+        self.send_email('Successful Payment', '', bid.product_to_bid_on.seller, html_content=html_content)
 
     def send_email_to_seller(self, bid):
-        content = 'Somebody bid on your product:{}, size: {}|{}, amount: ${}'.format(bid.product_to_bid_on.title,
-                                                                                     bid.shoe_size.shoe_size,
-                                                                                     bid.shoe_size.country,
-                                                                                     bid.bid_amount)
-        self.send_email('congregation Somebody Bid', content, bid.product_to_bid_on.seller)
+        htmly = get_template('email_template.html')
+        content = 'Somebody bid on your product'
+        items = [
+            {"name": "Product Name", "value": bid.product_to_bid_on.title},
+            {"name": "Size", "value": '{}|{}'.format(bid.shoe_size.shoe_size, bid.shoe_size.country)},
+            {"name": "Bid Value", "value": bid.bid_amount},
+        ]
+        d = {'email_body': content,
+             "email_type": 'Congratulations Somebody Bid', 'items': items}
+        html_content = htmly.render(d)
+        self.send_email('Congratulations Somebody Bid', '', bid.product_to_bid_on.seller, html_content=html_content)
+
         self.send_email_to_all_buyers(bid)
 
     def send_product_email_to_seller(self, product):
@@ -36,16 +56,36 @@ class Email(object):
         processing_fee = round((listing_price / 100) * 1, 2)
         transaction_fee = round((listing_price / 100) * 3, 2)
         listing_price = listing_price + processing_fee + transaction_fee
-        content = 'Successfully Listed product:{}, Listing Price: ${}, Processing Fee: ${}, Transaction Fee: ${}, Total Payouttt: ${}'.format(
-            product.title, product.listing_price, processing_fee, transaction_fee, listing_price)
-        self.send_email('Successfully Listed a product', content, product.seller)
+        content = 'Successfully Listed product.'
+        items = [
+            {"name": "Product Name", "value": product.title},
+            {"name": "Listing Price", "value": product.listing_price},
+            {"name": "Processing Fee", "value": processing_fee},
+            {"name": "Transaction Fee", "value": transaction_fee},
+            {"name": "Total Price", "value": listing_price},
+        ]
+        htmly = get_template('email_template.html')
+
+        d = {'email_body': content,
+             "email_type": 'Successfully Listed a product', 'items': items}
+        html_content = htmly.render(d)
+
+        self.send_email('Successfully Listed a product', '', product.seller, html_content=html_content)
 
     def send_email_to_all_buyers(self, bid):
         all_users = Bid.objects.filter(product_to_bid_on=bid.product_to_bid_on, shoe_size=bid.shoe_size,
                                        bid_amount__lt=bid.bid_amount).values_list('user__email', flat=True)
-        content = 'Somebody bid Higher than you. Product:{}, size: {}|{}, amount: ${}'.format(
-            bid.product_to_bid_on.title,
-            bid.shoe_size.shoe_size,
-            bid.shoe_size.country,
-            bid.bid_amount)
-        self.send_bulk_email("Somebody bid higher", content, all_users)
+        content = 'Somebody bid Higher than you'
+        htmly = get_template('email_template.html')
+
+        items = [
+            {"name": "Product Name", "value": bid.product_to_bid_on.title},
+            {"name": "Size", "value": '{}|{}'.format(bid.shoe_size.shoe_size, bid.shoe_size.country)},
+            {"name": "Bid Value", "value": bid.bid_amount},
+        ]
+
+        d = {'email_body': content,
+             "email_type": 'Somebody bid higher', 'items': items}
+        html_content = htmly.render(d)
+
+        self.send_bulk_email("Somebody bid higher", '', all_users, html_content=html_content)
