@@ -25,17 +25,27 @@ class Email(object):
 
     def send_email_to_seller(self, bid):
         content = 'Somebody bid on your product:{}, size: {}|{}, amount: ${}'.format(bid.product_to_bid_on.title,
-                                                                                   bid.shoe_size.shoe_size,
-                                                                                   bid.shoe_size.country,
-                                                                                   bid.bid_amount)
+                                                                                     bid.shoe_size.shoe_size,
+                                                                                     bid.shoe_size.country,
+                                                                                     bid.bid_amount)
         self.send_email('congregation Somebody Bid', content, bid.product_to_bid_on.seller)
         self.send_email_to_all_buyers(bid)
+
+    def send_product_email_to_seller(self, product):
+        listing_price = product.listing_price
+        processing_fee = round((listing_price / 100) * 1, 2)
+        transaction_fee = round((listing_price / 100) * 3, 2)
+        listing_price = listing_price + processing_fee + transaction_fee
+        content = 'Successfully Listed product:{}, Listing Price: ${}, Processing Fee: ${}, Transaction Fee: ${}, Total Payouttt: ${}'.format(
+            product.title, product.listing_price, processing_fee, transaction_fee, listing_price)
+        self.send_email('Successfully Listed a product', content, product.seller)
 
     def send_email_to_all_buyers(self, bid):
         all_users = Bid.objects.filter(product_to_bid_on=bid.product_to_bid_on, shoe_size=bid.shoe_size,
                                        bid_amount__lt=bid.bid_amount).values_list('user__email', flat=True)
-        content = 'Somebody bid Higher than you. Product:{}, size: {}|{}, amount: ${}'.format(bid.product_to_bid_on.title,
-                                                                                            bid.shoe_size.shoe_size,
-                                                                                            bid.shoe_size.country,
-                                                                                            bid.bid_amount)
+        content = 'Somebody bid Higher than you. Product:{}, size: {}|{}, amount: ${}'.format(
+            bid.product_to_bid_on.title,
+            bid.shoe_size.shoe_size,
+            bid.shoe_size.country,
+            bid.bid_amount)
         self.send_bulk_email("Somebody bid higher", content, all_users)
