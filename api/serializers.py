@@ -58,7 +58,8 @@ class BidSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Bid
         fields = (
-        'id', 'product_to_bid_on', 'user', 'bid_amount', 'shoe_size', 'can_pay', 'product', 'bid_payment', 'order_id')
+            'id', 'product_to_bid_on', 'user', 'bid_amount', 'shoe_size', 'can_pay', 'product', 'bid_payment',
+            'order_id', 'paid')
 
         extra_kwargs = {"verified_account": {"read_only": True}}
 
