@@ -70,14 +70,15 @@ class CreateProductViewset(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         if serializer.is_valid():
             product = serializer.save()
-            try:
-                Email().send_product_email_to_seller(product)
-            except:
-                pass
             shoe_sizes = ShoeSize.objects.filter(id__in=self.request.data.get('shoe_sizes', '').split(','))
             for shoe in shoe_sizes:
                 if shoe not in product.shoe_sizes.all():
                     product.shoe_sizes.add(shoe)
+
+            try:
+                Email().send_product_email_to_seller(product)
+            except:
+                pass
 
 
 class CreateSellerViewset(viewsets.ModelViewSet):

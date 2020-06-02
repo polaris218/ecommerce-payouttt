@@ -25,14 +25,14 @@ class Email(object):
     def send_buyer_email(self, bid):
         htmly = get_template('email_template.html')
         d = {'email_body': 'You have successfully pay for the product, we will email more details',
-             "email_type": "Successful Payment"}
+             "email_type": "Successful Payment", "user": bid.user}
         html_content = htmly.render(d)
         self.send_email('Successful Payment', '', bid.user, html_content=html_content)
 
     def send_seller_email(self, bid):
         htmly = get_template('email_template.html')
         d = {'email_body': 'Admin successfully pay for the items.',
-             "email_type": "Successful Payment"}
+             "email_type": "Successful Payment", "user": bid.product_to_bid_on.seller}
         html_content = htmly.render(d)
         self.send_email('Successful Payment', '', bid.product_to_bid_on.seller, html_content=html_content)
 
@@ -45,7 +45,7 @@ class Email(object):
             {"name": "Bid Value", "value": bid.bid_amount},
         ]
         d = {'email_body': content,
-             "email_type": 'Congratulations Somebody Bid', 'items': items}
+             "email_type": 'Congratulations Somebody Bid', 'items': items, "user": bid.product_to_bid_on.seller}
         html_content = htmly.render(d)
         self.send_email('Congratulations Somebody Bid', '', bid.product_to_bid_on.seller, html_content=html_content)
 
@@ -57,17 +57,19 @@ class Email(object):
         transaction_fee = round((listing_price / 100) * 3, 2)
         listing_price = listing_price + processing_fee + transaction_fee
         content = 'Successfully Listed product.'
+        size = product.shoe_sizes.all().first()
         items = [
             {"name": "Product Name", "value": product.title},
+            {"name": "Size", "value": '{}|{}'.format(size.shoe_size, size.country) if size else ''},
             {"name": "Listing Price", "value": product.listing_price},
             {"name": "Processing Fee", "value": processing_fee},
             {"name": "Transaction Fee", "value": transaction_fee},
-            {"name": "Total Price", "value": listing_price},
+            {"name": "Total Payouttt", "value": round(listing_price, 2)},
         ]
         htmly = get_template('email_template.html')
 
         d = {'email_body': content,
-             "email_type": 'Successfully Listed a product', 'items': items}
+             "email_type": 'Successfully Listed a product', 'items': items, "user": product.seller}
         html_content = htmly.render(d)
 
         self.send_email('Successfully Listed a product', '', product.seller, html_content=html_content)
