@@ -338,11 +338,7 @@ class CreateBidViewset(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         if serializer.is_valid():
-            product_to_bid_on = serializer.validated_data['product_to_bid_on']
-            existing_bid = Bid.objects.filter(product_to_bid_on=product_to_bid_on, user=self.request.user).exists()
-            if not existing_bid:
-                return serializer.save()
-            return False
+            return serializer.save()
 
 
 class FeedbackViewset(viewsets.ModelViewSet):
