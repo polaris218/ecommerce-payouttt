@@ -14,18 +14,22 @@
                 {#                    <li class="nav-item pcoded-menu-caption">#}
                 {#                        <label>Navigation</label>#}
                 {#                    </li>#}
-                <li data-username="dashboard Default Ecommerce CRM Analytics Crypto Project" class="nav-item active">
+                <li data-username="dashboard Default Ecommerce CRM Analytics Crypto Project" class="nav-item {{ dashboard }}">
                     <a href="{% url 'home' %}" class="nav-link "><span class="pcoded-micon"><i
                             class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
                 </li>
-                <li data-username="dashboard Default Ecommerce CRM Analytics Crypto Project" class="nav-item">
+                <li data-username="dashboard Default Ecommerce CRM Analytics Crypto Project" class="nav-item {{ address }}">
                     <a href="{% url 'address' %}" class="nav-link "><span class="pcoded-micon"><i
                             class="feather icon-monitor"></i></span><span class="pcoded-mtext">Address</span></a>
                 </li>
-                <li data-username="dashboard Default Ecommerce CRM Analytics Crypto Project" class="nav-item">
-                    <a href="{% url 'typo' %}" class="nav-link "><span class="pcoded-micon"><i
-                            class="feather icon-monitor"></i></span><span class="pcoded-mtext">Typo</span></a>
+                <li data-username="dashboard Default Ecommerce CRM Analytics Crypto Project" class="nav-item {{ orders }}">
+                    <a href="{% url 'paid_orders' %}" class="nav-link "><span class="pcoded-micon"><i
+                            class="feather icon-monitor"></i></span><span class="pcoded-mtext">Paid Orders</span></a>
                 </li>
+{#                <li data-username="dashboard Default Ecommerce CRM Analytics Crypto Project" class="nav-item">#}
+{#                    <a href="{% url 'typo' %}" class="nav-link "><span class="pcoded-micon"><i#}
+{#                            class="feather icon-monitor"></i></span><span class="pcoded-mtext">Typo</span></a>#}
+{#                </li>#}
                 {#                    <li class="nav-item pcoded-menu-caption">#}
                 {#                        <label>UI Element</label>#}
                 {#                    </li>#}

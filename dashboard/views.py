@@ -27,6 +27,18 @@ class IndexView(LoginRequiredMixin, TemplateView):
         kwargs['daily'] = BidManagement().get_daily_sales()
         kwargs['monthly'] = BidManagement().get_monthly_sales()
         kwargs['yearly'] = BidManagement().get_yearly_sales()
+        kwargs['dashboard'] = 'active'
+        return kwargs
+
+
+@method_decorator(staff_required, name='dispatch')
+class PaidOrdersView(LoginRequiredMixin, TemplateView):
+    template_name = 'paid_orders.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs.setdefault('view', self)
+        kwargs['paid_bids'] = BidManagement().get_paid_bids()
+        kwargs['orders'] = 'active'
         return kwargs
 
 
@@ -39,6 +51,7 @@ class AddressView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         kwargs.setdefault('view', self)
+        kwargs['address'] = 'active'
         form = AddressForm()
         address = self.get_object()
         if address:
