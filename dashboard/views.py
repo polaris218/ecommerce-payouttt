@@ -6,8 +6,10 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.template import loader
 from django.urls import reverse
+from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 
+from Payouttt.decorators import staff_required
 from addresses.address_validation import ShippoAddressManagement
 from addresses.models import Address
 from dashboard.forms import LoginForm, SignUpForm, AddressForm
@@ -15,6 +17,7 @@ from dashboard.services import BidManagement
 
 
 @login_required(login_url="/login/")
+@method_decorator(staff_required, name='dispatch')
 def index(request):
     paid_bids = BidManagement().get_paid_bids()
     non_paid_bids = BidManagement().get_non_paid_bids()
@@ -25,6 +28,7 @@ def index(request):
                                           'monthly': monthly_sales, 'yearly': yearly_sales})
 
 
+@method_decorator(staff_required, name='dispatch')
 class AddressView(LoginRequiredMixin, TemplateView):
     template_name = 'address.html'
 
@@ -67,8 +71,10 @@ class AddressView(LoginRequiredMixin, TemplateView):
         return self.render_to_response(context)
 
 
+@method_decorator(staff_required, name='dispatch')
 class TypoView(LoginRequiredMixin, TemplateView):
     template_name = 'ui-typography.html'
+
 
 @login_required(login_url="/login/")
 def pages(request):
