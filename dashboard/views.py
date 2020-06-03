@@ -16,16 +16,18 @@ from dashboard.forms import LoginForm, SignUpForm, AddressForm
 from dashboard.services import BidManagement
 
 
-@login_required(login_url="/login/")
 @method_decorator(staff_required, name='dispatch')
-def index(request):
-    paid_bids = BidManagement().get_paid_bids()
-    non_paid_bids = BidManagement().get_non_paid_bids()
-    daily_sales = BidManagement().get_daily_sales()
-    monthly_sales = BidManagement().get_monthly_sales()
-    yearly_sales = BidManagement().get_yearly_sales()
-    return render(request, "index.html", {'paid_bids': paid_bids, 'non_paid_bids': non_paid_bids, 'daily': daily_sales,
-                                          'monthly': monthly_sales, 'yearly': yearly_sales})
+class IndexView(LoginRequiredMixin, TemplateView):
+    template_name = 'index.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs.setdefault('view', self)
+        kwargs['paid_bids'] = BidManagement().get_paid_bids()
+        kwargs['non_paid_bids'] = BidManagement().get_non_paid_bids()
+        kwargs['daily'] = BidManagement().get_daily_sales()
+        kwargs['monthly'] = BidManagement().get_monthly_sales()
+        kwargs['yearly'] = BidManagement().get_yearly_sales()
+        return kwargs
 
 
 @method_decorator(staff_required, name='dispatch')

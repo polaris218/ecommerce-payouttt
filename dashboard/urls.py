@@ -15,7 +15,7 @@ urlpatterns = [
     re_path(r'^.*\.html', views.pages, name='pages'),
 
     # The home page
-    path('', views.index, name='home'),
+    path('', views.IndexView.as_view(), name='home'),
     path('dashboard/address/', views.AddressView.as_view(), name='address'),
     path('dashboard/typo/', views.TypoView.as_view(), name='typo'),
     path('login/', views.login_view, name="login"),
