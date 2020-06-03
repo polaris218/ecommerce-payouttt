@@ -22,8 +22,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('payouttt/', include("api.urls")),
     path('payouttt/admin/', include("core.urls")),
-    path('auth/', include("accounts.urls"))
+    path('auth/', include("accounts.urls")),
+    path('', include("addresses.urls")),
+    path('', include("dashboard.urls")),
+
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
