@@ -112,7 +112,7 @@
                                             {% for bid in non_paid_bids %}
                                                 <tr class="unread">
                                                     <td>{{ bid.id }}</td>
-                                                    <td>{{ bid.product_to_bid_on.title }}</td>
+                                                    <td><span title="{{ bid.product_to_bid_on.title }}">{{ bid.product_to_bid_on.title|truncatechars:20 }}</span></td>
                                                     <td>Seller: {{ bid.product_to_bid_on.seller }} <br>Buyer:{{ bid.user }}</td>
 
                                                     <td>{{ bid.product_to_bid_on.listing_price }}</td>
