@@ -109,7 +109,7 @@
                                             <tbody>
                                             {% for bid in paid_bids %}
                                                 <tr class="unread">
-                                                    <td>{{ bid.order_id }}</td>
+                                                    <td><span title="{{ bid.order_id }}">{{ bid.id }}</span></td>
                                                     <td><span
                                                             title="{{ bid.product_to_bid_on.title }}">{{ bid.product_to_bid_on.title|truncatechars:20 }}</span>
                                                     </td>
