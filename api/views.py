@@ -264,7 +264,7 @@ class PayBidView(APIView):
                     error_message = "You can't pay for this bid as your bid amount is less than the original price."
                 else:
                     if request.data.get('method') == 'dwolla':
-                        if bid.user.get_fund_source() and bid.product_to_bid_on.seller.get_fund_source():
+                        if bid.user.get_fund_source():# and bid.product_to_bid_on.seller.get_fund_source():
                             bid_payment = self.get_bid_payment(bid)
                             if not bid_payment:
                                 bid_payment = DwollaPayment().send_payment(bid)
@@ -278,7 +278,7 @@ class PayBidView(APIView):
                                 bid.save()
                                 error_message = "Payment not successful. Please try again later"
                         else:
-                            error_message = "Both of you must have account linked."
+                            error_message = "You must have dwolla account linked."
                     elif request.data.get('method') == 'stripe':
                         bid_payment = self.get_bid_payment(bid)
                         if request.user.stripe_customer_id and self.verify_payment_method(

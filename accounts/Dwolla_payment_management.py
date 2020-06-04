@@ -85,7 +85,7 @@ class DwollaPayment(object):
                         'href': bid.user.get_fund_source().source_url
                     },
                     'destination': {
-                        'href': bid.product_to_bid_on.seller.get_fund_source().source_url
+                        'href': admin_funding_source#bid.product_to_bid_on.seller.get_fund_source().source_url
                     }
                 },
                 'amount': {
