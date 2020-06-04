@@ -13,6 +13,7 @@ from rest_framework.response import Response
 from accounts.PLAID_payments import PalidPayments
 from accounts.STRIPE_payments import StripePayment
 from accounts.models import Plaid
+from addresses.address_validation import ShippoAddressManagement
 from core.EmailHelper import Email
 from . import serializers
 from . import models
@@ -62,10 +63,14 @@ class CreateProductViewset(viewsets.ModelViewSet):
         request_data = request.data.copy()
         request_data['seller'] = self.request.user.pk
         serializer = self.get_serializer(data=request_data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        valid_address = ShippoAddressManagement().user_valid_address(self.request.user)
+        if valid_address:
+            serializer.is_valid(raise_exception=True)
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        return Response({"message": "Please add a valid address before listing a product."},
+                        status=status.HTTP_400_BAD_REQUEST)
 
     def perform_create(self, serializer):
         if serializer.is_valid():
@@ -145,14 +150,15 @@ class PayBidView(APIView):
         return Bid.objects.filter(id=self.kwargs.get('id'), user=self.request.user, paid=False).first()
 
     def get_admin_address(self):
+        admin_address = ShippoAddressManagement().get_adming_address()
         admin_addr = {
-            "name": "Payouttt Team",
-            "street1": "1262 Appalachian road",
+            "name": admin_address.full_name,
+            "street1": admin_address.street1,
             "street2": "",
-            "city": "Ambler",
-            "state": "PA",
-            "zip": "19002",
-            "country": "US",
+            "city": admin_address.city,
+            "state": admin_address.state,
+            "zip": admin_address.zip,
+            "country": admin_address.country,
             "phone": "+1 123 456 789",
         }
         return admin_addr
@@ -172,14 +178,15 @@ class PayBidView(APIView):
 
         try:
             if seller:
+                address = ShippoAddressManagement().user_valid_address(user)
                 seller_addr = {
-                    "name": user.full_name or 'Payoutttt',
-                    "street1": user.street_address,
-                    "city": user.city,
-                    "state": str(user.state),
-                    "zip": int(user.zip_code),
-                    "country": "US",
-                    "phone": str(user.phone_number),
+                    "name": address.full_name or 'Payoutttt',
+                    "street1": address.street1,
+                    "city": address.city,
+                    "state": str(address.state),
+                    "zip": int(address.zip),
+                    "country": address.country,
+                    # "phone": str(user.phone_number),
                 }
 
                 shipment = shippo.Shipment.create(
@@ -189,14 +196,15 @@ class PayBidView(APIView):
                     asynchronous=False
                 )
             else:
+                address = ShippoAddressManagement().user_valid_address(user)
                 buyer_addr = {
-                    "name": user.full_name or 'Payoutttt',
-                    "street1": user.street_address,
-                    "city": user.city,
-                    "state": str(user.state),
-                    "zip": int(user.zip_code),
-                    "country": "US",
-                    "phone": str(user.phone_number),
+                    "name": address.full_name or 'Payoutttt',
+                    "street1": address.street1,
+                    "city": address.city,
+                    "state": str(address.state),
+                    "zip": int(address.zip),
+                    "country": address.country,
+                    # "phone": str(user.phone_number),
                 }
 
                 shipment = shippo.Shipment.create(
@@ -245,65 +253,71 @@ class PayBidView(APIView):
         return False
 
     def post(self, request, *args, **kwargs):
+
         error_message = ''
         bid = self.get_object()
         if bid:
-            if not bid.can_pay():
-                error_message = "You can't pay for this bid as your bid amount is less than the original price."
-            else:
-                if request.data.get('method') == 'dwolla':
-                    if bid.user.get_fund_source() and bid.product_to_bid_on.seller.get_fund_source():
-                        bid_payment = self.get_bid_payment(bid)
-                        if not bid_payment:
-                            bid_payment = DwollaPayment().send_payment(bid)
-
-                        if bid_payment:
-                            self.set_user_tracking(bid.user, bid_payment, seller=False)
-                            self.set_user_tracking(bid.product_to_bid_on.seller, bid_payment, seller=True)
-                            return Response(self.serializer_class(bid, many=False).data, status=status.HTTP_200_OK)
-                        else:
-                            bid.paid = False
-                            bid.save()
-                            error_message = "Payment not successful. Please try again later"
-                    else:
-                        error_message = "Both of you must have account linked."
-                elif request.data.get('method') == 'stripe':
-                    bid_payment = self.get_bid_payment(bid)
-                    if request.user.stripe_customer_id and self.verify_payment_method(
-                            request.user.stripe_payment_method):
-                        if not bid_payment:
-                            bid_payment = StripePayment().bid_payment(bid, request)
-
-                        if bid_payment:
-                            self.set_user_tracking(bid.user, bid_payment, seller=False)
-                            self.set_user_tracking(bid.product_to_bid_on.seller, bid_payment, seller=True)
-                            return Response(self.serializer_class(bid, many=False).data, status=status.HTTP_200_OK)
-                        else:
-                            bid.paid = False
-                            bid.save()
-                            error_message = "Payment not successful. Please try again later"
-                    else:
-                        error_message = "Please add stripe payment method first"
-
-
-                elif request.data.get('method') == 'plaid':
-                    bid_payment = self.get_bid_payment(bid)
-                    if self.verify_plaid_payment_method():
-                        if not bid_payment:
-                            bid_payment = PalidPayments().pay_for_order(bid, request)
-
-                        if bid_payment:
-                            self.set_user_tracking(bid.user, bid_payment, seller=False)
-                            self.set_user_tracking(bid.product_to_bid_on.seller, bid_payment, seller=True)
-                            return Response(self.serializer_class(bid, many=False).data, status=status.HTTP_200_OK)
-                        else:
-                            bid.paid = False
-                            bid.save()
-                            error_message = "Payment not successful. Please try again later"
-                    else:
-                        error_message = "Please link account with plaid first."
+            seller_address = ShippoAddressManagement().user_valid_address(self.request.user)
+            buyer_address = ShippoAddressManagement().user_valid_address(bid.user)
+            if seller_address and buyer_address:
+                if not bid.can_pay():
+                    error_message = "You can't pay for this bid as your bid amount is less than the original price."
                 else:
-                    error_message = "Please specify 'method' of payment, <stripe>/<dwolla>/<plaid>"
+                    if request.data.get('method') == 'dwolla':
+                        if bid.user.get_fund_source() and bid.product_to_bid_on.seller.get_fund_source():
+                            bid_payment = self.get_bid_payment(bid)
+                            if not bid_payment:
+                                bid_payment = DwollaPayment().send_payment(bid)
+
+                            if bid_payment:
+                                self.set_user_tracking(bid.user, bid_payment, seller=False)
+                                self.set_user_tracking(bid.product_to_bid_on.seller, bid_payment, seller=True)
+                                return Response(self.serializer_class(bid, many=False).data, status=status.HTTP_200_OK)
+                            else:
+                                bid.paid = False
+                                bid.save()
+                                error_message = "Payment not successful. Please try again later"
+                        else:
+                            error_message = "Both of you must have account linked."
+                    elif request.data.get('method') == 'stripe':
+                        bid_payment = self.get_bid_payment(bid)
+                        if request.user.stripe_customer_id and self.verify_payment_method(
+                                request.user.stripe_payment_method):
+                            if not bid_payment:
+                                bid_payment = StripePayment().bid_payment(bid, request)
+
+                            if bid_payment:
+                                self.set_user_tracking(bid.user, bid_payment, seller=False)
+                                self.set_user_tracking(bid.product_to_bid_on.seller, bid_payment, seller=True)
+                                return Response(self.serializer_class(bid, many=False).data, status=status.HTTP_200_OK)
+                            else:
+                                bid.paid = False
+                                bid.save()
+                                error_message = "Payment not successful. Please try again later"
+                        else:
+                            error_message = "Please add stripe payment method first"
+
+
+                    elif request.data.get('method') == 'plaid':
+                        bid_payment = self.get_bid_payment(bid)
+                        if self.verify_plaid_payment_method():
+                            if not bid_payment:
+                                bid_payment = PalidPayments().pay_for_order(bid, request)
+
+                            if bid_payment:
+                                self.set_user_tracking(bid.user, bid_payment, seller=False)
+                                self.set_user_tracking(bid.product_to_bid_on.seller, bid_payment, seller=True)
+                                return Response(self.serializer_class(bid, many=False).data, status=status.HTTP_200_OK)
+                            else:
+                                bid.paid = False
+                                bid.save()
+                                error_message = "Payment not successful. Please try again later"
+                        else:
+                            error_message = "Please link account with plaid first."
+                    else:
+                        error_message = "Please specify 'method' of payment, <stripe>/<dwolla>/<plaid>"
+            else:
+                error_message = "Both users must have address added and validated."
         else:
             error_message = "No bid Found"
         return Response({"error": error_message}, status=status.HTTP_400_BAD_REQUEST)
@@ -325,17 +339,22 @@ class CreateBidViewset(viewsets.ModelViewSet):
         request_data = request.data.copy()
         request_data['user'] = self.request.user.pk
         serializer = self.get_serializer(data=request_data)
-        serializer.is_valid(raise_exception=True)
-        obj = self.perform_create(serializer)
-        if obj:
-            try:
-                Email().send_email_to_seller(obj)
-            except:
-                pass
-            headers = self.get_success_headers(serializer.data)
-            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        valid_address = ShippoAddressManagement().user_valid_address(self.request.user)
+        if valid_address:
+            serializer.is_valid(raise_exception=True)
+            obj = self.perform_create(serializer)
+            if obj:
+                try:
+                    Email().send_email_to_seller(obj)
+                except:
+                    pass
+                headers = self.get_success_headers(serializer.data)
+                return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        else:
+            return Response({"message": "Please add a valid address before bidding a product."},
+                            status=status.HTTP_400_BAD_REQUEST)
 
-        return Response({"message": "You have already bid on this product."}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"message": "Please try again later."}, status=status.HTTP_400_BAD_REQUEST)
 
     def perform_create(self, serializer):
         if serializer.is_valid():

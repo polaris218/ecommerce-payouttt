@@ -1,5 +1,7 @@
 import shippo
 
+from addresses.models import Address
+
 shippo.config.api_key = "shippo_test_48803b138ac2f2cb91e20d674886102386a45920"
 shippo.config.api_version = "2018-02-08"
 shippo.config.verify_ssl_certs = True
@@ -7,6 +9,9 @@ shippo.config.rates_req_timeout = 30.0
 
 
 class ShippoAddressManagement(object):
+
+    def user_valid_address(self, user):
+        return Address.objects.filter(user=user, is_valid=True).first()
 
     def validate_address(self, address_data):
         address_from = shippo.Address.create(
@@ -25,8 +30,11 @@ class ShippoAddressManagement(object):
         message = ''
         if not address_validation:
             messages = address_from.get("validation_results").get('messages')
-            if messages and len(messages > 0):
+            if messages and len(messages):
                 message = messages[0].text
             else:
                 message = "Not a valid address, Please try again."
         return address_validation, message, address_id
+
+    def get_adming_address(self):
+        return Address.objects.filter(admin_address=True).first()

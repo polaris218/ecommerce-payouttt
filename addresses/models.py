@@ -23,6 +23,7 @@ class Address(BaseModel):
     zip = models.CharField(max_length=6)
     country = models.CharField(max_length=50)
     shippo_address_id = models.CharField(max_length=250, null=True, blank=True)
+    admin_address = models.BooleanField(default=False)
 
     def __str__(self):
         return self.company

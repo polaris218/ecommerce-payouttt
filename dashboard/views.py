@@ -76,6 +76,7 @@ class AddressView(LoginRequiredMixin, TemplateView):
                 address = form.save()
                 address.shippo_address_id = address_id
                 address.is_valid = True
+                address.admin_address = True
                 address.save()
                 return redirect(reverse('address'))
             else:
