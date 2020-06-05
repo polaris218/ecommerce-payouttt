@@ -48,7 +48,7 @@ class Email(object):
              "email_type": 'Congratulations Somebody Bid', 'items': items, "user": bid.product_to_bid_on.seller}
         html_content = htmly.render(d)
         self.send_email('Congratulations Somebody Bid', '', bid.product_to_bid_on.seller, html_content=html_content)
-
+        self.send_email_to_bidder(bid)
         self.send_email_to_all_buyers(bid)
 
     def send_product_email_to_seller(self, product):
@@ -91,3 +91,16 @@ class Email(object):
         html_content = htmly.render(d)
 
         self.send_bulk_email("Somebody bid higher", '', all_users, html_content=html_content)
+
+    def send_email_to_bidder(self, bid):
+        htmly = get_template('email_template.html')
+        content = 'Congratulations your bid is live'
+        items = [
+            {"name": "Product Name", "value": bid.product_to_bid_on.title},
+            {"name": "Size", "value": '{}|{}'.format(bid.shoe_size.shoe_size, bid.shoe_size.country)},
+            {"name": "Bid Value", "value": bid.bid_amount},
+        ]
+        d = {'email_body': content,
+             "email_type": 'Congratulations your bid is live', 'items': items, "user": bid.user}
+        html_content = htmly.render(d)
+        self.send_email('Congratulations your bid is live', '', bid.user, html_content=html_content)
