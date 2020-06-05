@@ -16,7 +16,7 @@ class AddAddressView(APIView):
 
     def get(self, request, *args, **kwargs):
         address = self.get_object()
-        return Response(self.serializer_class(instance=address, many=False).data, status=status.HTTP_400_BAD_REQUEST)
+        return Response(self.serializer_class(instance=address, many=False).data, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
         request_data = request.data.copy()
