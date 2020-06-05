@@ -49,7 +49,7 @@ class StripePayment(object):
         return intent.client_secret
 
     def link_paymentmethod_with_customer(self, user):
-        stripe.PaymentMethod.attach(eval(user.stripe_payment_method.get('paymentMethod').get('id')),
+        stripe.PaymentMethod.attach(eval(user.stripe_payment_method).get('paymentMethod').get('id'),
                                     customer=user.stripe_customer_id)
 
     def detach_account(self, payment_id):
