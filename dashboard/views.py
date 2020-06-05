@@ -89,7 +89,7 @@ class AddressView(LoginRequiredMixin, TemplateView):
 
 @method_decorator(staff_required, name='dispatch')
 class TypoView(LoginRequiredMixin, TemplateView):
-    template_name = 'ui-typography.html'
+    template_name = 'ui-tables.html'
 
 
 @login_required(login_url="/login/")
