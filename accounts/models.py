@@ -7,6 +7,15 @@ from localflavor.us.us_states import STATE_CHOICES
 from phonenumber_field.modelfields import PhoneNumberField
 
 
+class BaseModel(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_valid = models.BooleanField(default=False)
+
+    class Meta:
+        abstract = True
+
+
 class User(AbstractUser):
     SELLER = 'seller'
     BUYER = 'buyer'
@@ -63,3 +72,20 @@ class Plaid(models.Model):
 
     def __str__(self):
         return self.access_token
+
+
+class DwollaAccount(BaseModel):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    street1 = models.CharField(max_length=500)
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=3, choices=STATE_CHOICES)
+    postal_code = models.IntegerField(default=0)
+    ssn = models.CharField(max_length=50)
+    date_of_birth = models.DateField()
+    dwolla_customer_id = models.CharField(max_length=255, null=True, blank=True)
+    dwolla_customer_url = models.URLField(max_length=255, null=True, blank=True)
+
+    def __str__(self):
+        return self.user.email

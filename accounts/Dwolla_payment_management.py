@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 import dwollav2
 
-from accounts.models import User, FundingSource
+from accounts.models import User, FundingSource, DwollaAccount
 from api.models import BidPayment
 from core.EmailHelper import Email
 
@@ -33,40 +33,40 @@ class DwollaPayment(object):
     def get_all_customers(self):
         customers = self.app_token.get('customers', {'limit': 10})
 
-    def create_customer(self, user):
-        request_body = {
-            'firstName': user.first_name,
-            'lastName': user.last_name,
-            'email': user.email,
-            'type': 'personal',
-            'ipAddress': '99.99.99.99'
-        }
+    def create_customer(self, request_data, user):
+        import pdb;
+        pdb.set_trace()
+        try:
+            user.first_name = user.first_name or request_data.get('first_name'),
+            user.last_name = user.last_name or request_data.get('last_name'),
+            user.save()
+            request_body = {
+                'firstName': request_data.get('first_name'),
+                'lastName': request_data.get('last_name'),
+                'email': user.email,
+                'type': 'personal',
+                'ipAddress': '99.99.99.99'
+            }
 
-        # if user.user_type == User.BUYER and user.ssn:
-        request_body['type'] = 'personal'
-        request_body['address1'] = user.street_address
-        request_body['city'] = user.city
-        if not user.state:
-            request_body['state'] = 'NY'
-        else:
-            request_body['state'] = user.state.upper()
-        request_body['postalCode'] = str(user.zip_code)
-        request_body['ssn'] = user.ssn
-        if user.date_of_birth:
-            request_body['dateOfBirth'] = user.date_of_birth.strftime('%Y-%m-%d')
-        else:
-            request_body['dateOfBirth'] = (datetime.now() - timedelta(days=7200)).strftime('%Y-%m-%d')
+            request_body['type'] = 'personal'
+            request_body['address1'] = request_data.get('street1')
+            request_body['city'] = request_data.get('city')
 
-        # request_body['businessName'] = user.business_name,
+            request_body['state'] = request_data.get('state').upper()
+            request_body['postalCode'] = str(request_data.get('postal_code'))
+            request_body['ssn'] = request_data.get('ssn')
+            request_body['dateOfBirth'] = request_data.get('date_of_birth')
 
-        customer = self.app_token.post('customers', request_body)
-        user.dwolla_customer_url = customer.headers['location']
-        user.dwolla_customer_id = user.dwolla_customer_url.split('/')[-1]
-        user.save()
+            customer = self.app_token.post('customers', request_body)
+            return True, customer.headers['location'], customer.headers['location'].split('/')[
+                -1], "Customer Successffully Created"
+        except Exception as e:
+            return False, '', '', str(e)
 
     def get_customer_iav_token(self, user):
-        if user.dwolla_customer_url:
-            customer_token = self.app_token.post('%s/iav-token' % user.dwolla_customer_url)
+        dwolla_account = DwollaAccount.objects.filter(user=user).last()
+        if dwolla_account:
+            customer_token = self.app_token.post('%s/iav-token' % dwolla_account.dwolla_customer_url)
             return customer_token.body.get('token')
         return 'Customer is not connected to Dwolla'
 
@@ -77,6 +77,7 @@ class DwollaPayment(object):
         return None
 
     def send_payment(self, bid):
+        import pdb;pdb.set_trace()
         admin_funding_source = self.get_admin_account_funding_resource()
         if admin_funding_source:
             request_body = {
@@ -85,7 +86,7 @@ class DwollaPayment(object):
                         'href': bid.user.get_fund_source().source_url
                     },
                     'destination': {
-                        'href': admin_funding_source#bid.product_to_bid_on.seller.get_fund_source().source_url
+                        'href': admin_funding_source  # bid.product_to_bid_on.seller.get_fund_source().source_url
                     }
                 },
                 'amount': {

@@ -34,7 +34,7 @@ class AddAddressView(APIView):
                 address.is_valid = True
                 address.shippo_address_id = address_id
                 if self.request.user.is_staff:
-                    address.admin_address = address_id
+                    address.admin_address = True
                 address.save()
                 return Response(self.serializer_class(instance=address, many=False).data, status=status.HTTP_200_OK)
             else:

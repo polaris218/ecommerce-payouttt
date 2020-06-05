@@ -13,6 +13,7 @@ urlpatterns = [
     path('api/verified/buyer/account/', views.VerifiedBuyerAccountView.as_view(), name='add_verified_account'),
 
     # Test urls
+    path('api/create/dwolla/customer/', views.DwollaCustomerView.as_view(), name='dwolla_customer_view'),
     path('add/account/', views.AddAccountView.as_view(), name='add_account'),
     path('pay/stripe/', views.StripePaymentView.as_view(), name='stripe'),
     path('charge/', views.charge, name='charge'),

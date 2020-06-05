@@ -55,7 +55,7 @@ class Email(object):
         listing_price = product.listing_price
         processing_fee = round((listing_price / 100) * 1, 2)
         transaction_fee = round((listing_price / 100) * 3, 2)
-        listing_price = listing_price + processing_fee + transaction_fee
+        listing_price = listing_price - processing_fee - transaction_fee
         content = 'Successfully Listed product.'
         size = product.shoe_sizes.all().first()
         items = [

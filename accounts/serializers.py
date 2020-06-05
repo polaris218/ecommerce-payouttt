@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
-from accounts.models import User, FundingSource
+from accounts.models import User, FundingSource, DwollaAccount
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -10,6 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
         validators=[UniqueValidator(queryset=User.objects.all())]
     )
     password = serializers.CharField(min_length=8)
+
     # first_name = serializers.CharField(max_length=120, required=True)
     # user_type = serializers.ChoiceField(choices=User.USER_TYPES, required=True)
     # last_name = serializers.CharField(max_length=120, required=True)
@@ -93,3 +94,9 @@ class ChangePasswordSerializer(serializers.Serializer):
     class Meta:
         model = User
         fields = ('old_password', 'new_password')
+
+
+class DwollaAccountSerielizer(serializers.ModelSerializer):
+    class Meta:
+        model = DwollaAccount
+        fields = '__all__'

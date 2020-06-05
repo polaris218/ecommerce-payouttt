@@ -9,9 +9,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from accounts.Dwolla_payment_management import DwollaPayment
-from accounts.models import User, FundingSource
+from accounts.models import User, FundingSource, DwollaAccount
 from accounts.serializers import UserSerializer, UserUpdateSerializer, IAVTokenSerializer, FundingSourceSerializer, \
-    PersonalAccount, ChangePasswordSerializer
+    PersonalAccount, ChangePasswordSerializer, DwollaAccountSerielizer
 from core import EmailHelper
 from core.views import BaseView
 from django.conf import settings
@@ -187,3 +187,29 @@ class PlaidPaymentLink(TemplateView):
         kwargs['public_key'] = settings.PLAID_PUBLIC_KEY
         kwargs['secret_key'] = settings.PLAID_SAINDBOX_SECRET
         return kwargs
+
+
+class DwollaCustomerView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = DwollaAccountSerielizer
+    model_class = DwollaAccount
+
+    def post(self, request):
+        request_data = request.data.copy()
+        request_data['user'] = self.request.user.pk
+        serializer = self.serializer_class(data=request_data)
+        if serializer.is_valid():
+
+            status_code, customer_url, customer_id, message = DwollaPayment().create_customer(request_data,
+                                                                                              self.request.user)
+            if status_code:
+                account = serializer.save()
+                account.dwolla_customer_id = customer_id
+                account.dwolla_customer_url = customer_url
+                account.is_valid = True
+                account.save()
+                return Response(self.serializer_class(instance=account, many=False).data, status=status.HTTP_200_OK)
+            else:
+                data = {"message": message, "data": serializer.data}
+                return Response(data, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
