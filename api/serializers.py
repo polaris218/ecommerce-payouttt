@@ -2,6 +2,13 @@ from rest_framework import serializers
 
 from accounts.models import Plaid
 from . import models
+from .bid_status_management import BidStatusManagement
+
+
+class BidStatusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.BidStatus
+        exclude = ('bid',)
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -54,14 +61,18 @@ class BidSerializer(serializers.ModelSerializer):
     product = serializers.SerializerMethodField()
     bid_payment = serializers.SerializerMethodField()
     product_to_bid_on = serializers.SerializerMethodField()
+    status = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Bid
         fields = (
             'id', 'product_to_bid_on', 'user', 'bid_amount', 'shoe_size', 'can_pay', 'product', 'bid_payment',
-            'order_id', 'paid')
+            'order_id', 'paid', 'status')
 
         extra_kwargs = {"verified_account": {"read_only": True}}
+
+    def get_status(self, obj):
+        return BidStatusSerializer(BidStatusManagement().get_bid_status(obj), many=True).data
 
     def get_can_pay(self, obj):
         if obj.product_to_bid_on.listing_price <= obj.bid_amount:

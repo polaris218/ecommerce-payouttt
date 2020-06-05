@@ -19,7 +19,8 @@ from . import serializers
 from . import models
 
 from accounts.Dwolla_payment_management import DwollaPayment
-from .models import Bid
+from .bid_status_management import BidStatusManagement
+from .models import Bid, BidStatus
 import shippo
 from django.conf import settings
 from api.models import ShoeSize
@@ -264,7 +265,7 @@ class PayBidView(APIView):
                     error_message = "You can't pay for this bid as your bid amount is less than the original price."
                 else:
                     if request.data.get('method') == 'dwolla':
-                        if bid.user.get_fund_source():# and bid.product_to_bid_on.seller.get_fund_source():
+                        if bid.user.get_fund_source():  # and bid.product_to_bid_on.seller.get_fund_source():
                             bid_payment = self.get_bid_payment(bid)
                             if not bid_payment:
                                 bid_payment = DwollaPayment().send_payment(bid)
@@ -272,6 +273,7 @@ class PayBidView(APIView):
                             if bid_payment:
                                 self.set_user_tracking(bid.user, bid_payment, seller=False)
                                 self.set_user_tracking(bid.product_to_bid_on.seller, bid_payment, seller=True)
+                                BidStatusManagement().create_bid_status(bid, BidStatus.SELLER_SEND)
                                 return Response(self.serializer_class(bid, many=False).data, status=status.HTTP_200_OK)
                             else:
                                 bid.paid = False
@@ -289,10 +291,12 @@ class PayBidView(APIView):
                             if bid_payment:
                                 self.set_user_tracking(bid.user, bid_payment, seller=False)
                                 self.set_user_tracking(bid.product_to_bid_on.seller, bid_payment, seller=True)
+                                BidStatusManagement().create_bid_status(bid, BidStatus.SELLER_SEND)
                                 return Response(self.serializer_class(bid, many=False).data, status=status.HTTP_200_OK)
                             else:
                                 bid.paid = False
                                 bid.save()
+
                                 error_message = "Payment not successful. Please try again later"
                         else:
                             error_message = "Please add stripe payment method first"
@@ -307,6 +311,7 @@ class PayBidView(APIView):
                             if bid_payment:
                                 self.set_user_tracking(bid.user, bid_payment, seller=False)
                                 self.set_user_tracking(bid.product_to_bid_on.seller, bid_payment, seller=True)
+                                BidStatusManagement().create_bid_status(bid, BidStatus.SELLER_SEND)
                                 return Response(self.serializer_class(bid, many=False).data, status=status.HTTP_200_OK)
                             else:
                                 bid.paid = False

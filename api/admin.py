@@ -15,3 +15,4 @@ admin.site.register(models.FeaturedProduct)
 admin.site.register(models.Feedback)
 
 admin.site.register(models.ContactUs)
+admin.site.register(models.BidStatus)

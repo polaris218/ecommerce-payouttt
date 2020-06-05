@@ -9,6 +9,15 @@ from localflavor.us.us_states import STATE_CHOICES
 from accounts.models import User
 
 
+class BaseModel(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_valid = models.BooleanField(default=False)
+
+    class Meta:
+        abstract = True
+
+
 class Seller(models.Model):
     seller = models.CharField(max_length=100, primary_key=True, unique=True)
     full_name = models.CharField(max_length=100)
@@ -163,3 +172,23 @@ class BidPayment(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+
+class BidStatus(BaseModel):
+    SELLER_SEND = 'seller_send'
+    PAYOUT_RECEIVED = 'payout_received'
+    PAYOUT_SEND = 'payout_send'
+    STATUS_TYPE = (
+        (SELLER_SEND, 'Seller Send'),
+        (PAYOUT_RECEIVED, 'Payouttt Received'),
+        (PAYOUT_SEND, "Send from Payouttt"),
+    )
+    bid = models.ForeignKey(Bid, on_delete=models.CASCADE)
+    status = models.CharField(choices=STATUS_TYPE, default=SELLER_SEND, max_length=20)
+    status_message = models.CharField(max_length=200)
+
+    class Meta:
+        unique_together = ('bid', 'status')
+
+    def __str__(self):
+        return '{},{}'.format(self.bid.product_to_bid_on.title, self.status)
