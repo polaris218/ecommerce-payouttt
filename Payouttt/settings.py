@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from decouple import config
 from datetime import timedelta
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -24,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '7!wg%_&mmsf44+x1d0&e7#k_!zv+z+e6l(o)v4p+v57$l7(lh&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = ['*']
 
@@ -39,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'phonenumber_field',
-    'corsheaders','widget_tweaks',
+    'corsheaders', 'widget_tweaks',
     'api', 'accounts', 'core', 'django_filters', 'dashboard', 'addresses'
 ]
 
@@ -171,15 +172,16 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 # settings.py
-STRIPE_SECRET_KEY = 'sk_test_PRQ3OpN6ADb9IT9dQIR706ZN00s8ngJ1vK'
-STRIPE_PUBLISHABLE_KEY = 'pk_test_dY7fDe4zV4vlrTthyFZ3YTky00d23hieBY'
+STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY')
+STRIPE_PUBLISHABLE_KEY = config('STRIPE_PUBLISHABLE_KEY')
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=50),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=100),
 }
 
-PLAID_CLIENT_ID = '5ebdc1d2f4e00d001256e582'
-PLAID_PUBLIC_KEY = '8c7e53ee1fcc51423cd4191827973c'
-PLAID_SAINDBOX_SECRET = 'bd99e5d6019e08c029f10703ca0559'
-PLAID_DEVELOPMENT_SECRET = 'd2bc914d77386bca80874fd99e80f9'
+PLAID_CLIENT_ID = config('PLAID_CLIENT_ID')
+PLAID_PUBLIC_KEY = config('PLAID_PUBLIC_KEY')
+PLAID_SAINDBOX_SECRET = config('PLAID_SAINDBOX_SECRET')
+PLAID_DEVELOPMENT_SECRET = config('PLAID_DEVELOPMENT_SECRET')
+SHIPPO_API_KEY = config('SHIPPO_API_KEY')

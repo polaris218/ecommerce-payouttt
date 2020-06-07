@@ -116,6 +116,9 @@ class Bid(models.Model):
             return True
         return False
 
+    def get_payment(self):
+        return BidPayment.objects.filter(bid=self).last()
+
 
 class FeaturedProduct(models.Model):
     db_identification = models.CharField(max_length=120)

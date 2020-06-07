@@ -26,3 +26,4 @@ psycopg2
 django-filter
 plaid-python
 django-widget-tweaks
+python-decouple

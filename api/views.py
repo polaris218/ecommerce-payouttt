@@ -22,10 +22,10 @@ from accounts.Dwolla_payment_management import DwollaPayment
 from .bid_status_management import BidStatusManagement
 from .models import Bid, BidStatus
 import shippo
-from django.conf import settings
 from api.models import ShoeSize
+from django.conf import settings
 
-shippo.config.api_key = "shippo_test_48803b138ac2f2cb91e20d674886102386a45920"
+shippo.config.api_key = settings.SHIPPO_API_KEY
 shippo.config.api_version = "2018-02-08"
 shippo.config.verify_ssl_certs = True
 shippo.config.rates_req_timeout = 30.0
