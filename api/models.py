@@ -112,7 +112,7 @@ class Bid(models.Model):
         return self.user.email
 
     def can_pay(self):
-        if self.bid_amount >= self.product_to_bid_on.listing_price:
+        if self.bid_amount == self.product_to_bid_on.listing_price:
             return True
         return False
 
