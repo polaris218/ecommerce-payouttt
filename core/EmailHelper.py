@@ -98,7 +98,9 @@ class Email(object):
         items = [
             {"name": "Product Name", "value": bid.product_to_bid_on.title},
             {"name": "Size", "value": '{}|{}'.format(bid.shoe_size.shoe_size, bid.shoe_size.country)},
-            {"name": "Bid Value", "value": bid.bid_amount},
+            {"name": "Bid Value", "value": '${}'.format(bid.bid_amount)},
+            {"name": "Shipping", "value": '${}'.format(15)},
+            {"name": "Total", "value": '${}'.format(15+int(bid.bid_amount))},
         ]
         d = {'email_body': content,
              "email_type": 'Congratulations your bid is live', 'items': items, "user": bid.user}
