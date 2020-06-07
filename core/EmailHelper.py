@@ -1,7 +1,8 @@
 from django.core.mail import send_mail as main_email_send
 from django.conf import settings
 
-from api.models import Bid
+from accounts.models import User
+from api.models import Bid, Product
 from django.template.loader import get_template
 
 
@@ -73,6 +74,7 @@ class Email(object):
         html_content = htmly.render(d)
 
         self.send_email('Successfully Listed a product', '', product.seller, html_content=html_content)
+        self.send_email_to_higher_ask(product)
 
     def send_email_to_all_buyers(self, bid):
         all_users = Bid.objects.filter(product_to_bid_on=bid.product_to_bid_on, shoe_size=bid.shoe_size,
@@ -100,9 +102,29 @@ class Email(object):
             {"name": "Size", "value": '{}|{}'.format(bid.shoe_size.shoe_size, bid.shoe_size.country)},
             {"name": "Bid Value", "value": '${}'.format(bid.bid_amount)},
             {"name": "Shipping", "value": '${}'.format(15)},
-            {"name": "Total", "value": '${}'.format(15+int(bid.bid_amount))},
+            {"name": "Total", "value": '${}'.format(15 + int(bid.bid_amount))},
         ]
         d = {'email_body': content,
              "email_type": 'Congratulations your bid is live', 'items': items, "user": bid.user}
         html_content = htmly.render(d)
         self.send_email('Congratulations your bid is live', '', bid.user, html_content=html_content)
+
+    def send_email_to_higher_ask(self, product):
+        users = Product.objects.filter(sku_number=product.sku_number, listing_price__gt=product.listing_price,
+                                       shoe_sizes__in=product.shoe_sizes.all()).values_list('seller',
+                                                                                            flat=True).exclude(
+            seller=product.seller).distinct()
+        for user in User.objects.filter(id__in=set(users)):
+            shoe_size = product.shoe_sizes.all().first()
+            if shoe_size:
+                htmly = get_template('email_template.html')
+                content = 'Someone placed a new lowest ask'
+                items = [
+                    {"name": "Product Name", "value": product.title},
+                    {"name": "Size", "value": '{}|{}'.format(shoe_size.shoe_size, shoe_size.country)},
+                    {"name": "Product SKU", "value": product.sku_number},
+                ]
+                d = {'email_body': content,
+                     "email_type": 'Someone placed a new lowest ask', 'items': items, "user": user}
+                html_content = htmly.render(d)
+                self.send_email('Someone placed a new lowest ask', '', user, html_content=html_content)
