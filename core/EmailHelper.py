@@ -42,7 +42,7 @@ class Email(object):
         items = [
             {"name": "Product Name", "value": bid.product_to_bid_on.title},
             {"name": "Size", "value": '{}|{}'.format(bid.shoe_size.shoe_size, bid.shoe_size.country)},
-            {"name": "Bid Value", "value": bid.bid_amount},
+            {"name": "Bid Value", "value": '${}'.format(bid.bid_amount)},
         ]
         d = {'email_body': content,
              "email_type": 'Congratulations Somebody Bid', 'items': items, "user": bid.product_to_bid_on.seller}
@@ -61,10 +61,10 @@ class Email(object):
         items = [
             {"name": "Product Name", "value": product.title},
             {"name": "Size", "value": '{}|{}'.format(size.shoe_size, size.country) if size else ''},
-            {"name": "Listing Price", "value": product.listing_price},
-            {"name": "Processing Fee", "value": processing_fee},
-            {"name": "Transaction Fee", "value": transaction_fee},
-            {"name": "Total Payouttt", "value": round(listing_price, 2)},
+            {"name": "Listing Price", "value": '${}'.format(product.listing_price)},
+            {"name": "Processing Fee", "value": '${}'.format(processing_fee)},
+            {"name": "Transaction Fee", "value": '${}'.format(transaction_fee)},
+            {"name": "Total Payouttt", "value": '${}'.format(round(listing_price, 2))},
         ]
         htmly = get_template('email_template.html')
 
@@ -83,7 +83,7 @@ class Email(object):
         items = [
             {"name": "Product Name", "value": bid.product_to_bid_on.title},
             {"name": "Size", "value": '{}|{}'.format(bid.shoe_size.shoe_size, bid.shoe_size.country)},
-            {"name": "Bid Value", "value": bid.bid_amount},
+            {"name": "Bid Value", "value": '${}'.format(bid.bid_amount)},
         ]
 
         d = {'email_body': content,
