@@ -106,8 +106,8 @@
                                                 <th>Contacts</th>
                                                 <th>Listing</th>
                                                 <th>Bid Amount</th>
-                                                <th>Paid Through</th>
                                                 <th>Actions</th>
+                                                <th>Paid Through</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -123,7 +123,6 @@
 
                                                     <td>{{ bid.product_to_bid_on.listing_price }}</td>
                                                     <td>{{ bid.bid_amount }}</td>
-                                                    <td>{{ bid.get_payment.get_payment_method_display }}</td>
                                                     <td>
                                                         <button type="button" class="label theme-bg2 text-white f-12"
                                                                 data-toggle="modal"
@@ -195,7 +194,7 @@
                                                             </div>
                                                         </div>
                                                     </td>
-
+                                                    <td>{{ bid.get_payment.get_payment_method_display }}</td>
                                                 </tr>
 
 
