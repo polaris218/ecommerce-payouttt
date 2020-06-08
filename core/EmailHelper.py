@@ -122,7 +122,7 @@ class Email(object):
                 items = [
                     {"name": "Product Name", "value": product.title},
                     {"name": "Size", "value": '{}|{}'.format(shoe_size.shoe_size, shoe_size.country)},
-                    {"name": "Listing Price", "value": '{}|{}'.format(product.listing_price)},
+                    {"name": "Listing Price", "value": '${}'.format(product.listing_price)},
                     {"name": "Product SKU", "value": product.sku_number},
                 ]
                 d = {'email_body': content,
