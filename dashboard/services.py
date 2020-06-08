@@ -16,12 +16,12 @@ class BidManagement(object):
 
     def get_yearly_sales(self):
         yearly = timezone.now() - timedelta(days=12 * 30)
-        bids_amount = Bid.objects.filter(paid=False, timestamp__date__gte=yearly.date()).aggregate(
+        bids_amount = Bid.objects.filter(paid=True, timestamp__date__gte=yearly.date()).aggregate(
             total=Sum('bid_amount')).get('total')
         return bids_amount or 0
 
     def get_daily_sales(self):
-        bids_amount = Bid.objects.filter(paid=False, timestamp__date=timezone.now().date()).aggregate(
+        bids_amount = Bid.objects.filter(paid=True, timestamp__date=timezone.now().date()).aggregate(
             total=Sum('bid_amount')).get('total')
         return bids_amount or 0
 

@@ -23,7 +23,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         kwargs.setdefault('view', self)
         kwargs['paid_bids'] = BidManagement().get_paid_bids()
-        kwargs['non_paid_bids'] = BidManagement().get_non_paid_bids()
+        # kwargs['non_paid_bids'] = BidManagement().get_non_paid_bids()
         kwargs['daily'] = BidManagement().get_daily_sales()
         kwargs['monthly'] = BidManagement().get_monthly_sales()
         kwargs['yearly'] = BidManagement().get_yearly_sales()
@@ -32,12 +32,12 @@ class IndexView(LoginRequiredMixin, TemplateView):
 
 
 @method_decorator(staff_required, name='dispatch')
-class PaidOrdersView(LoginRequiredMixin, TemplateView):
-    template_name = 'paid_orders.html'
+class NonPaidOrdersView(LoginRequiredMixin, TemplateView):
+    template_name = 'non_paid_orders.html'
 
     def get_context_data(self, **kwargs):
         kwargs.setdefault('view', self)
-        kwargs['paid_bids'] = BidManagement().get_paid_bids()
+        kwargs['paid_bids'] = BidManagement().get_non_paid_bids()
         kwargs['orders'] = 'active'
         return kwargs
 
