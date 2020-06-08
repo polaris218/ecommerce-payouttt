@@ -103,6 +103,7 @@ class Bid(models.Model):
     order_id = models.CharField(max_length=100, blank=True, unique=True, default=uuid.uuid4)
     bid_amount = models.FloatField()
     timestamp = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     verified_account = models.BooleanField(default=False)
 
     shoe_size = models.ForeignKey(ShoeSize, on_delete=models.CASCADE)
