@@ -17,8 +17,8 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 class PalidPayments(object):
 
     def __init__(self):
-        self.client = Client(client_id=settings.PLAID_CLIENT_ID, secret=settings.PLAID_SAINDBOX_SECRET,
-                             public_key=settings.PLAID_PUBLIC_KEY, environment='sandbox')
+        self.client = Client(client_id=settings.PLAID_CLIENT_ID, secret=settings.PLAID_SECRET,
+                             public_key=settings.PLAID_PUBLIC_KEY, environment=settings.PLAID_ENVIRONMENT)
 
     def exchange_token(self, user, public_token, account_id):
         if public_token and account_id:

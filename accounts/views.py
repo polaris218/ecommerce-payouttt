@@ -185,7 +185,7 @@ class PlaidPaymentLink(TemplateView):
             kwargs.update(self.extra_context)
         kwargs['client_id'] = settings.PLAID_CLIENT_ID
         kwargs['public_key'] = settings.PLAID_PUBLIC_KEY
-        kwargs['secret_key'] = settings.PLAID_SAINDBOX_SECRET
+        kwargs['secret_key'] = settings.PLAID_SECRET
         return kwargs
 
 
