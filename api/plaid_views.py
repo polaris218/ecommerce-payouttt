@@ -15,4 +15,5 @@ class ExchangePlaidTokenView(APIView):
                                                                         request.data.get('account_id', None))
         if plaid_payment:
             serializer_data = PlaidSerializer(plaid_payment, many=False).data
-        return Response(serializer_data, status=status.HTTP_200_OK)
+            return Response(serializer_data, status=status.HTTP_200_OK)
+        return Response(serializer_data, status=status.HTTP_400_BAD_REQUEST)
