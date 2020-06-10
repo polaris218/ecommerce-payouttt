@@ -43,6 +43,16 @@ class NonPaidOrdersView(LoginRequiredMixin, TemplateView):
 
 
 @method_decorator(staff_required, name='dispatch')
+class OrderDeleteView(LoginRequiredMixin, TemplateView):
+    template_name = 'non_paid_orders.html'
+
+    def post(self, request, *args, **kwargs):
+        id = kwargs.get('id')
+        BidManagement().remove_bid(id)
+        return redirect(reverse('non_paid_orders'))
+
+
+@method_decorator(staff_required, name='dispatch')
 class AddressView(LoginRequiredMixin, TemplateView):
     template_name = 'address.html'
 
@@ -89,7 +99,7 @@ class AddressView(LoginRequiredMixin, TemplateView):
 
 @method_decorator(staff_required, name='dispatch')
 class TypoView(LoginRequiredMixin, TemplateView):
-    template_name = 'ui-tables.html'
+    template_name = 'ui-icons.html'
 
 
 @login_required(login_url="/login/")

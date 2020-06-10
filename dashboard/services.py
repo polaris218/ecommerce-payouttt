@@ -7,6 +7,8 @@ from api.models import Bid
 
 
 class BidManagement(object):
+    def remove_bid(self, id):
+        Bid.objects.filter(id=id).delete()
 
     def get_paid_bids(self):
         return Bid.objects.filter(paid=True).order_by('-id')
@@ -27,4 +29,4 @@ class BidManagement(object):
 
     def get_monthly_sales(self):
         bid_amount = self.get_yearly_sales()
-        return round(bid_amount/12,2) if bid_amount else 0
+        return round(bid_amount / 12, 2) if bid_amount else 0

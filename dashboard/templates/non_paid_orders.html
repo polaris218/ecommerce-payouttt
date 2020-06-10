@@ -7,6 +7,16 @@
 
 {% block content %}
 
+    <style>
+        .transparant-button {
+            background-color: Transparent;
+            background-repeat: no-repeat;
+            border: none;
+            cursor: pointer;
+            overflow: hidden;
+            outline: none;
+        }
+    </style>
     <div class="pcoded-content">
         <div class="pcoded-inner-content">
             <!-- [ breadcrumb ] start -->
@@ -91,7 +101,7 @@
                         <div class="col-xl-12 col-md-12">
                             <div class="card Recent-Users">
                                 <div class="card-header">
-                                    <h5>Paid Orders</h5>
+                                    <h5>Non Paid Orders</h5>
                                 </div>
                                 <div class="card-block px-0 py-3">
                                     <div class="table-responsive">
@@ -121,11 +131,19 @@
                                                     <td>{{ bid.product_to_bid_on.listing_price }}</td>
                                                     <td>{{ bid.bid_amount }}</td>
                                                     <td>
-                                                        <button type="button" class="label theme-bg2 text-white f-12"
+                                                        <button type="button" class="transparant-button"
                                                                 data-toggle="modal"
                                                                 data-target="#paid_order_{{ bid.id }}">
-                                                            Details
+                                                            <i style="color: grey;" class="feather icon-info"></i>
                                                         </button>
+                                                        <form action="{% url 'remove-order' bid.id %}" method="post">
+                                                            {% csrf_token %}
+                                                            <button type="submit" class="transparant-button"><i
+                                                                    style="color: red;"
+                                                                    class="feather icon-delete"></i></button>
+                                                        </form>
+
+
                                                         <div class="modal fade"
                                                              id="paid_order_{{ bid.id }}"
                                                              tabindex="-1"

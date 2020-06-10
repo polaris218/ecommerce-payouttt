@@ -19,6 +19,7 @@ urlpatterns = [
     path('dashboard/address/', views.AddressView.as_view(), name='address'),
     path('dashboard/typo/', views.TypoView.as_view(), name='typo'),
     path('dashboard/paid/orders/', views.NonPaidOrdersView.as_view(), name='non_paid_orders'),
+    path('dashboard/remove/order/<int:id>/', views.OrderDeleteView.as_view(), name='remove-order'),
     path('login/', views.login_view, name="login"),
     path('register/', views.register_user, name="register"),
     path("logout/", LogoutView.as_view(), name="logout")
