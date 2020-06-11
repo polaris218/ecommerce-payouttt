@@ -41,7 +41,7 @@ class CreateBidSerializer(serializers.ModelSerializer):
         extra_kwargs = {"verified_account": {"read_only": True}}
 
     def get_can_pay(self, obj):
-        if obj.product_to_bid_on.listing_price == obj.bid_amount:
+        if obj.product_to_bid_on.listing_price <= obj.bid_amount:
             return True
         return False
 
