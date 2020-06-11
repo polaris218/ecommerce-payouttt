@@ -75,7 +75,7 @@ class BidSerializer(serializers.ModelSerializer):
         return BidStatusSerializer(BidStatusManagement().get_bid_status(obj), many=True).data
 
     def get_can_pay(self, obj):
-        if obj.product_to_bid_on.listing_price == obj.bid_amount:
+        if obj.product_to_bid_on.listing_price <= obj.bid_amount:
             return True
         return False
 
