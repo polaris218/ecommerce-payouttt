@@ -3,6 +3,7 @@ from plaid import Client
 from django.conf import settings
 
 from accounts.Dwolla_payment_management import DwollaPayment
+from accounts.STRIPE_payments import StripePayment
 from accounts.models import Plaid
 
 import stripe
@@ -31,6 +32,7 @@ class PalidPayments(object):
                     user_plaid = Plaid.objects.create(user=user, access_token=access_token, item_id=item_id,
                                                       account_id=account_id)
                 else:
+                    StripePayment().get_customer(user)
                     user_plaid.access_token = access_token
                     user_plaid.item_id = item_id
                     user_plaid.account_id = account_id
@@ -47,14 +49,14 @@ class PalidPayments(object):
             response = self.client.Processor.stripeBankAccountTokenCreate(user_plaid.access_token,
                                                                           user_plaid.account_id)
             if response.get('stripe_bank_account_token'):
-                charge = stripe.Charge.create(amount=int(bid.bid_amount * 100) + 13, currency='usd',
+                charge = stripe.Charge.create(amount=int(bid.product_to_bid_on.listing_price * 100) + 15, currency='usd',
                                               source=response.get('stripe_bank_account_token'),
                                               description=bid.product_to_bid_on.title)
                 if charge:
                     admin_funding_source = DwollaPayment().get_admin_account_funding_resource()
                     bid.paid = True
                     bid.save()
-                    bid_payment = BidPayment.objects.create(amount=bid.bid_amount + 13,
+                    bid_payment = BidPayment.objects.create(amount=bid.product_to_bid_on.listing_price + 15,
                                                             admin_url=admin_funding_source,
                                                             buyer_url=charge.to_dict().get('receipt_url'),
                                                             success_url=charge.to_dict().get('receipt_url')

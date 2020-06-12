@@ -91,7 +91,7 @@ class DwollaPayment(object):
                 },
                 'amount': {
                     'currency': 'USD',
-                    'value': str(int(bid.bid_amount) + 13)
+                    'value': str(int(bid.product_to_bid_on.listing_price) + 15)
                 },
             }
 
@@ -100,7 +100,7 @@ class DwollaPayment(object):
             if transfer.status == 201:
                 bid.paid = True
                 bid.save()
-                bid_payment = BidPayment.objects.create(amount=bid.bid_amount + 13,
+                bid_payment = BidPayment.objects.create(amount=bid.product_to_bid_on.listing_price + 15,
                                                         admin_url=admin_funding_source,
                                                         buyer_url=bid.user.get_fund_source().source_url,
                                                         success_url=transfer.headers['location'], bid=bid)

@@ -12,7 +12,7 @@ class StripePayment(object):
     def bid_payment(self, bid, request):
         payment_token = eval(request.user.stripe_payment_method).get('paymentMethod').get('id')
         charge = stripe.PaymentIntent.create(
-            amount=int(bid.bid_amount * 100) + 13,
+            amount=int(bid.product_to_bid_on.listing_price * 100) + 15,
             currency='usd',
             customer=request.user.stripe_customer_id,
             description=bid.product_to_bid_on.title,
@@ -25,7 +25,7 @@ class StripePayment(object):
             admin_funding_source = DwollaPayment().get_admin_account_funding_resource()
             bid.paid = True
             bid.save()
-            bid_payment = BidPayment.objects.create(amount=bid.bid_amount + 13,
+            bid_payment = BidPayment.objects.create(amount=bid.product_to_bid_on.listing_price + 15,
                                                     admin_url=admin_funding_source,
                                                     buyer_url=charge.to_dict().get('charges').get('data')[0].get(
                                                         'receipt_url'),

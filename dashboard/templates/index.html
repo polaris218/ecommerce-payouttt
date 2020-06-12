@@ -106,6 +106,7 @@
                                                 <th>Contacts</th>
                                                 <th>Listing</th>
                                                 <th>Bid Amount</th>
+                                                <th>Amount Paid</th>
                                                 <th>Actions</th>
                                                 <th>Paid Through</th>
                                             </tr>
@@ -123,6 +124,7 @@
 
                                                     <td>{{ bid.product_to_bid_on.listing_price }}</td>
                                                     <td>{{ bid.bid_amount }}</td>
+                                                    <td>{{ bid.get_payment.amount }}</td>
                                                     <td>
                                                         <button type="button" class="label theme-bg2 text-white f-12"
                                                                 data-toggle="modal"
