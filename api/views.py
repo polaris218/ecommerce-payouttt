@@ -498,18 +498,21 @@ class StripeDeletePaymentMethodView(APIView):
 
     def verify_payment_method(self, payment_method):
         message = "You don't have payment method integrated"
+        user = self.request.user
         try:
             payment_data = eval(payment_method).get('paymentMethod')
             if payment_data.get('id') == self.kwargs.get('payment_id'):
                 StripePayment().detach_account(self.kwargs.get('payment_id'))
-                user = self.request.user
                 user.stripe_payment_method = ""
                 user.save()
                 message = "Successfully Detach payment method."
             else:
+                user.stripe_payment_method = ""
+                user.save()
                 message = "Invalid Payment Id."
         except:
-            pass
+            user.stripe_payment_method = ""
+            user.save()
 
         return message
 
