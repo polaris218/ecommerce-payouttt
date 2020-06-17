@@ -80,7 +80,7 @@ class CreateProductViewset(viewsets.ModelViewSet):
             for shoe in shoe_sizes:
                 if shoe not in product.shoe_sizes.all():
                     product.shoe_sizes.add(shoe)
-
+            BidStatusManagement().link_bid_with_product(product)
             try:
                 Email().send_product_email_to_seller(product)
             except:
@@ -348,7 +348,10 @@ class CreateBidViewset(viewsets.ModelViewSet):
         if valid_address:
             serializer.is_valid(raise_exception=True)
             obj = self.perform_create(serializer)
+
             if obj:
+                if not obj.product_to_bid_on:
+                    BidStatusManagement().add_product_in_bid(obj)
                 try:
                     Email().send_email_to_seller(obj)
                 except:
