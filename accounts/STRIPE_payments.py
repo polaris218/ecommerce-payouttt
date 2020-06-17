@@ -25,6 +25,9 @@ class StripePayment(object):
             admin_funding_source = DwollaPayment().get_admin_account_funding_resource()
             bid.paid = True
             bid.save()
+            product = bid.product_to_bid_on
+            product.sold = True
+            product.save()
             bid_payment = BidPayment.objects.create(amount=bid.product_to_bid_on.listing_price + 15,
                                                     admin_url=admin_funding_source,
                                                     buyer_url=charge.to_dict().get('charges').get('data')[0].get(
