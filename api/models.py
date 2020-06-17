@@ -76,6 +76,7 @@ class Product(models.Model):
 
     image = models.FileField(null=True, blank=True)
     sold = models.BooleanField(default=False)
+    on_hold = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
@@ -98,7 +99,9 @@ class VerifiedSellerApplication(models.Model):
 
 
 class Bid(models.Model):
-    product_to_bid_on = models.ForeignKey(Product, related_name='product_selection', on_delete=models.CASCADE)
+    product_to_bid_on = models.ForeignKey(Product, related_name='product_selection', on_delete=models.CASCADE,
+                                          null=True, blank=True)
+    sku_number = models.CharField(max_length=120, null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)  # Have to update this one.
     order_id = models.CharField(max_length=100, blank=True, unique=True, default=uuid.uuid4)
     bid_amount = models.FloatField()
@@ -113,7 +116,7 @@ class Bid(models.Model):
         return self.user.email
 
     def can_pay(self):
-        if self.bid_amount >= self.product_to_bid_on.listing_price:
+        if self.product_to_bid_on and self.bid_amount >= self.product_to_bid_on.listing_price:
             return True
         return False
 

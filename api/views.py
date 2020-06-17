@@ -262,7 +262,7 @@ class PayBidView(APIView):
             buyer_address = ShippoAddressManagement().user_valid_address(bid.user)
             if seller_address and buyer_address:
                 if not bid.can_pay():
-                    error_message = "You can't pay for this bid as your bid amount is less than the original price."
+                    error_message = "You can't pay for this bid as your bid amount is less than the original price or there is no product available right now"
                 else:
                     if request.data.get('method') == 'dwolla':
                         if bid.user.get_fund_source():  # and bid.product_to_bid_on.seller.get_fund_source():
