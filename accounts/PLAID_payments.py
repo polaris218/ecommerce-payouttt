@@ -49,7 +49,7 @@ class PalidPayments(object):
             response = self.client.Processor.stripeBankAccountTokenCreate(user_plaid.access_token,
                                                                           user_plaid.account_id)
             if response.get('stripe_bank_account_token'):
-                charge = stripe.Charge.create(amount=int(bid.product_to_bid_on.listing_price * 100) + 15, currency='usd',
+                charge = stripe.Charge.create(amount=int((bid.product_to_bid_on.listing_price + 15) * 100), currency='usd',
                                               source=response.get('stripe_bank_account_token'),
                                               description=bid.product_to_bid_on.title)
                 if charge:

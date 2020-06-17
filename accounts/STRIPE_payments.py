@@ -12,7 +12,7 @@ class StripePayment(object):
     def bid_payment(self, bid, request):
         payment_token = eval(request.user.stripe_payment_method).get('paymentMethod').get('id')
         charge = stripe.PaymentIntent.create(
-            amount=int(bid.product_to_bid_on.listing_price * 100) + 15,
+            amount=int((bid.product_to_bid_on.listing_price + 15) * 100),
             currency='usd',
             customer=request.user.stripe_customer_id,
             description=bid.product_to_bid_on.title,
