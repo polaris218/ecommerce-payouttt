@@ -1,0 +1,222 @@
+{% include 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}- Signin{% endblock %}
+{% block content %}
+    <main class="bg-white position-relative">
+        <div class="form-margin uk-section uk-section-muted uk-flex uk-flex-middle uk-animation-fade">
+            <div class="uk-width-1-1">
+                <div class="uk-container">
+                    <div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid>
+                        <div class="uk-width-1-1@m">
+                            <form class="uk-margin uk-width-large uk-margin-auto uk-card uk-card-default uk-card-body uk-box-shadow-large" method="post" action="{% url 'login' %}">
+                                <ul class="uk-tab uk-flex-center" uk-grid uk-switcher="animation: uk-animation-fade">
+                                    <li><a href="#" class="for_remove">Sign in</a></li>
+                                    <li><a href="#" class="for_remove">Sign up</a></li>
+                                    <li class="uk-hidden">Forgot Password?</li>
+                                    <li class="uk-hidden">Verify Account</li>
+                                </ul>
+                                <ul class="uk-switcher uk-margin">
+                                    <li>
+                                        <div class="social_icon">
+{#                                            <button class="twitter"><i class="fa fa-twitter"></i>Twitter</button>#}
+{#                                            <button class="facebook"><i class="fa fa-facebook"></i>Facebook</button>#}
+                                        </div>
+{#                                        <div class="or-seperator"><i>or</i></div>#}
+
+                                        <form method="post" action="{% url 'login' %}" id="login_form">
+                                            {% csrf_token %}
+                                            <div class="uk-margin">
+                                                <div class="uk-inline uk-width-1-1">
+                                                <span class="uk-form-icon" uk-icon="icon: mail"><svg
+                                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                        width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path
+                                                        d="M3 3h18a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm17 4.238l-7.928 7.1L4 7.216V19h16V7.238zM4.511 5l7.55 6.662L19.502 5H4.511z"/></svg></span>
+                                                    {{ form.username|add_class:"uk-input uk-form-large"|attr:"placeholder:Email Address" }}
+
+                                                </div>
+                                            </div>
+                                            <div class="uk-margin">
+                                                <div class="uk-inline uk-width-1-1">
+												<span class="uk-form-icon" uk-icon="icon: lock">
+												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
+                                                     height="24"><path fill="none" d="M0 0h24v24H0z"/><path
+                                                        d="M19 10h1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V11a1 1 0 0 1 1-1h1V9a7 7 0 1 1 14 0v1zM5 12v8h14v-8H5zm6 2h2v4h-2v-4zm6-4V9A5 5 0 0 0 7 9v1h10z"/></svg>
+												</span>
+                                                    {{ form.password|add_class:"uk-input uk-form-large" }}
+                                                    <span id="sieye" class="eye">
+												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
+                                                     height="24"><path fill="none" d="M0 0h24v24H0z"/><path
+                                                        d="M17.882 19.297A10.949 10.949 0 0 1 12 21c-5.392 0-9.878-3.88-10.819-9a10.982 10.982 0 0 1 3.34-6.066L1.392 2.808l1.415-1.415 19.799 19.8-1.415 1.414-3.31-3.31zM5.935 7.35A8.965 8.965 0 0 0 3.223 12a9.005 9.005 0 0 0 13.201 5.838l-2.028-2.028A4.5 4.5 0 0 1 8.19 9.604L5.935 7.35zm6.979 6.978l-3.242-3.242a2.5 2.5 0 0 0 3.241 3.241zm7.893 2.264l-1.431-1.43A8.935 8.935 0 0 0 20.777 12 9.005 9.005 0 0 0 9.552 5.338L7.974 3.76C9.221 3.27 10.58 3 12 3c5.392 0 9.878 3.88 10.819 9a10.947 10.947 0 0 1-2.012 4.592zm-9.084-9.084a4.5 4.5 0 0 1 4.769 4.769l-4.77-4.769z"/></svg>
+												</span>
+                                                </div>
+                                            </div>
+                                            <div class="uk-margin uk-text-right@s uk-text-center uk-text-small forgot_password">
+                                                <a href="#" uk-switcher-item="2" class="forgot_click">Forgot
+                                                    Password?</a>
+                                            </div>
+                                            <div class="uk-margin">
+                                                <button class="uk-button uk-button-primary uk-button-large uk-width-1-1 open_sans" type="submit">
+                                                    sign in
+                                                </button>
+                                                <a class="uk-button uk-button-primary uk-button-large uk-width-1-1 verify_account open_sans vefiry_click"
+                                                   uk-switcher-item="3">verify account</a>
+                                            </div>
+                                            <!-- 										<div class="uk-text-small uk-text-center">
+                                                                                        Not registered? <a href="#" uk-switcher-item="0">Create an account</a>
+                                                                                    </div> -->
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <div class="social_icon">
+{#                                            <button class="twitter"><i class="fa fa-twitter"></i>Twitter</button>#}
+{#                                            <button class="facebook"><i class="fa fa-facebook"></i>Facebook</button>#}
+                                        </div>
+{#                                        <div class="or-seperator"><i>or</i></div>#}
+                                        <form>
+                                            <div class="uk-margin">
+                                                <div class="uk-inline uk-width-1-1">
+												<span class="uk-form-icon" uk-icon="icon: user">'
+												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
+                                                     height="24"><path fill="none" d="M0 0h24v24H0z"/><path
+                                                        d="M4 22a8 8 0 1 1 16 0h-2a6 6 0 1 0-12 0H4zm8-9c-3.315 0-6-2.685-6-6s2.685-6 6-6 6 2.685 6 6-2.685 6-6 6zm0-2c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z"/></svg>
+												</span>
+                                                    <input class="uk-input uk-form-large" type="text"
+                                                           placeholder="First Name" required>
+                                                </div>
+                                            </div>
+                                            <div class="uk-margin">
+                                                <div class="uk-inline uk-width-1-1">
+												<span class="uk-form-icon" uk-icon="icon: user">
+												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
+                                                     height="24"><path fill="none" d="M0 0h24v24H0z"/><path
+                                                        d="M4 22a8 8 0 1 1 16 0h-2a6 6 0 1 0-12 0H4zm8-9c-3.315 0-6-2.685-6-6s2.685-6 6-6 6 2.685 6 6-2.685 6-6 6zm0-2c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z"/></svg>
+												</span>
+                                                    <input class="uk-input uk-form-large" type="text"
+                                                           placeholder="Last Name" required>
+                                                </div>
+                                            </div>
+                                            <div class="uk-margin">
+                                                <div class="uk-inline uk-width-1-1">
+												<span class="uk-form-icon" uk-icon="icon: mail">
+												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
+                                                     height="24"><path fill="none" d="M0 0h24v24H0z"/><path
+                                                        d="M3 3h18a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm17 4.238l-7.928 7.1L4 7.216V19h16V7.238zM4.511 5l7.55 6.662L19.502 5H4.511z"/></svg>
+												</span>
+                                                    <input class="uk-input uk-form-large" type="text"
+                                                           placeholder="Email"
+                                                           required>
+                                                </div>
+                                            </div>
+                                            <div class="uk-margin">
+                                                <div class="uk-inline uk-width-1-1">
+												<span class="uk-form-icon" uk-icon="icon: lock">
+												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
+                                                     height="24"><path fill="none" d="M0 0h24v24H0z"/><path
+                                                        d="M19 10h1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V11a1 1 0 0 1 1-1h1V9a7 7 0 1 1 14 0v1zM5 12v8h14v-8H5zm6 2h2v4h-2v-4zm6-4V9A5 5 0 0 0 7 9v1h10z"/></svg>
+												</span>
+                                                    <input class="uk-input uk-form-large" type="password" id="pwd"
+                                                           placeholder="Password" required>
+                                                    <span id="eye" class="eye">
+												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
+                                                     height="24"><path fill="none" d="M0 0h24v24H0z"/><path
+                                                        d="M17.882 19.297A10.949 10.949 0 0 1 12 21c-5.392 0-9.878-3.88-10.819-9a10.982 10.982 0 0 1 3.34-6.066L1.392 2.808l1.415-1.415 19.799 19.8-1.415 1.414-3.31-3.31zM5.935 7.35A8.965 8.965 0 0 0 3.223 12a9.005 9.005 0 0 0 13.201 5.838l-2.028-2.028A4.5 4.5 0 0 1 8.19 9.604L5.935 7.35zm6.979 6.978l-3.242-3.242a2.5 2.5 0 0 0 3.241 3.241zm7.893 2.264l-1.431-1.43A8.935 8.935 0 0 0 20.777 12 9.005 9.005 0 0 0 9.552 5.338L7.974 3.76C9.221 3.27 10.58 3 12 3c5.392 0 9.878 3.88 10.819 9a10.947 10.947 0 0 1-2.012 4.592zm-9.084-9.084a4.5 4.5 0 0 1 4.769 4.769l-4.77-4.769z"/></svg>
+												</span>
+                                                </div>
+                                            </div>
+                                            <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid trems-services-sec">
+                                                <label class="pointer"><input
+                                                        class="pointer uk-checkbox condition-accept"
+                                                        type="checkbox"><span class="by_signi">By signing up, you agree to the Terms of Service</span></label>
+                                            </div>
+                                            <div class="uk-margin">
+                                                <button class="uk-button uk-button-primary uk-button-large uk-width-1-1">
+                                                    Sign up
+                                                </button>
+                                            </div>
+                                            <div class="uk-text-small uk-text-center privacy_policy">
+                                                <a href="#" uk-switcher-item="1">Privacy Policy</a> | <a href="#"
+                                                                                                         uk-switcher-item="1">Terms
+                                                of Service</a>
+                                            </div>
+                                        </form>
+                                    </li>
+                                    <li class="Forgot-Password">
+                                        <h3 class="uk-card-title uk-text-center">Forgot Send Password</h3>
+                                        <p class="uk-text-center uk-width-medium@s uk-margin-auto">
+                                            Please enter the email associated with your account
+                                        </p>
+                                        <form>
+                                            <div class="uk-margin">
+                                                <div class="uk-inline uk-width-1-1">
+												<span class="uk-form-icon" uk-icon="icon: mail">
+												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
+                                                     height="24"><path fill="none" d="M0 0h24v24H0z"/><path
+                                                        d="M3 3h18a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm17 4.238l-7.928 7.1L4 7.216V19h16V7.238zM4.511 5l7.55 6.662L19.502 5H4.511z"/></svg>
+												</span>
+                                                    </span>
+                                                    <input class="uk-input uk-form-large" type="text"
+                                                           placeholder="Email"
+                                                           required>
+                                                </div>
+                                            </div>
+                                            <div class="uk-margin">
+                                                <button class="uk-button uk-button-primary uk-button-large uk-width-1-1 validate_code"
+                                                        required>Reset Password
+                                                </button>
+                                            </div>
+                                            <!-- 										<div class="uk-text-small uk-text-center">
+                                                                                        <a href="#" uk-switcher-item="1">Back to login</a>
+                                                                                    </div> -->
+                                        </form>
+                                    </li>
+                                    <li class="Verify-Account">
+                                        <h3 class="uk-card-title uk-text-center ">Verify Account</h3>
+                                        <p class="uk-text-center uk-width-medium@s uk-margin-auto">
+                                            Please check your email for the validation code and enter it here
+                                        </p>
+                                        <form>
+                                            <div class="uk-margin">
+                                                <div class="uk-inline uk-width-1-1">
+												<span class="uk-form-icon" uk-icon="icon: mail">
+												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
+                                                     height="24"><path fill="none" d="M0 0h24v24H0z"/><path
+                                                        d="M3 3h18a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm17 4.238l-7.928 7.1L4 7.216V19h16V7.238zM4.511 5l7.55 6.662L19.502 5H4.511z"/></svg>
+												</span>
+                                                    </span>
+                                                    <input class="uk-input uk-form-large" type="text"
+                                                           placeholder="Email"
+                                                           required>
+                                                </div>
+                                            </div>
+                                            <div class="uk-margin">
+                                                <div class="uk-inline uk-width-1-1">
+												<span class="uk-form-icon" uk-icon="icon: mail">
+												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
+                                                     height="24"><path fill="none" d="M0 0H24V24H0z"/><path
+                                                        d="M12 1l8.217 1.826c.457.102.783.507.783.976v9.987c0 2.006-1.003 3.88-2.672 4.992L12 23l-6.328-4.219C4.002 17.668 3 15.795 3 13.79V3.802c0-.469.326-.874.783-.976L12 1zm0 2.049L5 4.604v9.185c0 1.337.668 2.586 1.781 3.328L12 20.597l5.219-3.48C18.332 16.375 19 15.127 19 13.79V4.604L12 3.05zm4.452 5.173l1.415 1.414L11.503 16 7.26 11.757l1.414-1.414 2.828 2.828 4.95-4.95z"/></svg>
+												</span>
+                                                    </span>
+                                                    <input class="uk-input uk-form-large" type="text"
+                                                           placeholder="Verification code" required>
+                                                </div>
+                                            </div>
+                                            <div class="uk-margin">
+                                                <button class="uk-button uk-button-primary uk-button-large uk-width-1-1 validate_code"
+                                                        required>Validate code
+                                                </button>
+                                            </div>
+                                            <!-- 										<div class="uk-text-small uk-text-center">
+                                                                                        <a href="#" uk-switcher-item="1">Back to login</a>
+                                                                                    </div> -->
+                                        </form>
+                                    </li>
+                                </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </main>
+{% endblock %}

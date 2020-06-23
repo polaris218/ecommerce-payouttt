@@ -24,7 +24,8 @@ urlpatterns = [
     path('payouttt/admin/', include("core.urls")),
     path('auth/', include("accounts.urls")),
     path('', include("addresses.urls")),
-    path('', include("dashboard.urls")),
+    path('dashboard/', include("dashboard.urls")),
+    path('', include("website.urls")),
 
 ]
 
