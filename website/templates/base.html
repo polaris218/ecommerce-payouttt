@@ -13,7 +13,7 @@
     <link rel="shortcut icon" href="{% static 'web/images/favicon.png' %}">
     <!-- flaticon -->
     <link rel="stylesheet" type="text/css" href="{% static 'web/fonts/flaticon/flaticon.css' %}"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'web/css/owl.carousel.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'web/css/owl.carousel.min.css' %}"/>
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap"
@@ -25,6 +25,7 @@
 
     <link rel='stylesheet' href='{% static 'web/css/form.css' %}'>
     <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" type="text/css" href="{% static 'web/css/nice.select.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'web/css/bootstrap.min.css' %}"/>
     <!-- Our Custom CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'web/css/style.css' %}"/>
@@ -36,86 +37,7 @@
     <div id="status"><img src="{% static 'web/images/loader-img.gif' %}" alt=""></div>
 </div>
 <!-- header -->
-<header class="bg-white position-absolute w-100 head-box" id="myHeader">
-    <nav>
-        <div class="search-bar-top products-search-top">
-            <div class="close-icon d-block position-absolute">
-                <a href="javascript:void(0);" class="bg-transparent border-0 p-0 d-inline-block text-dark"><i
-                        class="flaticon-cancel" aria-hidden="true"></i></a>
-            </div>
-            <form class="products-search">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search entire store...">
-                    <div class="input-group-append">
-                        <button class="btn btn-secondary" type="button">
-                            <i class="flaticon-search position-relative text-dark" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="container-fluid header_container">
-            <div class="row align-items-center">
-                <div class="col-lg-2 col-6">
-                    <div class="logo_search_group d-flex justify-content-between d-sm-flex justify-content-sm-between align-items-center">
-                        <div class="logo_wrap">
-                            <a href="{% url 'web-home' %}" class="d-inline-block"><img src="{% static 'web/images/logo.png' %}" alt="Logo"
-                                                                             class="img-fluid"/></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-8 right_menu_responsive py-5 py-lg-0">
-                    <div class="right_menu_close d-block d-lg-none position-absolute">
-                        <a href="javascript:void(0);" class="bg-transparent border-0 p-0 d-inline-block text-dark"><i
-                                class="flaticon-cancel" aria-hidden="true"></i></a>
-                    </div>
-                    <div class="right_menu text-left text-md-center">
-                        <ul class="pl-0 mb-0 menu_list_hover">
-                            <li class="d-inline-block mr-md-0 mb-md-3 mb-lg-0 px-xl-4 py-xl-2 px-lg-3 py-lg-1"><a
-                                    href="{% url 'web-home' %}"
-                                    class="d-inline-block open_sans bold_600 text-dark text-uppercase position-relative">Browse</a>
-                            </li>
-                            <li class="d-inline-block mr-md-0 mb-md-3 mb-lg-0 px-xl-4 py-xl-2 px-lg-3 py-lg-1"><a
-                                    href="news.html"
-                                    class="d-inline-block open_sans bold_600 text-dark text-uppercase position-relative">News</a>
-                            </li>
-                            <li class="d-inline-block mb-md-3 mb-lg-0 px-xl-4 py-xl-2 px-lg-3 py-lg-1"><a
-                                    href="app.html"
-                                    class="d-inline-block open_sans bold_600 text-dark text-uppercase position-relative">App</a>
-                            </li>
-                            <li class="d-inline-block mb-md-3 mb-lg-0 px-xl-4 py-xl-2 px-lg-3 py-lg-1"><a
-                                    href="{% url 'login' %}"
-                                    class="d-inline-block open_sans bold_600 text-dark text-uppercase position-relative">Sign
-                                Up</a></li>
-                            <li class="d-inline-block mb-md-3 mb-lg-0 px-xl-4 py-xl-2 px-lg-3 py-lg-1"><a
-                                    href="{% url 'login' %}"
-                                    class="d-inline-block open_sans bold_600 text-dark text-uppercase position-relative">Sign
-                                In</a></li>
-                            <li class="d-inline-block mb-md-3 mb-lg-0 px-xl-4 py-xl-2 px-lg-3 py-lg-1"><a
-                                    href="selling.html"
-                                    class="d-inline-block open_sans bold_600 text-dark text-uppercase position-relative">Sell</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-6 cart-icon-right">
-                    <div class="responsive_toggle d-flex align-content-center justify-content-end">
-                        <a href="javascript:void(0);" class="search_scroll mr-3 mr-sm-4 d-inline-block sreach-icon"><i
-                                class="flaticon-search position-relative text-dark" aria-hidden="true"></i></a>
-                        <a href="javascript:void(0);"
-                           class="shop_cart_icon d-inline-block position-relative inner-cart-icon-right">
-                            <i class="shop_bg d-inline-block"></i>
-                            <span class="bg_green position-absolute open_sans bold_700 font_10 text-white shop_count d-flex align-items-center justify-content-center">0</span>
-                        </a>
-                        <a href="javascript:void(0);"
-                           class="bg-transparent responsive_side_toggle border-0 p-0 d-inline-block d-lg-none text-dark menu-icon-mobile"><i
-                                class="flaticon-menu position-relative" aria-hidden="true"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
-</header>
+{% include 'web_header.html' %}
 
 <div class="overlay"></div>
 {% block content %}
@@ -211,13 +133,17 @@
                                     <li class="pr-2"><a href="javascript:void(0);" target="_blank"><img
                                             src="{% static 'web/images/visa.png' %}" alt="" class="img-fluid"/></a></li>
                                     <li class="pr-2"><a href="javascript:void(0);" target="_blank"><img
-                                            src="{% static 'web/images/master_card.png' %}" alt="" class="img-fluid"/></a></li>
+                                            src="{% static 'web/images/master_card.png' %}" alt=""
+                                            class="img-fluid"/></a></li>
                                     <li class="pr-2"><a href="javascript:void(0);" target="_blank"><img
-                                            src="{% static 'web/images/american_express.png' %}" alt="" class="img-fluid"/></a></li>
+                                            src="{% static 'web/images/american_express.png' %}" alt=""
+                                            class="img-fluid"/></a></li>
                                     <li class="pr-2"><a href="javascript:void(0);" target="_blank"><img
-                                            src="{% static 'web/images/discover.png' %}" alt="" class="img-fluid"/></a></li>
+                                            src="{% static 'web/images/discover.png' %}" alt="" class="img-fluid"/></a>
+                                    </li>
                                     <li class="pr-2"><a href="javascript:void(0);" target="_blank"><img
-                                            src="{% static 'web/images/paypal.png' %}" alt="" class="img-fluid"/></a></li>
+                                            src="{% static 'web/images/paypal.png' %}" alt="" class="img-fluid"/></a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -242,6 +168,7 @@
 <script src="{% static 'web/js/bootstrap.bundle.min.js' %}"></script>
 <!-- custom.js -->
 <script src="{% static 'web/js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'web/js/jquery.nice-select.min.js' %}"></script>
 <!-- parallax_scrolling -->
 <script src="{% static 'web/js/parallax_scrolling.min.js' %}"></script>
 <script src="{% static 'web/js/custom.js' %}"></script>
