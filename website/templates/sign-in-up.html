@@ -1,7 +1,7 @@
-{% include 'base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% load widget_tweaks %}
-{% block title %}- Signin{% endblock %}
+{% block title %}-Signin{% endblock %}
 {% block content %}
     <main class="bg-white position-relative">
         <div class="form-margin uk-section uk-section-muted uk-flex uk-flex-middle uk-animation-fade">
@@ -9,7 +9,8 @@
                 <div class="uk-container">
                     <div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid>
                         <div class="uk-width-1-1@m">
-                            <form class="uk-margin uk-width-large uk-margin-auto uk-card uk-card-default uk-card-body uk-box-shadow-large" method="post" action="{% url 'login' %}">
+                            <form class="uk-margin uk-width-large uk-margin-auto uk-card uk-card-default uk-card-body uk-box-shadow-large"
+                                  method="post" action="{% url 'login' %}">
                                 <ul class="uk-tab uk-flex-center" uk-grid uk-switcher="animation: uk-animation-fade">
                                     <li><a href="#" class="for_remove">Sign in</a></li>
                                     <li><a href="#" class="for_remove">Sign up</a></li>
@@ -19,10 +20,10 @@
                                 <ul class="uk-switcher uk-margin">
                                     <li>
                                         <div class="social_icon">
-{#                                            <button class="twitter"><i class="fa fa-twitter"></i>Twitter</button>#}
-{#                                            <button class="facebook"><i class="fa fa-facebook"></i>Facebook</button>#}
+                                            {#                                            <button class="twitter"><i class="fa fa-twitter"></i>Twitter</button>#}
+                                            {#                                            <button class="facebook"><i class="fa fa-facebook"></i>Facebook</button>#}
                                         </div>
-{#                                        <div class="or-seperator"><i>or</i></div>#}
+                                        {#                                        <div class="or-seperator"><i>or</i></div>#}
 
                                         <form method="post" action="{% url 'login' %}" id="login_form">
                                             {% csrf_token %}
@@ -56,7 +57,8 @@
                                                     Password?</a>
                                             </div>
                                             <div class="uk-margin">
-                                                <button class="uk-button uk-button-primary uk-button-large uk-width-1-1 open_sans" type="submit">
+                                                <button class="uk-button uk-button-primary uk-button-large uk-width-1-1 open_sans"
+                                                        type="submit">
                                                     sign in
                                                 </button>
                                                 <a class="uk-button uk-button-primary uk-button-large uk-width-1-1 verify_account open_sans vefiry_click"
@@ -69,10 +71,10 @@
                                     </li>
                                     <li>
                                         <div class="social_icon">
-{#                                            <button class="twitter"><i class="fa fa-twitter"></i>Twitter</button>#}
-{#                                            <button class="facebook"><i class="fa fa-facebook"></i>Facebook</button>#}
+                                            {#                                            <button class="twitter"><i class="fa fa-twitter"></i>Twitter</button>#}
+                                            {#                                            <button class="facebook"><i class="fa fa-facebook"></i>Facebook</button>#}
                                         </div>
-{#                                        <div class="or-seperator"><i>or</i></div>#}
+                                        {#                                        <div class="or-seperator"><i>or</i></div>#}
                                         <form>
                                             <div class="uk-margin">
                                                 <div class="uk-inline uk-width-1-1">
@@ -212,6 +214,7 @@
                                         </form>
                                     </li>
                                 </ul>
+                            </form>
                         </div>
                     </div>
                 </div>

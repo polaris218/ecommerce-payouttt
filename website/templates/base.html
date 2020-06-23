@@ -59,7 +59,7 @@
                 <div class="col-lg-2 col-6">
                     <div class="logo_search_group d-flex justify-content-between d-sm-flex justify-content-sm-between align-items-center">
                         <div class="logo_wrap">
-                            <a href="index.html" class="d-inline-block"><img src="{% static 'web/images/logo.png' %}" alt="Logo"
+                            <a href="{% url 'web-home' %}" class="d-inline-block"><img src="{% static 'web/images/logo.png' %}" alt="Logo"
                                                                              class="img-fluid"/></a>
                         </div>
                     </div>
@@ -118,7 +118,7 @@
 </header>
 
 <div class="overlay"></div>
-{% block container %}
+{% block content %}
 
 {% endblock %}
 
