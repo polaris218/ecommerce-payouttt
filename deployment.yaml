@@ -50,7 +50,7 @@ spec:
   #  targetPort: 8000
    # nodePort: 30005
     protocol: TCP
-  type: LoadBalancer
+  type: LoadBalancer
   selector:
     run: payouttt
 
