@@ -14,6 +14,14 @@ class IndexView(TemplateView):
 class CategoryDetailsView(TemplateView):
     template_name = 'categories-detail.html'
 
+
+class SellingView(TemplateView):
+    template_name = 'selling.html'
+
+
+class AppView(TemplateView):
+    template_name = 'app.html'
+
 def login_view(request):
     form = LoginForm(request.POST or None)
 
