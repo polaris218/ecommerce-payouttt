@@ -22,6 +22,11 @@ class SellingView(TemplateView):
 class AppView(TemplateView):
     template_name = 'app.html'
 
+
+class NewsView(TemplateView):
+    template_name = 'news.html'
+
+
 def login_view(request):
     form = LoginForm(request.POST or None)
 
