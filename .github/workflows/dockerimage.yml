@@ -51,4 +51,4 @@ jobs:
       env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
       with:
-          args: set image deployment.apps/payouttt payouttt=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          args: set image deployment.apps/payouttt payouttt=${{ $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG }}
