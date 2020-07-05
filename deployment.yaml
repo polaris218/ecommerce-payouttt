@@ -36,21 +36,4 @@ spec:
         - containerPort: 8000
         name: payouttt
         imagePullPolicy: Always
----
-apiVersion: v1
-kind: Service
-metadata:
-#  annotations:
-#        service.beta.kubernetes.io/aws-load-balancer-internal: "true"
-  name: payouttt-api
-spec:
-  ports:
-  - port: 8000
-    protocol: TCP
-    targetPort: 8000
-   # nodePort: 30005
-    protocol: TCP
-  type: LoadBalancer
-  selector:
-    run: payouttt
 
