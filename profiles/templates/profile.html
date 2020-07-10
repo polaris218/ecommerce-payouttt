@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Payouttt Marketplace</title>
+    <!-- Our Custom CSS -->
+    <link rel="icon" href="images/favicon.png" type="image/gif" sizes="16x16">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="fonts/font/flaticon.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/style.css" />    
+</head>
+<body>
+
+<!-- preloader -->
+<div id="preloader">
+  <div id="status"><img src="images/loader-img.gif" alt=""></div>
+</div>
+<div class="wrapper profile_page">
+    <div class="switch">
+        <input id="themeSwitch" class="switch__input" type="checkbox">
+        <label class="switch__label" for="themeSwitch" aria-hidden="true">On</label>
+        <div class="switch__marker" aria-hidden="true"></div>
+    </div>
+    <div class="overlay"></div>
+    <div class="logo_left_search d-sm-block ">
+        <div class="search_nav">
+            <div class="close search_remove_on"><div class="d-flex position-relative justify-content-center align-items-center"><span></span><span></span></div></div>
+            <form>
+                <div class="input-group">
+                    <span class="fa fa-search d-flex align-items-center gray_c f_16 pl-3"></span>
+                    <input type="text" class="border-0" placeholder="Search">
+                </div>
+            </form>
+        </div>
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white position-fixed w-100">
+        <div class="container-fluid p-0">
+            <div class="logo">
+                <a href="#" class="d-inline-block"><img src="images/logo.png" alt="" class="img-fluid mr-3"/></a>
+            </div>
+            <div class="navbar-collapse" id="navbarSupportedContent">
+                <div class="search_nav">
+                    <div class="input-group">
+                        <span class="fa fa-search d-flex align-items-center gray_c f_16 pl-3 search_scroll" id="basic-addon1"></span>
+                        <input type="text" class="border-0" placeholder="Search">
+                    </div>                    
+                </div>
+                <div class="profile_detalis ml-auto d-flex align-items-center">
+                    <a href="#" class="d-inline-block mr-4 gray_c f_19 notification_icon">
+                        <i class="flaticon-notification"></i><span></span>
+                    </a>
+                    <div class="profile_icon d-flex align-items-center">
+                        <a href="#" class="mr-3">
+                            <img src="images/profile.png" alt="">
+                        </a>
+                        <div class="profile_name">
+                            <h6 class="f_19 mb-0">Elina Smith</h6>
+                            <span class="f_16">Admin</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="button" id="sidebarCollapse" class="btn btn-info d-none">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+    <!-- Sidebar  -->
+    <nav id="sidebar" class="bg-white">
+        <div class="close"><div class="d-none d-flex position-relative justify-content-center align-items-center"><span></span><span></span></div></div>
+        <ul class="list-unstyled components first_ul">
+            <li>
+                <a href="#" class="toogle_li gray_c f_19"><i class="flaticon-website-home-page left-icon" aria-hidden="true"></i>Home</a>
+            </li>
+            <li>
+                <a href="#" class="toogle_li gray_c f_19"><i class="fa fa-search left-icon" aria-hidden="true"></i>Browse</a>
+            </li>
+            <li>
+                <a href="index.html" class="toogle_li gray_c f_19"><i class="flaticon-dashboard left-icon" aria-hidden="true"></i>Dashboard</a>                
+            </li>
+            <li>
+                <a href="cart.html" class="toogle_li gray_c f_19"><i class="flaticon-shop-cart left-icon" aria-hidden="true"></i>Buying</a>
+            </li>
+            <li >
+                <a href="selling.html" class="toogle_li gray_c f_19"><i class="flaticon-shopping-bag left-icon" aria-hidden="true"></i>Selling</a>
+            </li>
+            <li class="active">
+                <a href="profile.html" class="toogle_li gray_c f_19"><i class="flaticon-user left-icon" aria-hidden="true"></i>Profile </a>
+            </li>
+            <li >
+                <a href="security.html" class="toogle_li gray_c f_19"><i class="flaticon-lock left-icon" aria-hidden="true"></i>Security</a>
+            </li>
+            <li >
+                <a href="setting.html" class="toogle_li gray_c f_19"><i class="flaticon-gear left-icon" aria-hidden="true"></i>Settings</a>
+            </li>
+            <li>
+                <a href="#" class="gray_c f_19"><i class="flaticon-logout-1 left-icon" aria-hidden="true"></i>Logout</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Page Content  -->
+    <div class="page_title p-30">
+        <h3 class="mb-0">Profile</h3>
+    </div>
+    <div class="content ">
+        <div class="content_inner p-30">
+            <div class="profile_info d-flex pt-4">
+                <div class="profile_tabs d-flex">
+                    <a href="#" class="d-block text-center w-100" data-toggle="modal" data-target="#payment_method">
+                        <div class="multi_icons_profile"></div>
+                        <h6 class="gray_c">Payment Method</h6>
+                    </a>
+                </div>
+                <div class="profile_tabs d-flex">
+                    <a href="#" class="d-block text-center w-100" data-toggle="modal" data-target="#bank_account">
+                        <div class="multi_icons_profile"></div>
+                        <h6 class="gray_c">Bank Account</h6>
+                    </a>
+                </div>
+                <div class="profile_tabs d-flex">
+                    <a href="#" class="d-block text-center w-100" data-toggle="modal" data-target="#verifeid_status">
+                        <div class="multi_icons_profile"></div>
+                        <h6 class="gray_c">Become Verified</h6>
+                    </a>
+                </div>
+                <div class="profile_tabs d-flex">
+                    <a href="#" class="d-block text-center w-100" data-toggle="modal" data-target="#personal_info">
+                        <div class="multi_icons_profile"></div>
+                        <h6 class="gray_c">Change Password</h6>
+                    </a>
+                </div>
+                <div class="profile_tabs d-flex">
+                    <a href="#" class="d-block text-center w-100" data-toggle="modal" data-target="#shipping">
+                        <div class="multi_icons_profile"></div>
+                        <h6 class="gray_c">Shipping</h6>
+                    </a>
+                </div>
+                <div class="profile_tabs d-flex">
+                    <a href="#" class="d-block text-center w-100" data-toggle="modal" data-target="#give_feedback">
+                        <div class="multi_icons_profile"></div>
+                        <h6 class="gray_c">Leave Us Feedback</h6>
+                    </a>
+                </div>
+            </div>     
+            <div class="sneaker_pro">       
+                <h3 class="set_up_title text-center">Set-Up Two-Factor Authentication</h3>
+                    <form id="msform">
+                      <!-- progressbar -->
+                      <div class="position-relative responsive-steap step_list">
+                          <ul id="progressbar" class="d-flex justify-content-center">
+                                <li class="active">Get An App</li>
+                                <li>Scan The Code</li>
+                                <li>Enter Your Verification Code</li>
+                          </ul>
+                        </div>
+                         <!-- fieldsets -->
+                        <!-- row-1 -->
+                        <fieldset class="row-one-one text-center">
+                            <div class="get_app_content">     
+                                <h4>Get An App</h4>    
+                                <p class="mb-0">Download one of the following apps from the app store on your phone</p>    
+                                <div class="row get_app_sec">
+                                    <div class="col-md-4">
+                                        <div class="get_app">
+                                            <img src="images/app.png" class="img-fluid" alt="">
+                                            <h4 class="mb-0">Google Authenticator</h4>
+                                            <div class="app_list d-flex justify-content-center">
+                                                <a href="#"><img src="images/apple.png" class="img-fluid" alt=""></a>
+                                                <a href="#"><img src="images/android.png" class="img-fluid" alt=""></a>
+                                                <a href="#"><img src="images/google_aythenti.png" class="img-fluid" alt=""></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="get_app">
+                                            <img src="images/app2.png" class="img-fluid" alt="">
+                                            <h4 class="mb-0">Duo Mobile</h4>
+                                            <div class="app_list d-flex justify-content-center">
+                                                <a href="#"><img src="images/apple.png" class="img-fluid" alt=""></a>
+                                                <a href="#"><img src="images/android.png" class="img-fluid" alt=""></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="get_app">
+                                            <img src="images/app3.png" class="img-fluid" alt="">
+                                            <h4 class="mb-0">Authy</h4>
+                                            <div class="app_list d-flex justify-content-center">
+                                                <a href="#"><img src="images/apple.png" class="img-fluid" alt=""></a>
+                                                <a href="#"><img src="images/android.png" class="img-fluid" alt=""></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                            </div>
+                            <a href="#"><button class="cancel-btn" type="button" data-toggle="modal" data-target="#cancel-btn" data-dismiss="variant_edit-sec">Cancel</button></a>
+                            <input type="button" name="next" class="next action-button step-btn-one bton-gray" value="Next" />                        
+                        </fieldset>
+                        <!-- row-2 -->
+                        <fieldset class="step-two text-center">               
+                            <div class="get_app_content">     
+                                <h4>Scan The Code</h4>    
+                                <p class="mb-0">In your app, add the new account and scan the QR code</p>    
+                                <img src="images/qr_code.png" alt="" class="img-fluid light_qr">
+                                <img src="images/qr_code_dark.png" alt="" class="img-fluid dark_qr">
+                                <p>If you can’t scan the QR code, enter <span class="green_c">ascdas879xdws</span></p> 
+                            </div>
+                            <input type="button" name="previous" class="previous action-button w-auto " value="Cancel" />
+                            <input type="button" name="next" class="next action-button w-auto" value="Next" />
+                        </fieldset>
+                        <!-- row-3-->
+                        <fieldset class="step-two fourth-row text-center">
+                            <div class="verification_code get_app_content">     
+                                <h4>Enter Your Verification Code</h4>    
+                                <p class="mb-0">Pre-fill text area with “6-digit code”</p>    
+                                <div class="verify_details"><input type="text" name="code" class="verify_code w-100" placeholder="Enter code"></div>
+                            </div>
+                            <button type="button" class="bton variant_update_btn segment_btn_right">Turn on 2-step verification <div class="loader5"></div></button>
+                        </fieldset>
+                    </form>
+            </div>            
+        </div>
+        <!-- Footer -->
+        <div class="footer bg-white">
+            <div class="footer_copyright text-center">
+                <p class="gray_c">Payouttt | Buy & Sell Verified Sneakers<br> All rights reserved © Payouttt Marketplace 2020</p>
+                <ul class="pl-0 mb-0 d-flex align-items-center justify-content-center social_icon">
+                    <li><a href="#" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    <li class="ml-3 mr-3"><a href="#" target="_blank" ><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                    <li><a href="#" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Popup list -->
+        <!-- Give us Feedback -->
+        <div class="modal fade" tabindex="-1" role="dialog" id="give_feedback" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered media-modal-wrap" role="document">
+                <div class="modal-content point-modal-box">
+                    <div class="modal-header padd-3020 border-0 justify-content-start align-items-center">
+                        <img src="images/feedback_popup.png" class="img-fluid mr-4" alt="">
+                        <h3 class="text-left mb-0">Give Us Feedback</h3>
+                        <div class="cancel-btn ml-auto" data-dismiss="modal">
+                            <div class="close d-flex position-relative justify-content-center align-items-center"><span></span><span></span></div>
+                        </div>
+                    </div>
+                    <div class="modal-body border-0 padd-30">
+                        <form>
+                            <div class="name-active ">
+                                <div class="field_row_pop gray_c position-relative w-100 d-inline-block mb-3">
+                                    <input class="input-field w-100" type="text" id="email" name="email" placeholder="Email">
+                                </div>
+                                <div class="field_row_pop gray_c position-relative w-100 d-inline-block">
+                                    <textarea aria-invalid="false" class="input-field w-100" name="rewardNotes" rows="4" placeholder="Description"></textarea>
+                                </div>
+                                <div class="field_row_pop field_btn">
+                                    <input type="submit" name="save" value="Save">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Shipping -->
+        <div class="modal fade" tabindex="-1" role="dialog" id="shipping" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered media-modal-wrap" role="document">
+                <div class="modal-content point-modal-box">
+                    <div class="modal-header padd-3020 border-0 justify-content-start align-items-center">
+                        <img src="images/shipping.png" class="img-fluid mr-4" alt="">
+                        <h3 class="text-left mb-0">Shipping</h3>
+                        <div  class="cancel-btn ml-auto" data-dismiss="modal">
+                            <div class="close d-flex position-relative justify-content-center align-items-center"><span></span><span></span></div>
+                        </div>
+                    </div>
+                    <div class="modal-body border-0 padd-30">
+                        <h4 class="text-left mb-0">Shipping Address</h4>
+                        <form>
+                            <div class="name-active ">
+                                <div class="field_row_pop gray_c position-relative w-100 d-inline-block mb-3">
+                                    <input class="input-field w-100" type="text" name="fullname" id="fullname" placeholder="Full Name*" required>
+                                </div>
+                                <div class="field_row_pop gray_c position-relative w-100 d-inline-block mb-3">
+                                    <input class="input-field w-100" type="text" name="address" id="address" placeholder="Street Address*" required>
+                                </div>
+                                <div class="field_row_pop gray_c position-relative w-100 d-inline-block mb-3">
+                                    <input class="input-field w-100" type="text" name="city" id="city" placeholder="City*" required>
+                                </div>
+                                <div class="field_row_pop gray_c position-relative w-100 d-inline-block mb-3">
+                                    <input class="input-field w-100" type="text" name="state" id="state" placeholder="State*" required>
+                                </div>
+                                <div class="field_row_pop gray_c position-relative w-100 d-inline-block mb-3">
+                                    <input class="input-field w-100" type="text" name="zip" id="zip" placeholder="Zip*" required>
+                                </div>
+                                <div class="field_row_pop field_btn">
+                                    <input type="submit" name="save" value="Save">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>       
+        <!--Card -->
+        <div class="modal fade" tabindex="-1" role="dialog" id="personal_info" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered media-modal-wrap" role="document">
+                <div class="modal-content point-modal-box">
+                    <div class="modal-header padd-3020 border-0 justify-content-start align-items-center">
+                        <img src="images/lock.png" class="img-fluid mr-4" alt="">
+                        <h3 class="text-left mb-0">Change Password</h3>
+                        <div class="cancel-btn ml-auto" data-dismiss="modal">
+                            <div class="close d-flex position-relative justify-content-center align-items-center"><span></span><span></span></div>
+                        </div>
+                    </div>
+                    <div class="modal-body border-0 padd-30">                                                  
+                        <form class="pass_form">
+                            <div class="name-active ">
+                                <div class="field_row_pop gray_c position-relative w-100 d-inline-block mb-3">
+                                    <input class="input-field w-100" type="password" id="password-field1" placeholder="Password" required><span toggle="#password-field1" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                </div>
+                                <div class="field_row_pop gray_c position-relative w-100 d-inline-block mb-3">
+                                    <input class="input-field w-100" type="password" id="password-field2" placeholder="Change password" required><span toggle="#password-field2" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                </div>
+                                <div class="field_row_pop field_btn">
+                                    <input type="submit" name="save" value="Save">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Verified Status -->
+        <div class="modal fade" tabindex="-1" role="dialog" id="verifeid_status" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered media-modal-wrap" role="document">
+                <div class="modal-content point-modal-box">
+                    <div class="modal-header padd-3020 border-0 justify-content-start align-items-center">
+                        <img src="images/verified_popup.png" class="img-fluid mr-4" alt="">
+                        <h3 class="text-left mb-0">Verified Status</h3>
+                        <div class="cancel-btn ml-auto" data-dismiss="modal">
+                            <div class="close d-flex position-relative justify-content-center align-items-center"><span></span><span></span></div>
+                        </div>
+                    </div>
+                    <div class="modal-body border-0 padd-30">
+                        <div class="verified_detais">
+                            <p class="gray_c">Become verified by reaching $20,000 in sales</p>
+                            <span class="verified_note">Features of being a verified seller includes:</span>
+                            <div class="status_list d-flex justify-content-between text-center">
+                                <div class="verified_icon">
+                                    <a href="#" class="d-block">
+                                        <img src="images/verify_status2.png" alt="" class="img-fluid">
+                                        <span class="text-center d-block">Instant Payouttts</span>
+                                    </a>
+                                </div>
+                                <div class="verified_icon">
+                                    <a href="#" class="d-block">
+                                        <img src="images/verify_status.png" alt="" class="img-fluid">
+                                        <span class="text-center d-block">Lower Fees</span>
+                                    </a>
+                                </div>
+                                <div class="verified_icon">
+                                    <a href="#" class="d-block">
+                                        <img src="images/verify_status3.png" alt="" class="img-fluid">
+                                        <span class="text-center d-block">Quicker Sales</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Payment Method -->
+        <div class="modal fade" tabindex="-1" role="dialog" id="payment_method" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered media-modal-wrap" role="document">
+                <div class="modal-content point-modal-box">
+                    <div class="modal-header padd-3020 border-0 justify-content-start align-items-center">
+                        <img src="images/pay_popup.png" class="img-fluid mr-4" alt="">
+                        <h3 class="text-left mb-0">Payment Method</h3>
+                        <div class="cancel-btn ml-auto" data-dismiss="modal">
+                            <div class="close d-flex position-relative justify-content-center align-items-center"><span></span><span></span></div>
+                        </div>
+                    </div>
+                    <div class="modal-body border-0 padd-30">
+                        <div class="verified_detais">
+                            
+                            <div class="payment_icon d-flex justify-content-center mb-4">
+                                <a href="#" class="mr-3 active"><img src="images/visa.png" class="img-fluid mr-3" alt=""></a>
+                                <a href="#"><img src="images/paypal.png" class="img-fluid" alt=""></a>
+                            </div>
+                            
+                            <h4 class="text-center">Credit Card</h4>
+                            <div class="payment_list">
+                                <form>
+                                    <div class="name-active ">
+                                        <div class="field_row_pop gray_c position-relative w-100 d-inline-block mb-3">
+                                            <input class="input-field w-100" type="text" name="card" placeholder="Name on Card" required>
+                                        </div>
+                                        <div class="field_row_pop gray_c position-relative w-100 d-inline-block mb-3">
+                                            <input class="input-field w-100" type="password" id="password-field" placeholder="Card Number" required><span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                        </div>
+                                        <div class="field_row_pop gray_c position-relative w-100 d-inline-block mb-3">
+                                            <div class="sbx block-wold d-flex">
+                                                <div class="select pr-3 w_30">
+                                                    <select id="sel_val1" class="styled select-hidden gray_c">
+                                                        <option>01</option>
+                                                        <option>02</option>
+                                                        <option>03</option>
+                                                        <option>04</option>
+                                                        <option>05</option>
+                                                        <option>06</option>
+                                                        <option>07</option>
+                                                        <option>08</option>
+                                                        <option>09</option>
+                                                        <option>10</option>
+                                                        <option>11</option>
+                                                        <option>12</option>
+                                                        <option>13</option>
+                                                        <option>14</option>
+                                                        <option>15</option>
+                                                        <option>16</option>
+                                                        <option>17</option>
+                                                        <option>18</option>
+                                                        <option>19</option>
+                                                        <option>20</option>
+                                                        <option>21</option>
+                                                        <option>22</option>
+                                                        <option>23</option>
+                                                        <option>24</option>
+                                                        <option>25</option>
+                                                        <option>26</option>
+                                                        <option>27</option>
+                                                        <option>28</option>
+                                                        <option>29</option>
+                                                        <option>30</option>
+                                                        <option>31</option>
+                                                    </select>
+                                                </div>
+                                                <div class="select pr-3 w_35">
+                                                    <select id="sel_val" class="styled select-hidden gray_c">
+                                                        <option>2019</option>
+                                                        <option>2018</option>
+                                                        <option>2017</option>
+                                                        <option>2016</option>
+                                                        <option>2015</option>
+                                                        <option>2014</option>
+                                                        <option>2013</option>
+                                                        <option>2012</option>
+                                                        <option>2011</option>
+                                                        <option>2010</option>
+                                                        <option>2009</option>
+                                                        <option>2008</option>
+                                                        <option>2007</option>
+                                                        <option>2005</option>
+                                                        <option>2004</option>
+                                                        <option>2003</option>
+                                                        <option>2002</option>
+                                                        <option>2001</option>
+                                                        <option>2000</option>
+                                                    </select>
+                                                </div>
+                                                <div class="cvv_img position-relative d-flex align-items-center w_35">
+                                                    <input type="text" name="cvv" class=" w-100" placeholder="cvv">
+                                                    <img src="images/cvv.png" class="img-fluid position-absolute" alt="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="field_row_pop field_btn">
+                                            <input type="submit" name="save" value="Add Card">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bank Account -->
+        <div class="modal fade" tabindex="-1" role="dialog" id="bank_account" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered media-modal-wrap" role="document">
+                <div class="modal-content point-modal-box">
+                    <div class="modal-header padd-3020 border-0 justify-content-start align-items-center">
+                        <img src="images/bank_popup.png" class="img-fluid mr-4" alt="">
+                        <h3 class="text-left mb-0">Bank Account</h3>
+                        <div class="cancel-btn ml-auto" data-dismiss="modal">
+                            <div class="close d-flex position-relative justify-content-center align-items-center"><span></span><span></span></div>
+                        </div>
+                    </div>
+                    <div class="modal-body border-0 padd-30">
+                        <div class="verified_detais">
+                            <div class="payment_icon d-flex justify-content-center mb-4">
+                                <div class="burmanRadio mr-4">
+                                    <input type="radio" class="burmanRadio__input" id="radio-1" name="burmanRadio" checked>
+                                    <label for="radio-1" class="burmanRadio__label">
+                                        <img src="images/axis_bank_logo_logotype.png" class="img-fluid" alt="">
+                                    </label>
+                                </div>
+                                <div class="burmanRadio">
+                                  <input type="radio" class="burmanRadio__input" id="radio-2" name="burmanRadio">
+                                  <label for="radio-2" class="burmanRadio__label">
+                                       <img src="images/hdfc_bank_logo.png" class="img-fluid" alt="">
+                                  </label>
+                                </div>   
+                            </div>
+                            <h4 class="text-left">All Banks</h4>
+                            <div class="payment_list">
+                                <div id="list-wrap">
+                                    <div id="listTwo-nav"></div>
+                                        <ul id="listTwo" class="Phonebook-List pl-0">
+                                          <li class="pb-3">
+                                            <a href="#" class="d-flex align-items-center">
+                                                <div class="bank_img mr-3"><img src="images/bank1.png" alt="" class="img-fluid"></div>
+                                                <span class="gray_c">Arab Bank Corporation</span>
+                                              </a>
+                                          </li>
+                                          <li class="pb-3">
+                                            <a href="#" class="d-flex align-items-center">
+                                                <div class="bank_img mr-3"><img src="images/bank2.png" alt="" class="img-fluid"></div>
+                                                <span class="gray_c">Arab Bank Group</span>
+                                              </a>
+                                          </li>
+                                          <li class="pb-3">
+                                            <a href="#" class="d-flex align-items-center">
+                                                <div class="bank_img mr-3"><img src="images/bank3.png" alt="" class="img-fluid"></div>
+                                                <span class="gray_c">Cairo Amman Bank</span>
+                                            </a>
+                                          </li>
+                                          <li class="pb-3">
+                                            <a href="#" class="d-flex align-items-center">
+                                                <div class="bank_img mr-3"><img src="images/bank4.png" alt="" class="img-fluid"></div>
+                                                <span class="gray_c">Getin Noble Bank S.A.</span>
+                                              </a>
+                                          </li>
+                                          <li class="pb-3">
+                                            <a href="#" class="d-flex align-items-center">
+                                                <div class="bank_img mr-3"><img src="images/bank5.png" alt="" class="img-fluid"></div>
+                                                <span class="gray_c">Idea Bank S.A.</span>
+                                              </a>
+                                          </li>
+                                          <li class="pb-3">
+                                            <a href="#" class="d-flex align-items-center">
+                                                <div class="bank_img mr-3"><img src="images/bank1.png" alt="" class="img-fluid"></div>
+                                                <span class="gray_c">State Bank of India</span>
+                                              </a>
+                                          </li>
+                                          <li class="pb-3">
+                                            <a href="#" class="d-flex align-items-center">
+                                                <div class="bank_img mr-3"><img src="images/bank2.png" alt="" class="img-fluid"></div>
+                                                <span class="gray_c">Punjab National Bank</span>
+                                              </a>
+                                          </li>
+                                          <li class="pb-3">
+                                            <a href="#" class="d-flex align-items-center">
+                                                <div class="bank_img mr-3"><img src="images/bank4.png" alt="" class="img-fluid"></div>
+                                                <span>Kotak Mahindra Bank</span>
+                                              </a>
+                                          </li>
+                                          <li class="pb-3">
+                                            <a href="#" class="d-flex align-items-center">
+                                                <div class="bank_img mr-3"><img src="images/bank3.png" alt="" class="img-fluid"></div>
+                                                <span class="gray_c">IndusInd Bank</span>
+                                              </a>
+                                          </li>                                           
+                                          
+                                        </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+</div>
+
+<script src="js/jquery-3.4.1.min.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+<script src="js/custom.js"></script>
+<!-- Step progress -->
+<script>
+    var current_fs, next_fs, previous_fs;
+    var left, opacity, scale; 
+    var animating; 
+
+    $(".next").click(function(){
+        if(animating) return false;
+        animating = true;        
+        current_fs = $(this).parent();
+        next_fs = $(this).parent().next();        
+        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active")        
+        next_fs.show(); 
+        current_fs.animate({opacity: 0}, {
+            step: function(now, mx) {
+                scale = 1 - (1 - now) * 0.2;
+                left = (now * 50)+"%";
+                opacity = 1 - now;
+                current_fs.css({
+            'transform': 'scale('+scale+')'
+          });
+                next_fs.css({'left': left, 'opacity': opacity});
+            }, 
+            duration: 800, 
+            complete: function(){
+                current_fs.hide();
+                animating = false;
+            }, 
+            easing: 'easeInOutBack'
+        });
+    });
+
+    $(".previous").click(function(){
+        if(animating) return false;
+        animating = true;        
+        current_fs = $(this).parent();
+        previous_fs = $(this).parent().prev();        
+        $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");        
+        previous_fs.show(); 
+        current_fs.animate({opacity: 0}, {
+            step: function(now, mx) {
+                scale = 0.8 + (1 - now) * 0.2;
+                left = ((1-now) * 50)+"%";
+                opacity = 1 - now;
+                current_fs.css({'left': left});
+                previous_fs.css({'transform': 'scale('+scale+')', 'opacity': opacity});
+            }, 
+            duration: 800, 
+            complete: function(){
+                current_fs.hide();
+                animating = false;
+            }, 
+            easing: 'easeInOutBack'
+        });
+    });
+    $(".submit").click(function(){
+        return false;
+    })  
+</script>
+<script>
+
+// see http://www.webdesignerdepot.com/2012/01/password-strength-verification-with-jquery/ for original
+
+var password = [];
+var password2 = [];
+
+
+$(document).ready(function() {
+    password = $('#password-field1');
+    password2 = $('#password-field2');
+
+    
+    $('.pass_form').submit( function(e) {
+       
+        if(password.val() !== password2.val()) {
+           $('#password-field2').css('border-color','red');
+            e.preventDefault();
+        } 
+        else {
+             $('#password-field2').css('border-color','#ddd');
+              $(this).submit(); 
+        } 
+
+    });
+    
+});
+
+$(document).ready(function(){
+$('#payment_method .payment_icon a').click(function(){
+    $('#payment_method .payment_icon a').removeClass("active");
+    $(this).addClass("active");
+});
+  $('.profile_info .profile_tabs').click(function(){
+    $('#payment_method .profile_tabs').removeClass("active");
+    $(this).addClass("active");
+});
+});
+
+
+$(".toggle-password").click(function() {
+
+  $(this).toggleClass("fa-eye fa-eye-slash");
+  var input = $($(this).attr("toggle"));
+  if (input.attr("type") == "password") {
+    input.attr("type", "text");
+  } else {
+    input.attr("type", "password");
+  }
+});
+$('select').each(function() {
+    var $this = $(this),
+        numberOfOptions = $(this).children('option').length;
+
+    $this.addClass('select-hidden');
+    $this.wrap('<div class="select"></div>');
+    $this.after('<div class="select-styled"></div>');
+
+    var $styledSelect = $this.next('div.select-styled');
+    $styledSelect.text($this.children('option').eq(0).text());
+
+    var $list = $('<ul />', {
+        'class': 'select-options'
+    }).insertAfter($styledSelect);
+
+    for (var i = 0; i < numberOfOptions; i++) {
+        $('<li />', {
+            text: $this.children('option').eq(i).text(),
+            rel: $this.children('option').eq(i).val()
+        }).appendTo($list);
+    }
+
+    var $listItems = $list.children('li');
+
+    $styledSelect.click(function(e) {
+        e.stopPropagation();
+        $('div.select-styled.active').not(this).each(function() {
+            $(this).removeClass('active').next('ul.select-options').hide();
+        });
+        $(this).toggleClass('active').next('ul.select-options').toggle();
+    });
+
+    $listItems.click(function(e) {
+        e.stopPropagation();
+        $styledSelect.text($(this).text()).removeClass('active');
+        $this.val($(this).attr('rel'));
+        $list.hide();
+        //console.log($this.val());
+    });
+
+    $(document).click(function() {
+        $styledSelect.removeClass('active');
+        $list.hide();
+    });
+});
+
+/*
+* jQuery listnav plugin
+* Copyright (c) 2009 iHwy, Inc.
+* Author: Jack Killpatrick
+*/
+
+(function($) {
+    $.fn.listnav = function(options) {
+        var opts = $.extend({}, $.fn.listnav.defaults, options);
+        var letters = ['_', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '-'];
+        var firstClick = false;
+        opts.prefixes = $.map(opts.prefixes, function(n) { return n.toLowerCase(); });
+
+        return this.each(function() {
+            var $wrapper, list, $list, $letters, $letterCount, id;
+            id = this.id;
+            $wrapper = $('#' + id + '-nav'); 
+            $list = $(this);
+
+            var counts = {}, allCount = 0, isAll = true, numCount = 0, prevLetter = '';
+
+            function init() {
+                $wrapper.append(createLettersHtml());
+
+                $letters = $('.ln-letters', $wrapper).slice(0, 1); 
+                if (opts.showCounts) $letterCount = $('.ln-letter-count', $wrapper).slice(0, 1); 
+                addClasses();
+                addNoMatchLI();
+                if (opts.flagDisabled) addDisabledClass();
+                bindHandlers();
+
+                if (!opts.includeAll) $list.show(); 
+                if (!opts.includeAll) $('.all', $letters).remove();
+                if (!opts.includeNums) $('._', $letters).remove();
+                if (!opts.includeOther) $('.-', $letters).remove();
+
+                $(':last', $letters).addClass('ln-last'); 
+                if ($.cookie && (opts.cookieName != null)) {
+                    var cookieLetter = $.cookie(opts.cookieName);
+                    if (cookieLetter != null) opts.initLetter = cookieLetter;
+                }
+                if (opts.initLetter != '') {
+                    firstClick = true;
+                    $('.' + opts.initLetter.toLowerCase(), $letters).slice(0, 1).click(); 
+                }
+                else {
+                    if (opts.includeAll) $('.all', $letters).addClass('ln-selected'); 
+                    else { 
+                        for (var i = ((opts.includeNums) ? 0 : 1); i < letters.length; i++) {
+                            if (counts[letters[i]] > 0) {
+                                firstClick = true;
+                                $('.' + letters[i], $letters).slice(0, 1).click();
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            function setLetterCountTop() {
+                $letterCount.css({ top: $('.a', $letters).slice(0, 1).offset({ margin: false, border: true }).top - $letterCount.outerHeight({ margin: true }) }); 
+            }
+            function addClasses() {
+                var str, firstChar, firstWord, spl, $this, hasPrefixes = (opts.prefixes.length > 0);
+                $($list).children().each(function() {
+                    $this = $(this), firstChar = '', str = $.trim($this.text()).toLowerCase();
+                    if (str != '') {
+                        if (hasPrefixes) {
+                            spl = str.split(' ');
+                            if ((spl.length > 1) && ($.inArray(spl[0], opts.prefixes) > -1)) {
+                                firstChar = spl[1].charAt(0);
+                                addLetterClass(firstChar, $this, true);
+                            }
+                        }
+                        firstChar = str.charAt(0);
+                        addLetterClass(firstChar, $this);
+                    }
+                });
+            }
+
+            function addLetterClass(firstChar, $el, isPrefix) {
+                if (/\W/.test(firstChar)) firstChar = '-'; 
+                if (!isNaN(firstChar)) firstChar = '_'; 
+                $el.addClass('ln-' + firstChar);
+                if (counts[firstChar] == undefined) counts[firstChar] = -1;
+                counts[firstChar]++;
+                if (!isPrefix) allCount++;
+            }
+
+            function addDisabledClass() {
+                for (var i = 0; i < letters.length; i++ -1) {
+                    if (counts[letters[i]] == undefined) $('.' + letters[i], $letters).addClass('ln-disabled');
+                }
+            }
+
+            function addNoMatchLI() {
+                $list.append('<li class="ln-no-match" style="display:none">' + opts.noMatchText + '</li>');
+            }
+
+            function getLetterCount(el) {
+                if ($(el).hasClass('all')) return allCount;
+                else {
+                    var count = counts[$(el).attr('class').split(' ')[0]];
+                    return (count != undefined) ? count : 0; // some letters may not have a count in the hash
+                }
+            }
+
+            function bindHandlers() {
+
+                if (opts.showCounts) {
+                    $wrapper.mouseover(function() {
+                        setLetterCountTop();
+                    });
+                }
+
+                if (opts.showCounts) {
+                    $('a', $letters).mouseover(function() {
+                        var left = $(this).position().left;
+                        var width = ($(this).outerWidth({ margin: true }) - 1) + 'px'; 
+                        var count = getLetterCount(this);
+                        $letterCount.css({ left: left, width: width }).text(count).show(); 
+                    });
+
+                    $('a', $letters).mouseout(function() {
+                        $letterCount.hide();
+                    });
+                }
+                $('a', $letters).click(function() {
+                    $('a.ln-selected', $letters).removeClass('ln-selected');
+
+                    var letter = $(this).attr('class').split(' ')[0];
+
+                    if (letter == 'all') {
+                        $list.children().show();
+                        $list.children('.ln-no-match').hide();
+                        isAll = true;
+                    } else {
+                        if (isAll) {
+                            $list.children().hide();
+                            isAll = false;
+                        } else if (prevLetter != '') $list.children('.ln-' + prevLetter).hide();
+
+                        var count = getLetterCount(this);
+                        if (count > 0) {
+                            $list.children('.ln-no-match').hide(); // in case it's showing
+                            $list.children('.ln-' + letter).show();
+                        }
+                        else $list.children('.ln-no-match').show();
+
+                        prevLetter = letter;
+                    }
+
+                    if ($.cookie && (opts.cookieName != null)) $.cookie(opts.cookieName, letter);
+
+
+                    $(this).addClass('ln-selected');
+                    $(this).blur();
+                    if (!firstClick && (opts.onClick != null)) opts.onClick(letter);
+                    else firstClick = false;
+                    return false;
+                });
+            }
+
+            function createLettersHtml() {
+                var html = [];
+                for (var i = 1; i < letters.length; i++) {
+                    if (html.length == 0) html.push('<a class="all" href="#">ALL</a>');
+                    html.push('<a class="' + letters[i] + '" href="#">' + ((letters[i] == '-') ? '...' : letters[i].toUpperCase()) + '</a>');
+                }
+        return '<div class="ln-letters">' + html.join('') + '</div>' + ((opts.showCounts) ? '<div class="ln-letter-count" style="display:none; position:absolute; margin: -40px 0 0 2px; left:0; width:20px;">0</div>' : ''); 
+            }
+
+            init();
+        });
+    };
+
+    $.fn.listnav.defaults = {
+        initLetter: '',
+        includeAll: true,
+        incudeOther: false,
+        includeNums: true,
+        flagDisabled: true,
+        noMatchText: 'No matching entries',
+        showCounts: true,
+        cookieName: null,
+        onClick: null,
+        prefixes: []
+    };
+})(jQuery);
+$('.Phonebook-List').listnav({
+    includeAll: true,
+    includeNums: true,
+    showCounts: false,
+    initLetter: 'all',
+    noMatchText: 'There are no matching entries.'
+});
+
+</script>
+
+</body>
+</html> 

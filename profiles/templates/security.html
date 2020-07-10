@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Payouttt Marketplace</title>
+    <!-- Our Custom CSS -->
+    <link rel="icon" href="images/favicon.png" type="image/gif" sizes="16x16">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="fonts/font/flaticon.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/style.css" />    
+</head>
+<body>
+
+<!-- preloader -->
+<div id="preloader">
+  <div id="status"><img src="images/loader-img.gif" alt=""></div>
+</div>
+<div class="wrapper">
+    <div class="switch">
+        <input id="themeSwitch" class="switch__input" type="checkbox">
+        <label class="switch__label" for="themeSwitch" aria-hidden="true">On</label>
+        <div class="switch__marker" aria-hidden="true"></div>
+    </div>
+    <div class="overlay"></div>
+    <div class="logo_left_search d-sm-block ">
+        <div class="search_nav">
+            <div class="close search_remove_on"><div class="d-flex position-relative justify-content-center align-items-center"><span></span><span></span></div></div>
+            <form>
+                <div class="input-group">
+                    <span class="fa fa-search d-flex align-items-center gray_c f_16 pl-3"></span>
+                    <input type="text" class="border-0" placeholder="Search">
+                </div>
+            </form>
+        </div>
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white position-fixed w-100">
+        <div class="container-fluid p-0">
+            <div class="logo">
+                <a href="#" class="d-inline-block"><img src="images/logo.png" alt="" class="img-fluid mr-3" /></a>
+            </div>
+            <div class="navbar-collapse" id="navbarSupportedContent">
+                <div class="search_nav">
+                    <div class="input-group">
+                        <span class="fa fa-search d-flex align-items-center gray_c f_16 pl-3 search_scroll" id="basic-addon1"></span>
+                        <input type="text" class="border-0" placeholder="Search">
+                    </div>
+                </div>
+                <div class="profile_detalis ml-auto d-flex align-items-center">
+                    <a href="#" class="d-inline-block mr-4 gray_c f_19 notification_icon">
+                        <i class="flaticon-notification"></i><span></span>
+                    </a>
+                    <div class="profile_icon d-flex align-items-center">
+                        <a href="#" class="mr-3">
+                            <img src="images/profile.png" alt="">
+                        </a>
+                        <div class="profile_name">
+                            <h6 class="f_19 mb-0">Elina Smith</h6>
+                            <span class="f_16">Admin</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="button" id="sidebarCollapse" class="btn btn-info d-none">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+    <!-- Sidebar  -->
+    <nav id="sidebar" class="bg-white">
+        <div class="close"><div class="d-none d-flex position-relative justify-content-center align-items-center"><span></span><span></span></div></div>
+        <ul class="list-unstyled components first_ul">
+            <li>
+                <a href="#" class="toogle_li gray_c f_19"><i class="flaticon-website-home-page left-icon" aria-hidden="true"></i>Home</a>
+            </li>
+            <li>
+                <a href="#" class="toogle_li gray_c f_19"><i class="fa fa-search left-icon" aria-hidden="true"></i>Browse</a>
+            </li>
+            <li>
+                <a href="index.html" class="toogle_li gray_c f_19"><i class="flaticon-dashboard left-icon" aria-hidden="true"></i>Dashboard</a>                
+            </li>
+            <li>
+                <a href="cart.html" class="toogle_li gray_c f_19"><i class="flaticon-shop-cart left-icon" aria-hidden="true"></i>Buying</a>
+            </li>
+            <li >
+                <a href="selling.html" class="toogle_li gray_c f_19"><i class="flaticon-shopping-bag left-icon" aria-hidden="true"></i>Selling</a>
+            </li>
+            <li>
+                <a href="profile.html" class="toogle_li gray_c f_19"><i class="flaticon-user left-icon" aria-hidden="true"></i>Profile </a>
+            </li>
+            <li class="active">
+                <a href="security.html" class="toogle_li gray_c f_19"><i class="flaticon-lock left-icon" aria-hidden="true"></i>Security</a>
+            </li>
+            <li >
+                <a href="setting.html" class="toogle_li gray_c f_19"><i class="flaticon-gear left-icon" aria-hidden="true"></i>Settings</a>
+            </li>
+            <li>
+                <a href="#" class="gray_c f_19"><i class="flaticon-logout-1 left-icon" aria-hidden="true"></i>Logout</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Page Content  -->
+    <div class="page_title p-30">
+        <h3 class="mb-0">Security</h3>
+    </div>
+    <div class="content ">
+        <div class="content_inner p-30">
+            <h3 class="set_up_title text-center">Set-Up Two-Factor Authentication</h3>
+            <form id="msform">
+              <!-- progressbar -->
+              <div class="position-relative responsive-steap step_list">
+                  <ul id="progressbar" class="d-flex justify-content-center">
+                        <li class="active">Get An App</li>
+                        <li>Scan The Code</li>
+                        <li>Enter Your Verification Code</li>
+                  </ul>
+                </div>
+                 <!-- fieldsets -->
+                <!-- row-1 -->
+                <fieldset class="row-one-one text-center">
+                    <div class="get_app_content">     
+                        <h4>Get An App</h4>    
+                        <p class="mb-0">Download one of the following apps from the app store on your phone</p>    
+                        <div class="row get_app_sec">
+                            <div class="col-md-4">
+                                <div class="get_app">
+                                    <img src="images/app.png" class="img-fluid" alt="">
+                                    <h4 class="mb-0">Google Authenticator</h4>
+                                    <div class="app_list d-flex justify-content-center">
+                                        <a href="#"><img src="images/apple.png" class="img-fluid" alt=""></a>
+                                        <a href="#"><img src="images/android.png" class="img-fluid" alt=""></a>
+                                        <a href="#"><img src="images/google_aythenti.png" class="img-fluid" alt=""></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="get_app">
+                                    <img src="images/app2.png" class="img-fluid" alt="">
+                                    <h4 class="mb-0">Duo Mobile</h4>
+                                    <div class="app_list d-flex justify-content-center">
+                                        <a href="#"><img src="images/apple.png" class="img-fluid" alt=""></a>
+                                        <a href="#"><img src="images/android.png" class="img-fluid" alt=""></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="get_app">
+                                    <img src="images/app3.png" class="img-fluid" alt="">
+                                    <h4 class="mb-0">Authy</h4>
+                                    <div class="app_list d-flex justify-content-center">
+                                        <a href="#"><img src="images/apple.png" class="img-fluid" alt=""></a>
+                                        <a href="#"><img src="images/android.png" class="img-fluid" alt=""></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                    <button class="cancel-btn" type="button" data-toggle="modal" data-target="#cancel-btn" data-dismiss="variant_edit-sec">Cancel</button>
+                    <input type="button" name="next" class="next action-button step-btn-one bton-gray" value="Next" />                        
+                </fieldset>
+                <!-- row-2 -->
+                <fieldset class="step-two text-center">               
+                    <div class="get_app_content">     
+                        <h4>Scan The Code</h4>    
+                        <p class="mb-0">In your app, add the new account and scan the QR code</p>    
+                        <img src="images/qr_code.png" alt="" class="img-fluid light_qr">
+                        <img src="images/qr_code_dark.png" alt="" class="img-fluid dark_qr">
+                        <p>If you can’t scan the QR code, enter <span class="green_c">ascdas879xdws</span></p> 
+                    </div>
+                    <input type="button" name="previous" class="previous action-button w-auto " value="Cancel" />
+                    <input type="button" name="next" class="next action-button w-auto" value="Next" />
+                </fieldset>
+                <!-- row-3-->
+                <fieldset class="step-two fourth-row text-center">
+                    <div class="verification_code get_app_content">     
+                        <h4>Enter Your Verification Code</h4>    
+                        <p class="mb-0">Pre-fill text area with “6-digit code”</p>    
+                        <div class="verify_details"><input type="text" name="code" class="verify_code w-100" placeholder="Enter code"></div>
+                    </div>
+                    <button type="button" class="bton variant_update_btn segment_btn_right">Turn on 2-step verification <span class="loader5"></span></button>
+                </fieldset>
+            </form>
+        </div>
+        <!-- Footer -->
+        <div class="footer bg-white">
+            <div class="footer_copyright text-center">
+                <p class="gray_c">Payouttt | Buy & Sell Verified Sneakers<br> All rights reserved © Payouttt Marketplace 2020</p>
+                <ul class="pl-0 mb-0 d-flex align-items-center justify-content-center social_icon">
+                    <li><a href="#" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    <li class="ml-3 mr-3"><a href="#" target="_blank" ><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                    <li><a href="#" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    
+</div>
+
+<script src="js/jquery-3.4.1.min.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
+<script src="js/custom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+<script>
+    var current_fs, next_fs, previous_fs;
+    var left, opacity, scale; 
+    var animating; 
+
+    $(".next").click(function(){
+        if(animating) return false;
+        animating = true;        
+        current_fs = $(this).parent();
+        next_fs = $(this).parent().next();        
+        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active")        
+        next_fs.show(); 
+        current_fs.animate({opacity: 0}, {
+            step: function(now, mx) {
+                scale = 1 - (1 - now) * 0.2;
+                left = (now * 50)+"%";
+                opacity = 1 - now;
+                current_fs.css({
+            'transform': 'scale('+scale+')'
+          });
+                next_fs.css({'left': left, 'opacity': opacity});
+            }, 
+            duration: 800, 
+            complete: function(){
+                current_fs.hide();
+                animating = false;
+            }, 
+            easing: 'easeInOutBack'
+        });
+    });
+
+    $(".previous").click(function(){
+        if(animating) return false;
+        animating = true;        
+        current_fs = $(this).parent();
+        previous_fs = $(this).parent().prev();        
+        $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");        
+        previous_fs.show(); 
+        current_fs.animate({opacity: 0}, {
+            step: function(now, mx) {
+                scale = 0.8 + (1 - now) * 0.2;
+                left = ((1-now) * 50)+"%";
+                opacity = 1 - now;
+                current_fs.css({'left': left});
+                previous_fs.css({'transform': 'scale('+scale+')', 'opacity': opacity});
+            }, 
+            duration: 800, 
+            complete: function(){
+                current_fs.hide();
+                animating = false;
+            }, 
+            easing: 'easeInOutBack'
+        });
+    });
+    $(".submit").click(function(){
+        return false;
+    })  
+</script>
+
+</body>
+</html> 

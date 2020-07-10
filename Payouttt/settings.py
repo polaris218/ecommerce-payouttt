@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'phonenumber_field',
     'corsheaders', 'widget_tweaks',
-    'api', 'accounts', 'core', 'django_filters', 'dashboard', 'addresses', 'website',
+    'api', 'accounts', 'core', 'django_filters', 'dashboard', 'addresses', 'website', 'profiles',
 ]
 
 MIDDLEWARE = [
