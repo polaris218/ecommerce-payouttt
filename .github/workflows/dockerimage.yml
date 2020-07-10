@@ -52,21 +52,3 @@ jobs:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
       with:
           args: apply -f deployment.yaml
-   # - name: Deploy k8s yaml
-   #   id: deploy-k8s-yaml
-   #   env:
-   #     K8S_YAML_DIR: ./manifests 
-   #     IMAGE_NAME: ${{ steps.build-image.outputs.image }}
-   #   run: |
-   
-   # Setup kustomize
-   #     cd $K8S_YAML_DIR
-   #     curl -s -o kustomize --location https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
-   #     chmod u+x ./kustomize
-   #     ./kustomize edit set image payouttt=$IMAGE_NAME
-   #     ./kustomize build . | kubectl apply -f -
-        # Verify deployment
-  #      kubectl rollout status deployment/payouttt
-        # List Public IP of cluster
-  #      kubectl get services -o wide
-   #     kubectl get ingress

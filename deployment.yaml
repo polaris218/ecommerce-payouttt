@@ -30,27 +30,10 @@ spec:
       imagePullSecrets:
       - name: regcred
       containers:
-      - image: 306300873308.dkr.ecr.eu-west-2.amazonaws.com/payouttt-django-backend:latest 
+      - image: 306300873308.dkr.ecr.us-east-1.amazonaws.com/payouttt-django-backend-us 
         command: ["/bin/sh", "-c", "python3 manage.py runserver 0.0.0.0:8000"]
         ports:
         - containerPort: 8000
         name: payouttt
         imagePullPolicy: Always
----
-apiVersion: v1
-kind: Service
-metadata:
-#  annotations:
-#        service.beta.kubernetes.io/aws-load-balancer-internal: "true"
-  name: payouttt-api
-spec:
-  ports:
-  - port: 8000
-    protocol: TCP
-    targetPort: 8000
-   # nodePort: 30005
-    protocol: TCP
-  type: LoadBalancer
-  selector:
-    run: payouttt
 
