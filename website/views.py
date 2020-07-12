@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -30,9 +30,9 @@ class NewsView(TemplateView):
 def login_view(request):
     form = LoginForm(request.POST or None)
     msg = None
-
+    if request.user.is_authenticated:
+        return redirect(reverse('web-profile'))
     if request.method == "POST":
-
         if form.is_valid():
             username = form.cleaned_data.get("username")
             password = form.cleaned_data.get("password")
@@ -40,8 +40,8 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 if user.is_superuser:
-                    return redirect(reverse('home'))
-                return redirect(reverse('web-home'))
+                    return redirect(reverse('web-profile'))
+                return redirect(reverse('web-profile'))
 
             else:
                 msg = 'Invalid credentials'
@@ -49,3 +49,8 @@ def login_view(request):
             msg = 'Error validating the form'
 
     return render(request, "sign-in-up.html", {"form": form, "msg": msg})
+
+
+def logout_view(request):
+    logout(request)
+    return redirect(reverse('home'))
