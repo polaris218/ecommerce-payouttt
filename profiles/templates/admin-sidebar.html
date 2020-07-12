@@ -1,0 +1,44 @@
+{% load static %}
+<nav id="sidebar" class="bg-white">
+    <div class="close">
+        <div class="d-none d-flex position-relative justify-content-center align-items-center">
+            <span></span><span></span></div>
+    </div>
+    <ul class="list-unstyled components first_ul">
+        <li>
+            <a href="#" class="toogle_li gray_c f_19"><i class="flaticon-website-home-page left-icon"
+                                                         aria-hidden="true"></i>Home</a>
+        </li>
+        <li>
+            <a href="#" class="toogle_li gray_c f_19"><i class="fa fa-search left-icon"
+                                                         aria-hidden="true"></i>Browse</a>
+        </li>
+        <li class="{{ dashboard }}">
+            <a href="{% url 'web-dashboard' %}" class="toogle_li gray_c f_19"><i class="flaticon-dashboard left-icon"
+                                                                  aria-hidden="true"></i>Dashboard</a>
+        </li>
+        <li class="{{ buying }}">
+            <a href="{% url 'web-admin-buying' %}" class="toogle_li gray_c f_19"><i class="flaticon-shop-cart left-icon"
+                                                                              aria-hidden="true"></i>Buying</a>
+        </li>
+        <li class="{{ selling }}">
+            <a href="{% url 'web-selling' %}" class="toogle_li gray_c f_19"><i class="flaticon-shopping-bag left-icon"
+                                                                               aria-hidden="true"></i>Selling</a>
+        </li>
+        <li class="{{ profile }}">
+            <a href="{% url 'web-profile' %}" class="toogle_li gray_c f_19"><i class="flaticon-user left-icon"
+                                                                               aria-hidden="true"></i>Profile </a>
+        </li>
+        <li class="{{ security }}">
+            <a href="{% url 'web-security' %}" class="toogle_li gray_c f_19"><i class="flaticon-lock left-icon"
+                                                                                aria-hidden="true"></i>Security</a>
+        </li>
+        <li class="{{ settings }}">
+            <a href="{% url 'web-setting' %}" class="toogle_li gray_c f_19"><i class="flaticon-gear left-icon"
+                                                                    aria-hidden="true"></i>Settings</a>
+        </li>
+        <li>
+            <a href="#" class="gray_c f_19"><i class="flaticon-logout-1 left-icon" aria-hidden="true"></i>Logout</a>
+        </li>
+    </ul>
+</nav>

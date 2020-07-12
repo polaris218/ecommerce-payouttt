@@ -37,7 +37,7 @@
                         <ul class="pl-0 mb-0 menu_list_hover">
                             <li class="d-inline-block mr-md-0 mb-md-3 mb-lg-0 px-xl-4 py-xl-2 px-lg-3 py-lg-1"><a
                                     href="{% url 'web-home' %}"
-                                        class="d-inline-block open_sans bold_600 text-dark text-uppercase position-relative">Browse</a>
+                                    class="d-inline-block open_sans bold_600 text-dark text-uppercase position-relative">Browse</a>
                             </li>
                             <li class="d-inline-block mr-md-0 mb-md-3 mb-lg-0 px-xl-4 py-xl-2 px-lg-3 py-lg-1"><a
                                     href="{% url 'web_news' %}"
@@ -47,14 +47,22 @@
                                     href="{% url 'web_app' %}"
                                     class="d-inline-block open_sans bold_600 text-dark text-uppercase position-relative">App</a>
                             </li>
-                            <li class="d-inline-block mb-md-3 mb-lg-0 px-xl-4 py-xl-2 px-lg-3 py-lg-1"><a
-                                    href="{% url 'login' %}"
-                                    class="d-inline-block open_sans bold_600 text-dark text-uppercase position-relative">Sign
-                                Up</a></li>
-                            <li class="d-inline-block mb-md-3 mb-lg-0 px-xl-4 py-xl-2 px-lg-3 py-lg-1"><a
-                                    href="{% url 'login' %}"
-                                    class="d-inline-block open_sans bold_600 text-dark text-uppercase position-relative">Sign
-                                In</a></li>
+                            {% if not user.is_authenticated %}
+                                <li class="d-inline-block mb-md-3 mb-lg-0 px-xl-4 py-xl-2 px-lg-3 py-lg-1"><a
+                                        href="{% url 'login' %}"
+                                        class="d-inline-block open_sans bold_600 text-dark text-uppercase position-relative">Sign
+                                    Up</a></li>
+                                <li class="d-inline-block mb-md-3 mb-lg-0 px-xl-4 py-xl-2 px-lg-3 py-lg-1"><a
+                                        href="{% url 'login' %}"
+                                        class="d-inline-block open_sans bold_600 text-dark text-uppercase position-relative">Sign
+                                    In</a></li>
+                            {% else %}
+                                <li class="d-inline-block mb-md-3 mb-lg-0 px-xl-4 py-xl-2 px-lg-3 py-lg-1"><a
+                                        href="{% url 'web-profile' %}"
+                                        class="d-inline-block open_sans bold_600 text-dark text-uppercase position-relative">Profile</a>
+                                </li>
+                            {% endif %}
+
                             <li class="d-inline-block mb-md-3 mb-lg-0 px-xl-4 py-xl-2 px-lg-3 py-lg-1"><a
                                     href="{% url 'selling' %}"
                                     class="d-inline-block open_sans bold_600 text-dark text-uppercase position-relative">Sell</a>

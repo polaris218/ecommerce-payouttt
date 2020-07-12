@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Payouttt Marketplace</title>
+    <!-- Our Custom CSS -->
+    <link rel="icon" href="{% static 'web_admin/images/favicon.png' %}" type="image/gif" sizes="16x16">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'web_admin/fonts/font/flaticon.css' %}">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'web_admin/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="{% static 'web_admin/css/style.css' %}"/>
+</head>
+<body>
+
+<!-- preloader -->
+<div id="preloader">
+    <div id="status"><img src="{% static 'web_admin/images/loader-img.gif' %}" alt=""></div>
+</div>
+<div class="wrapper profile_page">
+    <div class="switch">
+        <input id="themeSwitch" class="switch__input" type="checkbox">
+        <label class="switch__label" for="themeSwitch" aria-hidden="true">On</label>
+        <div class="switch__marker" aria-hidden="true"></div>
+    </div>
+    <div class="overlay"></div>
+    <div class="logo_left_search d-sm-block ">
+        <div class="search_nav">
+            <div class="close search_remove_on">
+                <div class="d-flex position-relative justify-content-center align-items-center">
+                    <span></span><span></span></div>
+            </div>
+            <form>
+                <div class="input-group">
+                    <span class="fa fa-search d-flex align-items-center gray_c f_16 pl-3"></span>
+                    <input type="text" class="border-0" placeholder="Search">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% include 'admin-top-bar.html' %}
+    {% include 'admin-sidebar.html' %}
+
+    {% block content %}
+
+    {% endblock %}
+
+</div>
+
+<script src="{% static 'web_admin/js/jquery-3.4.1.min.js' %}"></script>
+<script src="{% static 'web_admin/js/bootstrap.bundle.min.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+<script src="https://harvesthq.github.io/chosen/chosen.jquery.js"></script>
+<script src="{% static 'web_admin/js/custom.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+{% block extra_js %}
+{% endblock %}
+</body>
+</html> 

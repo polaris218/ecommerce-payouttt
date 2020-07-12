@@ -29,7 +29,6 @@ class NewsView(TemplateView):
 
 def login_view(request):
     form = LoginForm(request.POST or None)
-
     msg = None
 
     if request.method == "POST":

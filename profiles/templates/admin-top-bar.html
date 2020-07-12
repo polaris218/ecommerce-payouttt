@@ -1,0 +1,37 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-light bg-white position-fixed w-100">
+    <div class="container-fluid p-0">
+        <div class="logo">
+            <a href="#" class="d-inline-block"><img src="{% static 'web_admin/images/logo.png' %}" alt=""
+                                                    class="img-fluid mr-3"/></a>
+        </div>
+        <div class="navbar-collapse" id="navbarSupportedContent">
+            <div class="search_nav">
+                <div class="input-group">
+                        <span class="fa fa-search d-flex align-items-center gray_c f_16 pl-3 search_scroll"
+                              id="basic-addon1"></span>
+                    <input type="text" class="border-0" placeholder="Search">
+                </div>
+            </div>
+            <div class="profile_detalis ml-auto d-flex align-items-center">
+                <a href="#" class="d-inline-block mr-4 gray_c f_19 notification_icon">
+                    <i class="flaticon-notification"></i><span></span>
+                </a>
+                <div class="profile_icon d-flex align-items-center">
+                    <a href="#" class="mr-3">
+                        <img src="{% static 'web_admin/images/profile.png' %}" alt="">
+                    </a>
+                    <div class="profile_name">
+                        <h6 class="f_19 mb-0">Elina Smith</h6>
+                        <span class="f_16">Admin</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="button" id="sidebarCollapse" class="btn btn-info d-none">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+</nav>

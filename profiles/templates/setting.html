@@ -1,111 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Payouttt Marketplace</title>
-    <!-- Our Custom CSS -->
-    <link rel="icon" href="images/favicon.png" type="image/gif" sizes="16x16">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="fonts/font/flaticon.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-    <link rel="stylesheet" href="css/style.css" />    
-</head>
-<body>
-
-<!-- preloader -->
-<div id="preloader">
-  <div id="status"><img src="images/loader-img.gif" alt=""></div>
-</div>
-<div class="wrapper">
-    <div class="switch">
-        <input id="themeSwitch" class="switch__input" type="checkbox">
-        <label class="switch__label" for="themeSwitch" aria-hidden="true">On</label>
-        <div class="switch__marker" aria-hidden="true"></div>
-    </div>
-    <div class="overlay"></div>
-    <div class="logo_left_search d-sm-block ">
-        <div class="search_nav">
-            <div class="close search_remove_on"><div class="d-flex position-relative justify-content-center align-items-center"><span></span><span></span></div></div>
-            <form>
-                <div class="input-group">
-                    <span class="fa fa-search d-flex align-items-center gray_c f_16 pl-3"></span>
-                    <input type="text" class="border-0" placeholder="Search">
-                </div>
-            </form>
-        </div>
-    </div>
-    <nav class="navbar navbar-expand-lg navbar-light bg-white position-fixed w-100">
-        <div class="container-fluid p-0">
-            <div class="logo">
-                <a href="#" class="d-inline-block"><img src="images/logo.png" alt="" class="img-fluid mr-3" /></a>
-            </div>
-            <div class="navbar-collapse" id="navbarSupportedContent">
-                <div class="search_nav">
-                    <div class="input-group">
-                        <span class="fa fa-search d-flex align-items-center gray_c f_16 pl-3 search_scroll" id="basic-addon1"></span>
-                        <input type="text" class="border-0" placeholder="Search">
-                    </div>
-                </div>
-                <div class="profile_detalis ml-auto d-flex align-items-center">
-                    <a href="#" class="d-inline-block mr-4 gray_c f_19 notification_icon"> 
-                        <i class="flaticon-notification"></i><span></span>
-                    </a>
-                    <div class="profile_icon d-flex align-items-center">
-                        <a href="#" class="mr-3">
-                            <img src="images/profile.png" alt="">
-                        </a>
-                        <div class="profile_name">
-                            <h6 class="f_19 mb-0">Elina Smith</h6>
-                            <span class="f_16">Admin</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <button type="button" id="sidebarCollapse" class="btn btn-info d-none">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </nav>
-    <!-- Sidebar  -->
-    <nav id="sidebar" class="bg-white">
-        <div class="close"><div class="d-none d-flex position-relative justify-content-center align-items-center"><span></span><span></span></div></div>
-        <ul class="list-unstyled components first_ul">
-            <li>
-                <a href="#" class="toogle_li gray_c f_19"><i class="flaticon-website-home-page left-icon" aria-hidden="true"></i>Home</a>
-            </li>
-            <li>
-                <a href="#" class="toogle_li gray_c f_19"><i class="fa fa-search left-icon" aria-hidden="true"></i>Browse</a>
-            </li>
-            <li>
-                <a href="index.html" class="toogle_li gray_c f_19"><i class="flaticon-dashboard left-icon" aria-hidden="true"></i>Dashboard</a>                
-            </li>
-            <li>
-                <a href="cart.html" class="toogle_li gray_c f_19"><i class="flaticon-shop-cart left-icon" aria-hidden="true"></i>Buying</a>
-            </li>
-            <li >
-                <a href="selling.html" class="toogle_li gray_c f_19"><i class="flaticon-shopping-bag left-icon" aria-hidden="true"></i>Selling</a>
-            </li>
-            <li>
-                <a href="profile.html" class="toogle_li gray_c f_19"><i class="flaticon-user left-icon" aria-hidden="true"></i>Profile </a>
-            </li>
-            <li >
-                <a href="security.html" class="toogle_li gray_c f_19"><i class="flaticon-lock left-icon" aria-hidden="true"></i>Security</a>
-            </li>
-            <li class="active">
-                <a href="setting.html" class="toogle_li gray_c f_19"><i class="flaticon-gear left-icon" aria-hidden="true"></i>Settings</a>
-            </li>
-            <li>
-                <a href="#" class="gray_c f_19"><i class="flaticon-logout-1 left-icon" aria-hidden="true"></i>Logout</a>
-            </li>
-        </ul>
-    </nav>
-
-    <!-- Page Content  -->
+{% extends 'admin_base.html' %}
+{% load static %}
+{% block content %}
     <div class="page_title p-30">
         <h3 class="mb-0">Setting</h3>
     </div>
@@ -128,17 +23,19 @@
                         </div>
                     </div>
                     <div class="setting_tab_sec">
-                        <a class="add_sec gray_c d-block" data-toggle="collapse" data-target="#address">Return Address</a>
+                        <a class="add_sec gray_c d-block" data-toggle="collapse" data-target="#address">Return
+                            Address</a>
                         <div id="address" class="collapse" data-parent="#account_sec">
-                          <div class="pro_info">
-                            <div class="field_row d-flex justify-content-between">
-                               <textarea placeholder="Enter your Address"></textarea>
+                            <div class="pro_info">
+                                <div class="field_row d-flex justify-content-between">
+                                    <textarea placeholder="Enter your Address"></textarea>
+                                </div>
                             </div>
-                          </div>
                         </div>
                     </div>
                     <div class="setting_tab_sec">
-                        <a class="profiles gray_c d-block" data-toggle="collapse" data-target="#promo_code">Promo Code</a>
+                        <a class="profiles gray_c d-block" data-toggle="collapse" data-target="#promo_code">Promo
+                            Code</a>
                         <div id="promo_code" class="collapse" data-parent="#account_sec">
                             <div class="field_row d-flex justify-content-between">
                                 <div class="field_items w-100 ">
@@ -154,15 +51,15 @@
                         <a class="profiles gray_c d-block" data-toggle="collapse" data-target="#currency">Currency</a>
                         <div id="currency" class="collapse" data-parent="#preferences_sec">
                             <div class="field_row d-flex justify-content-between">
-                               <div class="currency_list">
-                                <ul class="pl-0 mb-0 d-flex"> 
-                                    <li><a href="#">Euro</a></li>
-                                    <li><a href="#">Peso</a></li>
-                                    <li><a href="#">Bahraini dinar</a></li>
-                                    <li><a href="#">Australian dollar</a></li>
-                                    <li><a href="#">Lao kip</a></li>
-                                </ul>
-                               </div>
+                                <div class="currency_list">
+                                    <ul class="pl-0 mb-0 d-flex">
+                                        <li><a href="#">Euro</a></li>
+                                        <li><a href="#">Peso</a></li>
+                                        <li><a href="#">Bahraini dinar</a></li>
+                                        <li><a href="#">Australian dollar</a></li>
+                                        <li><a href="#">Lao kip</a></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -292,15 +189,22 @@
                         <a class="profiles gray_c d-block" data-toggle="collapse" data-target="#support">Support</a>
                         <div id="support" class="collapse" data-parent="#support_sec">
                             <div class="field_row d-flex justify-content-between">
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                                has been the industry's standard dummy text ever since the 1500s, when an unknown
+                                printer took a galley of type and scrambled it to make a type specimen book. It has
+                                survived not only five centuries
                             </div>
                         </div>
                     </div>
                     <div class="setting_tab_sec">
-                        <a class="profiles gray_c d-block" data-toggle="collapse" data-target="#privacy">Terms & Privacy</a>
+                        <a class="profiles gray_c d-block" data-toggle="collapse" data-target="#privacy">Terms &
+                            Privacy</a>
                         <div id="privacy" class="collapse" data-parent="#support_sec">
                             <div class="field_row d-flex justify-content-between">
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                                has been the industry's standard dummy text ever since the 1500s, when an unknown
+                                printer took a galley of type and scrambled it to make a type specimen book. It has
+                                survived not only five centuries
                             </div>
                         </div>
                     </div>
@@ -308,7 +212,10 @@
                         <a class="profiles gray_c d-block" data-toggle="collapse" data-target="#licenses">Licenses</a>
                         <div id="licenses" class="collapse" data-parent="#support_sec">
                             <div class="field_row d-flex justify-content-between">
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                                has been the industry's standard dummy text ever since the 1500s, when an unknown
+                                printer took a galley of type and scrambled it to make a type specimen book. It has
+                                survived not only five centuries
                             </div>
                         </div>
                     </div>
@@ -318,57 +225,48 @@
         <!-- Footer -->
         <div class="footer bg-white">
             <div class="footer_copyright text-center">
-                <p class="gray_c">Payouttt | Buy & Sell Verified Sneakers<br> All rights reserved © Payouttt Marketplace 2020</p>
+                <p class="gray_c">Payouttt | Buy & Sell Verified Sneakers<br> All rights reserved © Payouttt Marketplace
+                    2020</p>
                 <ul class="pl-0 mb-0 d-flex align-items-center justify-content-center social_icon">
                     <li><a href="#" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                    <li class="ml-3 mr-3"><a href="#" target="_blank" ><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                    <li class="ml-3 mr-3"><a href="#" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                    </li>
                     <li><a href="#" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
                 </ul>
             </div>
         </div>
     </div>
-    
-    
-</div>
+{% endblock %}
+{% block extra_js %}
+    <script>
+        $(document).ready(function () {
+            $('.setting_details .setting_tab_sec a').click(function () {
+                $('.setting_details .setting_tab_sec a').removeClass("active");
+                $(this).addClass("active");
+            });
+        });
+        // check btn
+        $('.checkboxs').click(function () {
+            var mainParent = $(this).parent('.check-btn');
+            if ($(mainParent).find('input.checkboxs').is(':checked')) {
+                $(mainParent).addClass('active');
+            } else {
+                $(mainParent).removeClass('active');
+            }
 
-<script src="js/jquery-3.4.1.min.js"></script>
-<script src="js/bootstrap.bundle.min.js"></script>
-<script src="https://harvesthq.github.io/chosen/chosen.jquery.js"></script>
-<script src="js/custom.js"></script>
+        })
+        $(function () {
 
-<script>
-$(document).ready(function(){
-  $('.setting_details .setting_tab_sec a').click(function(){
-    $('.setting_details .setting_tab_sec a').removeClass("active");
-    $(this).addClass("active");
-    });
-});
-// check btn
-$('.checkboxs').click(function() {
-  var mainParent = $(this).parent('.check-btn');
-  if($(mainParent).find('input.checkboxs').is(':checked')) {
-    $(mainParent).addClass('active');
-  } else {
-    $(mainParent).removeClass('active');
-  }
+            $('.hidden').hide();
+            $('.trigger').change(function () {
+                var hiddenId = $(this).attr("data-trigger");
 
-})
-$(function() {
-
-  $('.hidden').hide();
-  $('.trigger').change(function() {  
-    var hiddenId = $(this).attr("data-trigger");
-
-    if ($(this).is(':checked')) {
-      $("#" + hiddenId).hide();
-    }
-
-    else {
-      $("#" + hiddenId).show();
-    }
-  });
-});
-</script>
-
-</body>
-</html> 
+                if ($(this).is(':checked')) {
+                    $("#" + hiddenId).hide();
+                } else {
+                    $("#" + hiddenId).show();
+                }
+            });
+        });
+    </script>
+{% endblock %}
