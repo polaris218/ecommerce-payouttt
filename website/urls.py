@@ -14,7 +14,6 @@ urlpatterns = [
     path('selling/', views.SellingView.as_view(), name='selling'),
     path('app/', views.AppView.as_view(), name='web_app'),
     path('news/', views.NewsView.as_view(), name='web_news'),
-    # path('news/details/', views.AppView.as_view(), name='web_app'),
     path('login/', views.login_view, name="login"),
     path("logout/", views.logout_view, name="logout")
 ]
