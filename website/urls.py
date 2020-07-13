@@ -15,5 +15,6 @@ urlpatterns = [
     path('app/', views.AppView.as_view(), name='web_app'),
     path('news/', views.NewsView.as_view(), name='web_news'),
     path('login/', views.login_view, name="login"),
+    path('signup/', views.signup_view, name="signup"),
     path("logout/", views.logout_view, name="logout")
 ]
