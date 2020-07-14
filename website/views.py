@@ -64,6 +64,7 @@ def signup_view(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.is_active = True
+            user.full_name = user.first_name + " " + user.last_name
             user.save()
             try:
                 EmailHelper.Email().send_welcome_email(user)

@@ -160,7 +160,8 @@
                                         <p class="uk-text-center uk-width-medium@s uk-margin-auto">
                                             Please enter the email associated with your account
                                         </p>
-                                        <form>
+                                        <form method="post" action="{% url 'password_reset' %}">
+                                            {% csrf_token %}
                                             <div class="uk-margin">
                                                 <div class="uk-inline uk-width-1-1">
 												<span class="uk-form-icon" uk-icon="icon: mail">
@@ -169,7 +170,7 @@
                                                         d="M3 3h18a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm17 4.238l-7.928 7.1L4 7.216V19h16V7.238zM4.511 5l7.55 6.662L19.502 5H4.511z"/></svg>
 												</span>
                                                     </span>
-                                                    <input class="uk-input uk-form-large" type="text"
+                                                    <input class="uk-input uk-form-large" type="email" name="email"
                                                            placeholder="Email"
                                                            required>
                                                 </div>
@@ -238,11 +239,11 @@
 
 {% block js_block %}
     <script>
-    var active_form = '{{ active_form }}';
+        var active_form = '{{ active_form }}';
 
-    if(active_form){
-        $('.uk-first-column').next().click()
-    }
+        if (active_form) {
+            $('.uk-first-column').next().click()
+        }
 
     </script>
 {% endblock %}

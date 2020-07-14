@@ -52,7 +52,7 @@ class OrderDeleteView(LoginRequiredMixin, TemplateView):
         return redirect(reverse('non_paid_orders'))
 
 
-@method_decorator(staff_required, name='dispatch')
+# @method_decorator(staff_required, name='dispatch')
 class AddressView(LoginRequiredMixin, TemplateView):
     template_name = 'address.html'
 

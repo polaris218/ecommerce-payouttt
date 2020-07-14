@@ -199,35 +199,8 @@
                             <span></span><span></span></div>
                     </div>
                 </div>
-                <div class="modal-body border-0 padd-30">
-                    <h4 class="text-left mb-0">Shipping Address</h4>
-                    <form>
-                        <div class="name-active ">
-                            <div class="field_row_pop gray_c position-relative w-100 d-inline-block mb-3">
-                                <input class="input-field w-100" type="text" name="fullname" id="fullname"
-                                       placeholder="Full Name*" required>
-                            </div>
-                            <div class="field_row_pop gray_c position-relative w-100 d-inline-block mb-3">
-                                <input class="input-field w-100" type="text" name="address" id="address"
-                                       placeholder="Street Address*" required>
-                            </div>
-                            <div class="field_row_pop gray_c position-relative w-100 d-inline-block mb-3">
-                                <input class="input-field w-100" type="text" name="city" id="city" placeholder="City*"
-                                       required>
-                            </div>
-                            <div class="field_row_pop gray_c position-relative w-100 d-inline-block mb-3">
-                                <input class="input-field w-100" type="text" name="state" id="state"
-                                       placeholder="State*" required>
-                            </div>
-                            <div class="field_row_pop gray_c position-relative w-100 d-inline-block mb-3">
-                                <input class="input-field w-100" type="text" name="zip" id="zip" placeholder="Zip*"
-                                       required>
-                            </div>
-                            <div class="field_row_pop field_btn">
-                                <input type="submit" name="save" value="Save">
-                            </div>
-                        </div>
-                    </form>
+                <div class="modal-body border-0 padd-30" id="address-update">
+                    {% include 'address_form_ajax.html' %}
                 </div>
             </div>
         </div>
@@ -244,24 +217,8 @@
                             <span></span><span></span></div>
                     </div>
                 </div>
-                <div class="modal-body border-0 padd-30">
-                    <form class="pass_form">
-                        <div class="name-active ">
-                            <div class="field_row_pop gray_c position-relative w-100 d-inline-block mb-3">
-                                <input class="input-field w-100" type="password" id="password-field1"
-                                       placeholder="Password" required><span toggle="#password-field1"
-                                                                             class="fa fa-fw fa-eye field-icon toggle-password"></span>
-                            </div>
-                            <div class="field_row_pop gray_c position-relative w-100 d-inline-block mb-3">
-                                <input class="input-field w-100" type="password" id="password-field2"
-                                       placeholder="Change password" required><span toggle="#password-field2"
-                                                                                    class="fa fa-fw fa-eye field-icon toggle-password"></span>
-                            </div>
-                            <div class="field_row_pop field_btn">
-                                <input type="submit" name="save" value="Save">
-                            </div>
-                        </div>
-                    </form>
+                <div class="modal-body border-0 padd-30" id="password_change">
+                    {% include 'password_change_ajax.html' %}
                 </div>
             </div>
         </div>
@@ -896,6 +853,7 @@
             initLetter: 'all',
             noMatchText: 'There are no matching entries.'
         });
+
 
     </script>
 {% endblock %}

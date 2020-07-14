@@ -1,0 +1,45 @@
+{% load static %}
+<h4 class="text-left mb-0">Shipping Address</h4>
+{% if message %}
+    <div class="row">
+        <div class="col-12 text-center">
+            <p>{{ message }}</p>
+        </div>
+    </div>
+{% endif %}
+<form method="post" action="{% url 'user_address_update' %}" id="address_form">
+    {% csrf_token %}
+    <div class="name-active ">
+        {% for field in address_form %}
+            <div class="field_row_pop gray_c position-relative w-100 d-inline-block mb-3">
+                {{ field }}
+                {% if field.help_text %}
+                    <small style="display: none">{{ field.help_text }}</small>
+                {% endif %}
+                {% for error in field.errors %}
+                    <p style="color: red">{{ error }}</p>
+                {% endfor %}
+
+            </div>
+        {% endfor %}
+        <div class="field_row_pop field_btn">
+            <input type="submit" name="save" value="Save">
+        </div>
+    </div>
+</form>
+
+<script src="{% static 'web_admin/js/jquery-3.4.1.min.js' %}"></script>
+<script>
+    $("#address_form").on('submit', function (e) {
+        e.preventDefault();
+        var form = $(this);
+        $.ajax({
+            type: 'Post',
+            url: "{% url 'user_address_update' %}",
+            data: form.serialize(),
+            success: function (data) {
+                $('#address-update').html(data);
+            }
+        });
+    });
+</script>

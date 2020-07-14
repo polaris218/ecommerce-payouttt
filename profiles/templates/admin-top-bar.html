@@ -22,8 +22,7 @@
                         <img src="{% static 'web_admin/images/profile.png' %}" alt="">
                     </a>
                     <div class="profile_name">
-                        <h6 class="f_19 mb-0">Elina Smith</h6>
-                        <span class="f_16">Admin</span>
+                        <h6 class="f_19 mb-0">{{ user.full_name|truncatechars:"12" }} </h6>
                     </div>
                 </div>
             </div>

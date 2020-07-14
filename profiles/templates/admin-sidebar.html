@@ -15,11 +15,11 @@
         </li>
         <li class="{{ dashboard }}">
             <a href="{% url 'web-dashboard' %}" class="toogle_li gray_c f_19"><i class="flaticon-dashboard left-icon"
-                                                                  aria-hidden="true"></i>Dashboard</a>
+                                                                                 aria-hidden="true"></i>Dashboard</a>
         </li>
         <li class="{{ buying }}">
             <a href="{% url 'web-admin-buying' %}" class="toogle_li gray_c f_19"><i class="flaticon-shop-cart left-icon"
-                                                                              aria-hidden="true"></i>Buying</a>
+                                                                                    aria-hidden="true"></i>Buying</a>
         </li>
         <li class="{{ selling }}">
             <a href="{% url 'web-selling' %}" class="toogle_li gray_c f_19"><i class="flaticon-shopping-bag left-icon"
@@ -35,10 +35,11 @@
         </li>
         <li class="{{ settings }}">
             <a href="{% url 'web-setting' %}" class="toogle_li gray_c f_19"><i class="flaticon-gear left-icon"
-                                                                    aria-hidden="true"></i>Settings</a>
+                                                                               aria-hidden="true"></i>Settings</a>
         </li>
         <li>
-            <a href="#" class="gray_c f_19"><i class="flaticon-logout-1 left-icon" aria-hidden="true"></i>Logout</a>
+            <a href="{% url 'logout' %}" class="gray_c f_19"><i class="flaticon-logout-1 left-icon"
+                                                                     aria-hidden="true"></i>Logout</a>
         </li>
     </ul>
 </nav>

@@ -14,10 +14,12 @@
                         <div id="profile" class="collapse" data-parent="#account_sec">
                             <div class="field_row d-flex justify-content-between">
                                 <div class="field_item ">
-                                    <input type="text" name="name" class="w-100" placeholder="Enter Your name">
+                                    <input id="user_name" type="text" name="name" class="w-100"
+                                           placeholder="Enter Your name" required value="{{ user.full_name }}">
                                 </div>
                                 <div class="field_item ">
-                                    <input type="email" name="name" class="w-100" placeholder="Enetr Email id">
+                                    <input disabled type="email" name="name" class="w-100" placeholder="Enetr Email id"
+                                           value="{{ user.email }}">
                                 </div>
                             </div>
                         </div>
@@ -28,7 +30,8 @@
                         <div id="address" class="collapse" data-parent="#account_sec">
                             <div class="pro_info">
                                 <div class="field_row d-flex justify-content-between">
-                                    <textarea placeholder="Enter your Address"></textarea>
+                                    <textarea id="return_address"
+                                              placeholder="Enter your Address">{{ user.return_address }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -267,6 +270,38 @@
                     $("#" + hiddenId).show();
                 }
             });
+        });
+        $("#user_name").on('change', function (e) {
+
+            e.preventDefault(); // avoid to execute the actual submit of the form.
+            var new_name = $("#user_name").val();
+
+            $.ajax({
+                type: 'Post',
+                url: "{% url 'change-user-name' %}",
+                data: {"new_name": new_name},
+                success: function (data) {
+                    {#alert(data); // show response from the php script.#}
+                }
+            });
+
+
+        });
+        $("#return_address").on('change', function (e) {
+
+            e.preventDefault(); // avoid to execute the actual submit of the form.
+            var address = $("#return_address").val();
+
+            $.ajax({
+                type: 'Post',
+                url: "{% url 'change-return-address' %}",
+                data: {"address": address},
+                success: function (data) {
+                    {#alert(data); // show response from the php script.#}
+                }
+            });
+
+
         });
     </script>
 {% endblock %}
