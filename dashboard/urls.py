@@ -17,6 +17,7 @@ urlpatterns = [
     # The home page
     path('', views.IndexView.as_view(), name='home'),
     path('dashboard/address/', views.AddressView.as_view(), name='address'),
+    path('feedbacks/', views.DashboardFeedback.as_view(), name='dashboard-feedback'),
     path('dashboard/typo/', views.TypoView.as_view(), name='typo'),
     path('dashboard/paid/orders/', views.NonPaidOrdersView.as_view(), name='non_paid_orders'),
     path('dashboard/remove/order/<int:id>/', views.OrderDeleteView.as_view(), name='remove-order'),

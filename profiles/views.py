@@ -1,15 +1,19 @@
 import re
-
+import json
+from django.conf import settings
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from django.views import View
 from django.urls import reverse
+from rest_framework import status
 
+from accounts.STRIPE_payments import StripePayment
 from accounts.models import User
 from addresses.address_validation import ShippoAddressManagement
 from addresses.models import Address
+from core.models import FeedbackModel
 from dashboard.views import AddressView
 from profiles.forms import MyPasswordChangeForm, MyAddressForm
 
@@ -26,15 +30,25 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         kwargs['profile'] = 'active'
         return kwargs
 
+    def verify_payment_method(self, payment_method):
+        try:
+            return eval(payment_method).get('paymentMethod').get('id')
+        except:
+            return False
+
     def get(self, request, *args, **kwargs):
         form = self.form_class(self.request.user)
         address_form = MyAddressForm()
         address = Address.objects.filter(user=self.request.user).first()
         if address:
             address_form = MyAddressForm(instance=address)
+        secret_key = StripePayment().get_customer_secret(self.request.user)
+        strip_publish_key = settings.STRIPE_PUBLISHABLE_KEY
+        is_payment_method_added = self.verify_payment_method(request.user.stripe_payment_method)
         return render(request, self.template_name,
                       {'form': form, 'active_password_profile': 'active-tab',
-                       'active_dashboard': 'active', 'address_form': address_form})
+                       'active_dashboard': 'active', 'address_form': address_form, 'secret_key': secret_key,
+                       'strip_publish_key': strip_publish_key, 'is_payment_method_added': is_payment_method_added})
 
 
 class SecurityView(LoginRequiredMixin, TemplateView):
@@ -175,3 +189,24 @@ class UserAddressView(AddressView, TemplateView):
                 return self.render_to_response(context)
         context['address_form'] = form
         return self.render_to_response(context)
+
+
+class PaymentMethodAddSuccess(LoginRequiredMixin, View):
+
+    def post(self, request, *args, **kwargs):
+        payment_method = json.loads(request.body)
+        user = self.request.user
+        if payment_method:
+            if user.stripe_customer_id and payment_method.get('paymentMethod').get('id'):
+                user.stripe_payment_method = payment_method
+                user.save()
+                StripePayment().link_paymentmethod_with_customer(user)
+        return render(request, 'setting.html')
+
+
+class FeedBack(LoginRequiredMixin, View):
+
+    def post(self, request, *args, **kwargs):
+        feedback_description = (request.POST.get('rewardNotes'))
+        FeedbackModel.objects.create(user=request.user, description=feedback_description)
+        return redirect(reverse('home'))

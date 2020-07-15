@@ -168,12 +168,8 @@
                     </div>
                 </div>
                 <div class="modal-body border-0 padd-30">
-                    <form>
+                    <form method="post" action="{% url 'feedback' %}">
                         <div class="name-active ">
-                            <div class="field_row_pop gray_c position-relative w-100 d-inline-block mb-3">
-                                <input class="input-field w-100" type="text" id="email" name="email"
-                                       placeholder="Email">
-                            </div>
                             <div class="field_row_pop gray_c position-relative w-100 d-inline-block">
                                 <textarea aria-invalid="false" class="input-field w-100" name="rewardNotes" rows="4"
                                           placeholder="Description"></textarea>
@@ -280,101 +276,44 @@
                     </div>
                 </div>
                 <div class="modal-body border-0 padd-30">
-                    <div class="verified_detais">
-
-                        <div class="payment_icon d-flex justify-content-center mb-4">
-                            <a href="#" class="mr-3 active"><img src="{% static 'web_admin/images/visa.png' %}"
-                                                                 class="img-fluid mr-3"
-                                                                 alt=""></a>
-                            <a href="#"><img src="{% static 'web_admin/images/paypal.png' %}" class="img-fluid" alt=""></a>
-                        </div>
-
-                        <h4 class="text-center">Credit Card</h4>
-                        <div class="payment_list">
-                            <form>
-                                <div class="name-active ">
-                                    <div class="field_row_pop gray_c position-relative w-100 d-inline-block mb-3">
-                                        <input class="input-field w-100" type="text" name="card"
-                                               placeholder="Name on Card" required>
-                                    </div>
-                                    <div class="field_row_pop gray_c position-relative w-100 d-inline-block mb-3">
-                                        <input class="input-field w-100" type="password" id="password-field"
-                                               placeholder="Card Number" required><span toggle="#password-field"
-                                                                                        class="fa fa-fw fa-eye field-icon toggle-password"></span>
-                                    </div>
-                                    <div class="field_row_pop gray_c position-relative w-100 d-inline-block mb-3">
-                                        <div class="sbx block-wold d-flex">
-                                            <div class="select pr-3 w_30">
-                                                <select id="sel_val1" class="styled select-hidden gray_c">
-                                                    <option>01</option>
-                                                    <option>02</option>
-                                                    <option>03</option>
-                                                    <option>04</option>
-                                                    <option>05</option>
-                                                    <option>06</option>
-                                                    <option>07</option>
-                                                    <option>08</option>
-                                                    <option>09</option>
-                                                    <option>10</option>
-                                                    <option>11</option>
-                                                    <option>12</option>
-                                                    <option>13</option>
-                                                    <option>14</option>
-                                                    <option>15</option>
-                                                    <option>16</option>
-                                                    <option>17</option>
-                                                    <option>18</option>
-                                                    <option>19</option>
-                                                    <option>20</option>
-                                                    <option>21</option>
-                                                    <option>22</option>
-                                                    <option>23</option>
-                                                    <option>24</option>
-                                                    <option>25</option>
-                                                    <option>26</option>
-                                                    <option>27</option>
-                                                    <option>28</option>
-                                                    <option>29</option>
-                                                    <option>30</option>
-                                                    <option>31</option>
-                                                </select>
-                                            </div>
-                                            <div class="select pr-3 w_35">
-                                                <select id="sel_val" class="styled select-hidden gray_c">
-                                                    <option>2019</option>
-                                                    <option>2018</option>
-                                                    <option>2017</option>
-                                                    <option>2016</option>
-                                                    <option>2015</option>
-                                                    <option>2014</option>
-                                                    <option>2013</option>
-                                                    <option>2012</option>
-                                                    <option>2011</option>
-                                                    <option>2010</option>
-                                                    <option>2009</option>
-                                                    <option>2008</option>
-                                                    <option>2007</option>
-                                                    <option>2005</option>
-                                                    <option>2004</option>
-                                                    <option>2003</option>
-                                                    <option>2002</option>
-                                                    <option>2001</option>
-                                                    <option>2000</option>
-                                                </select>
-                                            </div>
-                                            <div class="cvv_img position-relative d-flex align-items-center w_35">
-                                                <input type="text" name="cvv" class=" w-100" placeholder="cvv">
-                                                <img src="images/cvv.png" class="img-fluid position-absolute" alt="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="field_row_pop field_btn">
-                                        <input type="submit" name="save" value="Add Card">
-                                    </div>
+                    {% if is_payment_method_added %}
+                        <h2 class="whiteBoxTitle" style="color: green ;font-size: small;text-align: center">Payment
+                            Method Already Added</h2>
+                    {% endif %}
+                    <div id="error-div" style="display: none;">
+                        <p class="dragPar">Please fix following errors.</p>
+                        <p class="dragPar text-danger" id="error-message"></p>
+                    </div>
+                    <div id="success-div" style="display: none;">
+                        <p class="dragPar text-danger" id="success-message"></p>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group fieldWrap">
+                                    <input type="text" name="" placeholder="Card Holder Name" class="form-control"
+                                           id="cardholder-name">
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
+
+                    <form id="setup-form"
+                          data-secret="{{ secret_key }}">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div id="card-element"></div>
+                                </div>
+                                <div class="col-12">
+                                    <button id="card-button" type="submit" class="btn logBtn">
+                                        Save Card
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
                 </div>
             </div>
         </div>
@@ -852,6 +791,61 @@
             showCounts: false,
             initLetter: 'all',
             noMatchText: 'There are no matching entries.'
+        });
+
+
+    </script>
+    <script>
+        var stripe = Stripe('{{ strip_publish_key }}');
+        var elements = stripe.elements();
+        var cardElement = elements.create('card');
+        cardElement.mount('#card-element');
+
+
+        var cardholderName = document.getElementById('cardholder-name');
+        var cardButton = document.getElementById('card-button');
+        var clientSecret = '{{secret_key}}';
+
+        function addPaymentMethod(result) {
+            {#console.log(result.payment_method);#}
+            $.ajax({
+                type: 'Post',
+                url: "{% url 'payment_method_added_success' %}",
+                data: JSON.stringify({'paymentMethod': result}),
+                success: function (data) {
+                    window.location.reload()
+                }
+            });
+        }
+
+        $('#setup-form').on('submit', function (e) {
+            e.preventDefault();
+            $('#card-button').prop('disabled', true);
+            stripe.confirmCardSetup(
+                clientSecret,
+                {
+                    payment_method: {
+                        card: cardElement,
+                        billing_details: {
+                            name: cardholderName.value,
+                        },
+                    },
+                }
+            ).then(function (result) {
+                $('#card-button').prop('disabled', false);
+                if (result.error) {
+                    // Display error.message in your UI.
+                    console.log(result.error);
+                    $('#error-div').css({'display': 'block'});
+                    $('#error-message').text(result.error.message)
+                } else {
+                    $('#success-div').css({'display': 'block'});
+                    $('#success-message').css({'color': 'green', 'font-size': 'small', 'text-align': 'center'});
+                    $('#success-message').text('Payment Method Added Successfully');
+                    addPaymentMethod(result)
+
+                }
+            });
         });
 
 

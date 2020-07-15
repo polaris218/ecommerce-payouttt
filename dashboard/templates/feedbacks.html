@@ -1,0 +1,75 @@
+{% extends "layouts/base.html" %}
+{% load widget_tweaks %}
+
+{% block title %} FeedBacks {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    <style>
+        .height-unset {
+            height: unset;
+        }
+    </style>
+    <div class="pcoded-content">
+        <div class="pcoded-inner-content">
+            <!-- [ breadcrumb ] start -->
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10">Feedback</h5>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- [ breadcrumb ] end -->
+            <div class="main-body">
+                <div class="page-wrapper">
+                    <!-- [ Main Content ] start -->
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>FeedBacks</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table>
+                                                <tbody>
+                                                <tr>User Name</tr>
+                                                <tr>Email</tr>
+                                                <tr></tr>
+                                                <tr>Feedback</tr>
+                                                {% for feedback in feedbacks %}
+                                                    <tr>
+                                                        <td>{{ feedback.user.full_name }}</td>
+                                                        <td>{{ feedback.user }}</td>
+                                                        <td></td>
+                                                        <td>{{ feedback.description }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

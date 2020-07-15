@@ -21,5 +21,7 @@ urlpatterns = [
     path('change-user-name/', csrf_exempt(views.ChangeUserName.as_view()), name='change-user-name'),
     path('change-return-address/', csrf_exempt(views.ChangeReturnAddress.as_view()), name='change-return-address'),
     path('user_address/', views.UserAddressView.as_view(), name='user_address_update'),
-
+    path('payment_method_added_success/', csrf_exempt(views.PaymentMethodAddSuccess.as_view()),
+         name='payment_method_added_success'),
+    path('feedback/', csrf_exempt(views.FeedBack.as_view()), name='feedback'),
 ]

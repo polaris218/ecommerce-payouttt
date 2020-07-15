@@ -12,6 +12,7 @@ from django.views.generic import TemplateView
 from Payouttt.decorators import staff_required
 from addresses.address_validation import ShippoAddressManagement
 from addresses.models import Address
+from core.models import FeedbackModel
 from dashboard.forms import LoginForm, SignUpForm, AddressForm
 from dashboard.services import BidManagement
 
@@ -95,6 +96,14 @@ class AddressView(LoginRequiredMixin, TemplateView):
                 return self.render_to_response(context)
         context['form'] = form
         return self.render_to_response(context)
+
+
+class DashboardFeedback(LoginRequiredMixin, TemplateView):
+    template_name = 'feedbacks.html'
+
+    def get(self, request, *args, **kwargs):
+        feedbacks = FeedbackModel.objects.filter(is_active=True).order_by('-id')
+        return render(request, self.template_name, {'feedbacks': feedbacks})
 
 
 @method_decorator(staff_required, name='dispatch')
