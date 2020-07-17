@@ -48,9 +48,17 @@ jobs:
       id: setup-kubeconfig
       run: |
         aws eks --region $AWS_REGION update-kubeconfig --name $EKS_CLUSTER_NAME 
+    
     - name: deploy to K8
       uses: Consensys/kubernetes-action@master
       env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
       with:
-          args: set image deployment/frontend payouttt=$ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }}
+          args: apply -f deployment.yaml
+
+    - name: update image to sha value
+      uses: Consensys/kubernetes-action@master
+      env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+      with:
+          args: set image deployment/payouttt payouttt=$ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }}
