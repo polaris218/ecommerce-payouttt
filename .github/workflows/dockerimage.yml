@@ -40,8 +40,8 @@ jobs:
         # push it to ECR so that it can
         # be deployed to EKS.
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }} .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }} 
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${{ steps.vars.outputs.sha_short }} .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{ steps.vars.outputs.sha_short }} 
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
     - name: Setup kubeconfig
@@ -61,4 +61,4 @@ jobs:
       env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
       with:
-          args: set image deployment/payouttt payouttt=$ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }}
+          args: set image deployment/payouttt payouttt=$ECR_REGISTRY/$ECR_REPOSITORY:${{ steps.vars.outputs.sha_short }}
