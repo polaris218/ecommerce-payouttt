@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %}-News{% endblock %}
 {% block content %}
     <main class="bg-white position-relative">
         <div class="payoutt_container">
@@ -12,7 +13,7 @@
                             <p class="mt-lg-3 mt-xl-4 mt-2">We caught up professional skateboarder Jamie Foy on how<br/>
                                 he's spending time at home.</p>
                             <div class="mt-lg-3 mt-xl-4">
-                                <a href="categories-detail.html"
+                                <a href="{% url 'web-category-detail' %}"
                                    class="text-uppercase open_sans bold_700 text-white bg_green shop_btn d-inline-block font_16 mt-lg-2 mt-xl-3">Shop
                                     Now</a>
                             </div>
@@ -42,11 +43,11 @@
                                     <div class="date">22</div>
                                     <div class="month">feb</div>
                                 </div>
-                                <a class="blog-sub-title" href="news-detail.html"> Ever undertakes laborious
+                                <a class="blog-sub-title" href="{% url 'web_news_detail' %}"> Ever undertakes laborious
                                     physical</a>
                                 <p>Et harum quidem rerum facilis est et expedinctio. Nam libero tempore, cum soluta
                                     nobis est eligendi optio cumque nihil ipossimus</p>
-                                <a class="read_more" href="news-detail.html">Read More<i
+                                <a class="read_more" href="{% url 'web_news_detail' %}">Read More<i
                                         class="fa fa-angle-double-right" aria-hidden="true"></i></a>
                             </div>
                         </div>
@@ -60,11 +61,11 @@
                                     <div class="date">22</div>
                                     <div class="month">feb</div>
                                 </div>
-                                <a class="blog-sub-title" href="news-detail.html"> Ever undertakes laborious
+                                <a class="blog-sub-title" href="{% url 'web_news_detail' %}"> Ever undertakes laborious
                                     physical</a>
                                 <p>Et harum quidem rerum facilis est et expedinctio. Nam libero tempore, cum soluta
                                     nobis est eligendi optio cumque nihil ipossimus</p>
-                                <a class="read_more" href="news-detail.html">Read More<i
+                                <a class="read_more" href="{% url 'web_news_detail' %}">Read More<i
                                         class="fa fa-angle-double-right" aria-hidden="true"></i></a>
                             </div>
                         </div>
@@ -78,11 +79,11 @@
                                     <div class="date">22</div>
                                     <div class="month">feb</div>
                                 </div>
-                                <a class="blog-sub-title" href="news-detail.html"> Ever undertakes laborious
+                                <a class="blog-sub-title" href="{% url 'web_news_detail' %}"> Ever undertakes laborious
                                     physical</a>
                                 <p>Et harum quidem rerum facilis est et expedinctio. Nam libero tempore, cum soluta
                                     nobis est eligendi optio cumque nihil ipossimus</p>
-                                <a class="read_more" href="news-detail.html">Read More<i
+                                <a class="read_more" href="{% url 'web_news_detail' %}">Read More<i
                                         class="fa fa-angle-double-right" aria-hidden="true"></i></a>
                             </div>
                         </div>
@@ -96,11 +97,11 @@
                                     <div class="date">22</div>
                                     <div class="month">feb</div>
                                 </div>
-                                <a class="blog-sub-title" href="news-detail.html"> Ever undertakes laborious
+                                <a class="blog-sub-title" href="{% url 'web_news_detail' %}"> Ever undertakes laborious
                                     physical</a>
                                 <p>Et harum quidem rerum facilis est et expedinctio. Nam libero tempore, cum soluta
                                     nobis est eligendi optio cumque nihil ipossimus</p>
-                                <a class="read_more" href="news-detail.html">Read More<i
+                                <a class="read_more" href="{% url 'web_news_detail' %}">Read More<i
                                         class="fa fa-angle-double-right" aria-hidden="true"></i></a>
                             </div>
                         </div>
@@ -114,11 +115,11 @@
                                     <div class="date">22</div>
                                     <div class="month">feb</div>
                                 </div>
-                                <a class="blog-sub-title" href="news-detail.html"> Ever undertakes laborious
+                                <a class="blog-sub-title" href="{% url 'web_news_detail' %}"> Ever undertakes laborious
                                     physical</a>
                                 <p>Et harum quidem rerum facilis est et expedinctio. Nam libero tempore, cum soluta
                                     nobis est eligendi optio cumque nihil ipossimus</p>
-                                <a class="read_more" href="news-detail.html">Read More<i
+                                <a class="read_more" href="{% url 'web_news_detail' %}">Read More<i
                                         class="fa fa-angle-double-right" aria-hidden="true"></i></a>
                             </div>
                         </div>
@@ -132,11 +133,11 @@
                                     <div class="date">22</div>
                                     <div class="month">feb</div>
                                 </div>
-                                <a class="blog-sub-title" href="news-detail.html"> Ever undertakes laborious
+                                <a class="blog-sub-title" href="{% url 'web_news_detail' %}"> Ever undertakes laborious
                                     physical</a>
                                 <p>Et harum quidem rerum facilis est et expedinctio. Nam libero tempore, cum soluta
                                     nobis est eligendi optio cumque nihil ipossimus</p>
-                                <a class="read_more" href="news-detail.html">Read More<i
+                                <a class="read_more" href="{% url 'web_news_detail' %}">Read More<i
                                         class="fa fa-angle-double-right" aria-hidden="true"></i></a>
                             </div>
                         </div>

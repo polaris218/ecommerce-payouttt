@@ -1,221 +1,167 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <meta name="author" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cart</title>
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="images/favicon.png" >
-    <!-- flaticon -->
-    <link rel="stylesheet" type="text/css" href="fonts/flaticon/flaticon.css" />
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;500;600&display=swap" rel="stylesheet">
-    <!-- font-awesome.min.css -->
-    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
-   <!-- nice.select.css -->
-    <link rel="stylesheet" type="text/css" href="css/nice.select.css" />
-   	<!-- Bootstrap CSS CDN -->
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-    <!-- Our Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
-</head>
-<body class="bg-white home_container categories-page">
-<!-- preloader -->
-<div id="preloader">
-  <div id="status"><img src="images/loader-img.gif" alt=""></div>
-</div>
-<!-- header -->
-<header class="bg-white position-absolute w-100 head-box" id="myHeader">
-    <nav>
-        <div class="search-bar-top products-search-top">
-            <div class="close-icon d-block position-absolute">
-                <a href="javascript:void(0);" class="bg-transparent border-0 p-0 d-inline-block text-dark"><i class="flaticon-cancel" aria-hidden="true"></i></a>
-            </div>
-            <form class="products-search">
-               <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search entire store...">
-            <div class="input-group-append">
-              <button class="btn btn-secondary" type="button">
-                <i class="flaticon-search position-relative text-dark" aria-hidden="true"></i>
-              </button>
-            </div>
-            </div>
-            </form>
-        </div>
-        <div class="container-fluid header_container">
-            <div class="row align-items-center">
-                <div class="col-lg-2 col-6">
-                    <div class="logo_search_group d-flex justify-content-between d-sm-flex justify-content-sm-between align-items-center">
-                        <div class="logo_wrap">
-                            <a href="index.html" class="d-inline-block"><img src="images/logo.png" alt="Logo" class="img-fluid" /></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-8 right_menu_responsive py-5 py-lg-0">
-                    <div class="right_menu_close d-block d-lg-none position-absolute">
-                        <a href="javascript:void(0);" class="bg-transparent border-0 p-0 d-inline-block text-dark"><i class="flaticon-cancel" aria-hidden="true"></i></a>
-                    </div>
-                    <div class="right_menu text-left text-md-center">
-                        <ul class="pl-0 mb-0 menu_list_hover">
-                            <li class="d-inline-block mr-md-0 mb-md-3 mb-lg-0 px-xl-4 py-xl-2 px-lg-3 py-lg-1"><a href="#" class="d-inline-block open_sans bold_600 text-dark text-uppercase position-relative">Browse</a></li>
-                            <li class="d-inline-block mr-md-0 mb-md-3 mb-lg-0 px-xl-4 py-xl-2 px-lg-3 py-lg-1"><a href="news.html" class="d-inline-block open_sans bold_600 text-dark text-uppercase position-relative">News</a></li>
-                            <li class="d-inline-block mb-md-3 mb-lg-0 px-xl-4 py-xl-2 px-lg-3 py-lg-1"><a href="app.html" class="d-inline-block open_sans bold_600 text-dark text-uppercase position-relative">App</a></li>
-                            <li class="d-inline-block mb-md-3 mb-lg-0 px-xl-4 py-xl-2 px-lg-3 py-lg-1"><a href="sign-in-up.html" class="d-inline-block open_sans bold_600 text-dark text-uppercase position-relative">Sign Up</a></li>
-                            <li class="d-inline-block mb-md-3 mb-lg-0 px-xl-4 py-xl-2 px-lg-3 py-lg-1"><a href="sign-in-up.html" class="d-inline-block open_sans bold_600 text-dark text-uppercase position-relative">Sign In</a></li>
-                            <li class="d-inline-block mb-md-3 mb-lg-0 px-xl-4 py-xl-2 px-lg-3 py-lg-1"><a href="selling.html" class="d-inline-block open_sans bold_600 text-dark text-uppercase position-relative">Sell</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-6 cart-icon-right">
-                    <div class="responsive_toggle d-flex align-content-center justify-content-end">
-                        <a href="javascript:void(0);" class="search_scroll mr-3 mr-sm-4 d-inline-block sreach-icon"><i class="flaticon-search position-relative text-dark" aria-hidden="true"></i></a>
-                        <a href="javascript:void(0);" class="shop_cart_icon d-inline-block position-relative inner-cart-icon-right">
-                            <i class="shop_bg d-inline-block"></i>
-                            <span class="bg_green position-absolute open_sans bold_700 font_10 text-white shop_count d-flex align-items-center justify-content-center">0</span>
-                        </a>
-                        <a href="javascript:void(0);" class="bg-transparent responsive_side_toggle border-0 p-0 d-inline-block d-lg-none text-dark menu-icon-mobile"><i class="flaticon-menu position-relative" aria-hidden="true"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
-</header>
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}-Cart{% endblock %}
 
-<div class="overlay"></div>
-
-<main class="bg-white position-relative">
-    <div class="payoutt_container">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-6 O-M-2">
-                    <div class="title_content">
-                        <h1 class="text-uppercase text-white open_sans font_68 bold_700">cart</h1>
-                        <p class="mt-lg-3 mt-xl-4 mt-2">On Payouttt, every sneaker you want is always available and authentic.</p>
-                        <div class="mt-lg-3 mt-xl-4">
-                            <a href="categories-detail.html" class="text-uppercase open_sans bold_700 text-white bg_green shop_btn d-inline-block font_16 mt-lg-2 mt-xl-3">Shop Now</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 O-M-1 text-right">
-                    <img src="images/categories-shoes.png" alt="" class="img-fluid" />
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- cart table -->
-    <section class="product-table-sec padd-top-bot">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="table-responsive">      
-                        <table class="display product-detail-table">
-                        <thead>
-                            <tr>
-                                <th>Product</th>
-                                <th >Sneaker</th>
-                                <th>SKU</th>
-                                <th>Size</th>
-                                <th class="qty-sec">qty</th>
-                                <th>Bid price</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><img src="./images/cart-product-img.png" alt=""></td>
-                                <td class="sneaker-sec"><p>Off-White x Wmns Air Zoom Terra Kiger 5 (W)-Athlete in Progress(Electric Green) </p></td>
-                                <td>CD8179-300</td>
-                                <td>86</td>
-                                <td class="qty-sec">
-                                    <div id="field1" class="quantity-sec-top">
-                                       <button type="button" id="add" class="add"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
-                                        <input type="number" value="1" min="1" max="30" />
-                                        <button type="button" id="sub" class="sub"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
-                                    </div>
-                                </td>
-                                <td>
-                                   $222.00
-                                </td>
-                                <td><a href="javascript:void(0)"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
-                            </tr>
-                             <tr>
-                                <td><img src="./images/cart-product-img.png" alt=""></td>
-                                <td class="sneaker-sec"><p>Off-White x Wmns Air Zoom Terra Kiger 5 (W)-Athlete in Progress(Electric Green) </p></td>
-                                <td>CD8179-300</td>
-                                <td>86</td>
-                                <td class="qty-sec">
-                                    <div id="field2" class="quantity-sec-top">
-                                        <button type="button" id="add2" class="add"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
-                                        <input type="number" value="1" min="1" max="30" />
-                                        <button type="button" id="sub2" class="sub"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
-                                    </div>
-                                 </td>
-                                <td>
-                                    $222.00
-                                </td>
-                                <td><a href="javascript:void(0)"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td><img src="./images/cart-product-img.png" alt=""></td>
-                                <td class="sneaker-sec"><p>Off-White x Wmns Air Zoom Terra Kiger 5 (W)-Athlete in Progress(Electric Green) </p></td>
-                                <td>CD8179-300</td>
-                                <td>86</td>
-                                <td class="qty-sec">
-                                    <div id="field3" class="quantity-sec-top">
-                                        <button type="button" id="add3" class="add"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
-                                        <input type="number" value="1" min="1" max="30" />
-                                        <button type="button" id="sub3" class="sub"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
-                                    </div> 
-                                </td>
-                                <td>
-                                    $222.00
-                                </td>
-                                <td><a href="javascript:void(0)"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
-                            </tr>
-
-                        </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div  class="col-md-4">
-                    <div class="cart-totale-sec">
-                        <div class="inner-cart-totale">
-                            <h2>CART TOTALS</h2>
-                            <div class="sub-total-sec padd-top-bot-25">
-                                <h3>Subtotal</h3>
-                                <h3>$222.00</h3>
+{% block content %}
+    <main class="bg-white position-relative">
+        <div class="payoutt_container">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6 O-M-2">
+                        <div class="title_content">
+                            <h1 class="text-uppercase text-white open_sans font_68 bold_700">cart</h1>
+                            <p class="mt-lg-3 mt-xl-4 mt-2">On Payouttt, every sneaker you want is always available and
+                                authentic.</p>
+                            <div class="mt-lg-3 mt-xl-4">
+                                <a href="{% url 'web-category-detail' %}"
+                                   class="text-uppercase open_sans bold_700 text-white bg_green shop_btn d-inline-block font_16 mt-lg-2 mt-xl-3">Shop
+                                    Now</a>
                             </div>
-                            <div class="shipping-sec padd-top-bot-25">
-                                <h3>Shipping</h3>
-                                <div class="shipping-radio-sec">
-                                    <div class="custom-control custom-radio">
-                                    <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
-                                    <label class="custom-control-label" for="customRadioInline1">Flat Rate: $100.00</label>
-                                  </div>
-                                  <div class="custom-control custom-radio">
-                                    <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
-                                    <label class="custom-control-label" for="customRadioInline2">Free Shipping</label>
-                                  </div>
-                                  <div class="custom-control custom-radio">
-                                    <input type="radio" id="customRadioInline3" name="customRadioInline1" class="custom-control-input">
-                                    <label class="custom-control-label" for="customRadioInline3">International Delivery: $170.00</label>
-                                  </div>
-                                  <div class="custom-control custom-radio">
-                                    <input type="radio" id="customRadioInline4" name="customRadioInline1" class="custom-control-input">
-                                    <label class="custom-control-label" for="customRadioInline4">Local Delivery: $60.00</label>
-                                  </div>
-                                  <div class="custom-control custom-radio">
-                                    <input type="radio" id="customRadioInline5" name="customRadioInline1" class="custom-control-input">
-                                    <label class="custom-control-label" for="customRadioInline5">Local Pickup (Free)</label>
-                                  </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 O-M-1 text-right">
+                        <img src="images/categories-shoes.png" alt="" class="img-fluid"/>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- cart table -->
+        <section class="product-table-sec padd-top-bot">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="table-responsive">
+                            <table class="display product-detail-table">
+                                <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Sneaker</th>
+                                    <th>SKU</th>
+                                    <th>Size</th>
+                                    <th class="qty-sec">qty</th>
+                                    <th>Bid price</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td><img src="./images/cart-product-img.png" alt=""></td>
+                                    <td class="sneaker-sec"><p>Off-White x Wmns Air Zoom Terra Kiger 5 (W)-Athlete in
+                                        Progress(Electric Green) </p></td>
+                                    <td>CD8179-300</td>
+                                    <td>86</td>
+                                    <td class="qty-sec">
+                                        <div id="field1" class="quantity-sec-top">
+                                            <button type="button" id="add" class="add"><i class="fa fa-angle-down"
+                                                                                          aria-hidden="true"></i>
+                                            </button>
+                                            <input type="number" value="1" min="1" max="30"/>
+                                            <button type="button" id="sub" class="sub"><i class="fa fa-angle-up"
+                                                                                          aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        $222.00
+                                    </td>
+                                    <td><a href="javascript:void(0)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><img src="./images/cart-product-img.png" alt=""></td>
+                                    <td class="sneaker-sec"><p>Off-White x Wmns Air Zoom Terra Kiger 5 (W)-Athlete in
+                                        Progress(Electric Green) </p></td>
+                                    <td>CD8179-300</td>
+                                    <td>86</td>
+                                    <td class="qty-sec">
+                                        <div id="field2" class="quantity-sec-top">
+                                            <button type="button" id="add2" class="add"><i class="fa fa-angle-down"
+                                                                                           aria-hidden="true"></i>
+                                            </button>
+                                            <input type="number" value="1" min="1" max="30"/>
+                                            <button type="button" id="sub2" class="sub"><i class="fa fa-angle-up"
+                                                                                           aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        $222.00
+                                    </td>
+                                    <td><a href="javascript:void(0)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><img src="./images/cart-product-img.png" alt=""></td>
+                                    <td class="sneaker-sec"><p>Off-White x Wmns Air Zoom Terra Kiger 5 (W)-Athlete in
+                                        Progress(Electric Green) </p></td>
+                                    <td>CD8179-300</td>
+                                    <td>86</td>
+                                    <td class="qty-sec">
+                                        <div id="field3" class="quantity-sec-top">
+                                            <button type="button" id="add3" class="add"><i class="fa fa-angle-down"
+                                                                                           aria-hidden="true"></i>
+                                            </button>
+                                            <input type="number" value="1" min="1" max="30"/>
+                                            <button type="button" id="sub3" class="sub"><i class="fa fa-angle-up"
+                                                                                           aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        $222.00
+                                    </td>
+                                    <td><a href="javascript:void(0)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="cart-totale-sec">
+                            <div class="inner-cart-totale">
+                                <h2>CART TOTALS</h2>
+                                <div class="sub-total-sec padd-top-bot-25">
+                                    <h3>Subtotal</h3>
+                                    <h3>$222.00</h3>
                                 </div>
+                                <div class="shipping-sec padd-top-bot-25">
+                                    <h3>Shipping</h3>
+                                    <div class="shipping-radio-sec">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="customRadioInline1" name="customRadioInline1"
+                                                   class="custom-control-input">
+                                            <label class="custom-control-label" for="customRadioInline1">Flat Rate:
+                                                $100.00</label>
+                                        </div>
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="customRadioInline2" name="customRadioInline1"
+                                                   class="custom-control-input">
+                                            <label class="custom-control-label" for="customRadioInline2">Free
+                                                Shipping</label>
+                                        </div>
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="customRadioInline3" name="customRadioInline1"
+                                                   class="custom-control-input">
+                                            <label class="custom-control-label" for="customRadioInline3">International
+                                                Delivery: $170.00</label>
+                                        </div>
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="customRadioInline4" name="customRadioInline1"
+                                                   class="custom-control-input">
+                                            <label class="custom-control-label" for="customRadioInline4">Local Delivery:
+                                                $60.00</label>
+                                        </div>
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="customRadioInline5" name="customRadioInline1"
+                                                   class="custom-control-input">
+                                            <label class="custom-control-label" for="customRadioInline5">Local Pickup
+                                                (Free)</label>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="myaccordion calculate-shipping-sec">
                                     <div class="brand-header">
@@ -239,143 +185,50 @@
                                         </div>
                                     </div>
                                 </div>
-                                 <div class="sub-total-sec padd-top-bot-25 total-sec">
+                                <div class="sub-total-sec padd-top-bot-25 total-sec">
                                     <h3>TOTAL</h3>
                                     <h3><b>$222.00</b></h3>
                                 </div>
-                        </div>
-                        <div class="proceed-checkout-btn">
-                         <a href="checkout.html">PROCEED TO CHECKOUT</a>
-                     </div>
-                     </div>
-                     
-                     <div>
-                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-</main>
-
-
-<footer class="mt-lg-0 pt-lg-0 mt-md-0 pt-md-0 mt-sm-0 mt-0 position-fixed w-100">
-    <div class="bg-dark pt-sm-5 pt-5 pb-sm-0">
-        <div class="container pt-lg-3"> 
-            <div class="row">
-                <div class="col-md-2 offset-lg-1">
-                    <div class="footer_menu_list">
-                        <h4 class="text-uppercase text-white text-left oswald_font font_20 bold_500">Information</h4>
-                        <ul class="pl-0 mb-0 mt-2 mt-sm-4 pt-2">
-                            <li class="mb-2 mb-sm-3"><a href="buy-now.html" class="text-white text-capitalize text-left open_sans bold_400 font_16">Buy</a>
-                            <li class="mb-2 mb-sm-3"><a href="sell-now.html" class="text-white text-capitalize text-left open_sans bold_400 font_16">Sell</a>
-                            <li class="mb-2 mb-sm-3"><a href="about-us.html" class="text-white text-capitalize text-left open_sans bold_400 font_16">About Us</a>
-                            <li class="mb-2 mb-sm-3"><a href="contact.html" class="text-white text-capitalize text-left open_sans bold_400 font_16">Contact Us</a>
-                            <li class="mb-0 mb-sm-0"><a href="javascript:void(0);" class="text-white text-capitalize text-left open_sans bold_400 font_16">Help</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="footer_menu_list">
-                        <h4 class="text-uppercase text-white text-left oswald_font font_20 bold_500">Support</h4>
-                        <ul class="pl-0 mb-0 mt-2 mt-sm-4 pt-2">
-                            <li class="mb-2 mb-sm-3"><a href="privacy-policy.html" class="text-white text-capitalize text-left open_sans bold_400 font_16">Privacy</a>
-                            <li class="mb-2 mb-sm-3"><a href="privacy-policy.html" class="text-white text-capitalize text-left open_sans bold_400 font_16">Policy</a>
-                            <li class="mb-2 mb-sm-3"><a href="faq.html" class="text-white text-capitalize text-left open_sans bold_400 font_16">FAQ</a>
-                            <li class="mb-2 mb-sm-3"><a href="app.html" class="text-white text-capitalize text-left open_sans bold_400 font_16">App</a>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="latest_news">
-                        <h4 class="oswald_font font_25 bold_500 text-white text-uppercase">Get Latest news and Updates Now</h4>
-                        <p class="open_sans bold_600 font_16 mt-2">Subscribe Our Newslater,For Get Big exclusive offer.</p>
-                        <form method="POST" class="mt-5">
-                            <div class="d-flex align-items-end">
-                                <label class="mb-0">
-                                    <input type="email" name="email" placeholder="Enter your email here" class="d-inline-block w-auto border-left-0 border-right-0 border-top-0 border-bottom bg-transparent text-white font_18 open_sans bold_400" />
-                                </label>
-                                <button type="submit" class="text-dark text-center d-inline-block bg-white border subscribe_btn open_sans bold_700 font_16 text-uppercase subscribe-btn">Subscribe</button>
                             </div>
-                        </form>
-                    </div>
-                    <div class="socile-icon-footer">
-                        <ul>
-                            <li><a href="#" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                            <li><a href="#" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                            <li><a href="#" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-                            <li><a href="#" target="_blank"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>
-                            <li><a href="#" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="copyright_text text-center border-top d-flex justify-content-between mt-5">
-            <div class="container">
-                <div class="row d-md-block d-lg-flex">
-                    <div class="col-md-12 offset-md-0 d-md-flex align-items-center justify-content-md-between">
-                        <div class="copyright_small_text">
-                            <p class="open_sans bold_400 font_15 text-white">Copyright © 2020 <a href="index.html" class="d-inline-block text-white">Payouttt</a>. All Rights Reserved</p>
-                        </div>
-                        <div class="payment_accept">
-                            <div class="payment_accept_list">
-                                <ul class="pl-0 mb-0 d-flex align-items-center justify-content-end payment-acceptable-sec">
-                                    <li class="open_sans bold_400 font_15 text-white pr-3">Payment Acceptable On :</li>
-                                    <li class="pr-2"><a href="javascript:void(0);" target="_blank"><img src="images/visa.png" alt="" class="img-fluid" /></a></li>
-                                    <li class="pr-2"><a href="javascript:void(0);" target="_blank"><img src="images/master_card.png" alt="" class="img-fluid" /></a></li>
-                                    <li class="pr-2"><a href="javascript:void(0);" target="_blank"><img src="images/american_express.png" alt="" class="img-fluid" /></a></li>
-                                    <li class="pr-2"><a href="javascript:void(0);" target="_blank"><img src="images/discover.png" alt="" class="img-fluid" /></a></li>
-                                    <li class="pr-2"><a href="javascript:void(0);" target="_blank"><img src="images/paypal.png" alt="" class="img-fluid" /></a></li>
-                                </ul>
+                            <div class="proceed-checkout-btn">
+                                <a href="{% url 'web_cart_checkout' %}">PROCEED TO CHECKOUT</a>
                             </div>
                         </div>
+
+                        <div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</footer>
+        </section>
+    </main>
+{% endblock %}
 
-<!-- dark mode -->
-<div class="switch">
-    <input id="themeSwitch" class="switch__input" type="checkbox">
-    <label class="switch__label" for="themeSwitch" aria-hidden="true">On</label>
-    <div class="switch__marker" aria-hidden="true"></div>
-</div>
-<!-- top to bottom arrow -->
-<a href="#" id="scroll"><span></span></a>
-<!-- jQuery CDN - Slim version (=without AJAX) -->
-<script src="js/jquery-3.5.1.min.js"></script>
-<!-- form -->
-<script src='js/form.js'></script>
-<script src="js/bootstrap.bundle.min.js"></script>
-<!-- jquery.nice-select.min.js -->
-<script src="js/jquery.nice-select.min.js"></script>  
-<!-- custom.js -->
-<script src="js/custom.js"></script>
-<script>
-    $(".myaccordion .brand-header").click(function(){
-        $(this).siblings().slideToggle();
-        $(this).parents('.myaccordion').toggleClass('active');
-    });
+{% block js_block %}
 
-    // ==================================== Select DropDown Js ====================================
-    $(document).ready(function() {
-      $('select').niceSelect();
-    });
-</script>
-<!-- vue-counter -->
-<script>
-    $('.sub').click(function () {
-        if ($(this).prev().val() < 30) {
-        $(this).prev().val(+$(this).prev().val() + 1);
-        }
-    });
-    $('.add').click(function () {
-            if ($(this).next().val() > 1) {
-            if ($(this).next().val() > 1) $(this).next().val(+$(this).next().val() - 1);
+    <script>
+        $(".myaccordion .brand-header").click(function () {
+            $(this).siblings().slideToggle();
+            $(this).parents('.myaccordion').toggleClass('active');
+        });
+
+        // ==================================== Select DropDown Js ====================================
+        $(document).ready(function () {
+            $('select').niceSelect();
+        });
+    </script>
+    <!-- vue-counter -->
+    <script>
+        $('.sub').click(function () {
+            if ($(this).prev().val() < 30) {
+                $(this).prev().val(+$(this).prev().val() + 1);
             }
-    });
-</script>
-</body>
-</html>
+        });
+        $('.add').click(function () {
+            if ($(this).next().val() > 1) {
+                if ($(this).next().val() > 1) $(this).next().val(+$(this).next().val() - 1);
+            }
+        });
+    </script>
+
+{% endblock %}

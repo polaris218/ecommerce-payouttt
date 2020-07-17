@@ -4,13 +4,17 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.generic import TemplateView
-
+from api.models import Product
 from core import EmailHelper
 from dashboard.forms import LoginForm, WebSignUpForm
 
 
 class IndexView(TemplateView):
     template_name = 'web_index.html'
+
+    def get(self, request, *args, **kwargs):
+        products = Product.objects.filter(sold=False)
+        return render(request, self.template_name, {'products': products})
 
 
 class CategoryDetailsView(TemplateView):
@@ -27,6 +31,66 @@ class AppView(TemplateView):
 
 class NewsView(TemplateView):
     template_name = 'news.html'
+
+
+class SearchView(TemplateView):
+    template_name = 'search.html'
+
+
+class NewsDetailView(TemplateView):
+    template_name = 'news-detail.html'
+
+
+class ProductDetailView(TemplateView):
+    template_name = 'product-detail.html'
+
+    def get(self, request, *args, **kwargs):
+        product_id = kwargs.get('product_id')
+        product = Product.objects.get(id=product_id)
+        return render(request, self.template_name, {'product': product})
+
+
+class WebCartView(TemplateView):
+    template_name = 'cart.html'
+
+
+class WebCartBidView(TemplateView):
+    template_name = 'bid.html'
+
+    def get(self, request, *args, **kwargs):
+        product_id = kwargs.get('product_id')
+        product = Product.objects.get(id=product_id)
+        return render(request, self.template_name, {'product': product})
+
+
+class WebCartBuyView(TemplateView):
+    template_name = 'buy-now.html'
+
+    def get(self, request, *args, **kwargs):
+        product_id = kwargs.get('product_id')
+        product = Product.objects.get(id=product_id)
+        return render(request, self.template_name, {'product': product})
+
+
+class WebCartSellView(TemplateView):
+    template_name = 'sell-now.html'
+
+    def get(self, request, *args, **kwargs):
+        product_id = kwargs.get('product_id')
+        product = Product.objects.get(id=product_id)
+        return render(request, self.template_name, {'product': product})
+
+
+class WebCartCheckoutView(TemplateView):
+    template_name = 'checkout.html'
+
+
+class WebCartConfirmationView(TemplateView):
+    template_name = 'confirmation.html'
+
+
+class WebCartThankYouView(TemplateView):
+    template_name = 'thank-you.html'
 
 
 def login_view(request):

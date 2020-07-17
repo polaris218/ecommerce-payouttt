@@ -11,7 +11,8 @@
                     <input type="text" class="form-control" placeholder="Search entire store...">
                     <div class="input-group-append">
                         <button class="btn btn-secondary" type="button">
-                            <i class="flaticon-search position-relative text-dark" aria-hidden="true"></i>
+                            <a href="{% url 'web_search' %}" class="flaticon-search position-relative text-dark"
+                               aria-hidden="true"></a>
                         </button>
                     </div>
                 </div>
@@ -80,7 +81,7 @@
                     <div class="responsive_toggle d-flex align-content-center justify-content-end">
                         <a href="javascript:void(0);" class="search_scroll mr-3 mr-sm-4 d-inline-block sreach-icon"><i
                                 class="flaticon-search position-relative text-dark" aria-hidden="true"></i></a>
-                        <a href="javascript:void(0);"
+                        <a href="{% url 'web_cart' %}"
                            class="shop_cart_icon d-inline-block position-relative inner-cart-icon-right">
                             <i class="shop_bg d-inline-block"></i>
                             <span class="bg_green position-absolute open_sans bold_700 font_10 text-white shop_count d-flex align-items-center justify-content-center">0</span>

@@ -208,5 +208,5 @@ class FeedBack(LoginRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         feedback_description = (request.POST.get('rewardNotes'))
-        FeedbackModel.objects.create(user=request.user, description=feedback_description)
+        FeedbackModel.objects.create(user=request.user, description=feedback_description, is_active=True)
         return redirect(reverse('home'))

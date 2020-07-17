@@ -41,7 +41,10 @@ ul{
 .total-price-sec2 .payouttt_offers_content a,.verify_account,.uk-button-primary,.search-bar-top button.btn-secondary i,.search-bar-top.products-search-top,
 .popularity-right-sec li a,.cart-icon-right a.sreach-icon:hover i,.add-top-cart-btn a,
 .add-top-cart-btn,.proceed-checkout-btn a,.dark-mode .total-price-sec2 .payouttt_offers_content a,
-.dark-mode .cart-btn-mobile a,.submit-button input,#scroll,.contact-social a{
+.dark-mode .cart-btn-mobile a,.submit-button input,#scroll,.contact-social a,
+.myaccordion_btn a,
+.highest-size-box,
+.highest-size-box span{
     transition: all 0.3s;
     -webkit-transition: all 0.3s;
     -moz-transition: all 0.3s;
@@ -65,7 +68,8 @@ a:hover,
 .top_sell_title h4 a:hover,
 .news_content h4 a:hover,
 .footer_menu_list li > a:hover,
-.payoutt_container .shop_btn:hover{
+.payoutt_container .shop_btn:hover,
+.top_sell_title h3 a:hover{
     color: #87bc31;
 }
 a.top_sell_a_tag_2:hover,
@@ -74,7 +78,10 @@ a.top_sell_a_tag_2:hover,
 }
 .bg_green,
 .subscribe_btn:hover,
-.menu_list_hover a:after{
+.menu_list_hover a:after,
+.highest-size-box input[type="checkbox"]:checked + label,
+.highest-size-box input[type="checkbox"]:checked + label span,
+#size_chart_modal .close{
     background-color: #87bc31;
 }
 .subscribe_btn:hover{
@@ -97,10 +104,12 @@ body .product-slider-sec .owl-carousel .owl-nav button:hover,.confirm-btn .next-
     padding-bottom: 80px;
 }
 body,
-.open_sans{
+.open_sans,
+.highest-size-box span{
     font-family: 'Open Sans', sans-serif;
 }
-.oswald_font{
+.oswald_font,
+.highest-size-box{
     font-family: 'Oswald', sans-serif;
 }
 .poppins_font{
@@ -822,6 +831,16 @@ body.dark-mode .product-slider-sec .owl-carousel .owl-nav button{
     background-position: left;
 }
 /*media*/
+@media screen and (max-width: 767px){
+	.app_link_downloads a:last-child img {
+	    max-width: 133px;
+	}
+}
+@media screen and (min-width: 768px){
+	.app_link_downloads a:last-child img {
+	    max-width: 126px;
+	}
+}
 @media screen and (min-width: 992px){
     .menu_list_hover a:after{
         content: "";
@@ -835,6 +854,9 @@ body.dark-mode .product-slider-sec .owl-carousel .owl-nav button{
     .menu_list_hover li a:hover:after{
         width: 50%;
     }
+	.app_link_downloads a:last-child img{
+	    max-width: 140px;
+	}
 }
 @media (min-width: 1200px){
     body .product-slider-sec .owl-carousel .owl-nav button.owl-prev {
@@ -849,6 +871,9 @@ body.dark-mode .product-slider-sec .owl-carousel .owl-nav button{
     .app-page .download_payouttt_container h3 {
         font-size: 66px;
     }
+	.app_link_downloads a:last-child img {
+	    max-width: 140px;
+	}
 }
 @media (min-width: 1360px){
     .container,
@@ -2338,7 +2363,7 @@ form.login-box{
 }
 .dark-mode .wizard .nav-tabs > li a i,.dark-mode .last-sale-price h3,.dark-mode .sec-heading,.dark-mode .total-price-sec h3,
 .dark-mode .shiping-sec-top p b,.dark-mode .shiping-sec-top span b,.dark-mode .inner-buy-now-price p,.dark-mode .inner-buy-now-price span,.dark-mode .buy-now-field span,
-.dark-mode .condition-sec li span{
+.dark-mode .condition-sec li span,.dark-mode .size_chart_list a{
     color: #cccccc;
 }
 .dark-mode span.round-tab{
@@ -2976,7 +3001,7 @@ form.login-box{
     padding: 10% 0%;
     margin-top: 0px;
     z-index: 99;
-    top: -100%;
+    top: -200%;
     transition: all 1s cubic-bezier(.19,1,.22,1);
     -webkit-transition: all 1s cubic-bezier(.19,1,.22,1);
     -o-transition: all 1s cubic-bezier(.19,1,.22,1);
@@ -3148,6 +3173,8 @@ form.login-box{
     justify-content: flex-end;
     display: flex;
     align-items: center;
+    z-index: 999;
+    position: relative;
 }
 .popularity-right-sec .nice-select{
     width: 310px;
@@ -3361,9 +3388,10 @@ form.login-box{
     .product-prize-sec-top .size-selected .nice-select{
         padding-right: 80px;
     }
-    .product-prize-sec-top h2{
-        font-size: 30px;
-    }
+	.product-prize-sec-top h2 {
+	    font-size: 30px;
+	    display: block;
+	}
     .product-prize-sec-top h2 span{
         font-size: 18px;
     }
@@ -3492,6 +3520,7 @@ form.login-box{
     }
     .product-prize-sec-top h2{
         font-size: 34px;
+        display: block;
     }
     .product-right .font_16 {
         font-size: 13px;
@@ -5302,7 +5331,14 @@ textarea.input__field--yoshiko{
     top: 38px;
   }
 }
-#exampleModal h2{
+#logoutModal{
+    text-align: center;
+}
+#logoutModal .shop_btn{
+    margin-top: 15px;
+}
+#exampleModal h2,
+.login-modal h2{
     font-size: 34px;
     font-weight: 700;
     color: #222321;
@@ -5311,37 +5347,48 @@ textarea.input__field--yoshiko{
     letter-spacing: 1px;
     text-align: center;
 }
-#exampleModal p{
+#exampleModal p,
+.login-modal p{
     text-align: center;
     margin-top: 10px;
 }
-#exampleModal .modal-dialog{
+#exampleModal .modal-dialog,
+.login-modal .modal-dialog{
     max-width: 600px;
 }
-#exampleModal .modal-body{
+#exampleModal .modal-body,
+.login-modal .modal-body{
     padding: 50px;
     position: relative;
 }
-#exampleModal .modal-body button{
+#exampleModal .modal-body button,
+.login-modal .modal-body button{
     position: absolute;
     top: 15px;
     right: 15px;
 }
-#exampleModal .modal-body button span {
+#exampleModal .modal-body button span,
+.login-modal .modal-body button span {
     font-size: 44px;
 }
 @media screen and (max-width: 767px){
 .modal-open .modal{
     padding-right: 0 !important
 }
-#exampleModal .modal-body{
+#exampleModal .modal-body,
+.login-modal .modal-body{
     padding: 30px
 }
-#exampleModal p{
+#exampleModal p,
+.login-modal p{
     font-size: 14px;
 }
-#exampleModal h2{
+#exampleModal h2,
+.login-modal h2{
     font-size: 28px;
+}
+#logoutModal .modal-body button{
+    top: 5px;
 }
 }
 
@@ -5654,13 +5701,98 @@ textarea.input__field--yoshiko{
 }
 
 @media (min-width: 992px) and (max-width: 1199px){
-.blog-info h2{
-    font-size: 34px;
+    .blog-info h2{
+        font-size: 34px;
+    }
+    .comment-left h4 {
+        font-size: 23px;
+    }
+    .latest-info a {
+        font-size: 18px;
+    }
 }
-.comment-left h4 {
-    font-size: 23px;
+.def_btn_admin {
+    padding: 13px 15px 13px;
 }
-.latest-info a {
+.def_btn_admin:hover{
+    background-color: #222321;
+    color: #fff;
+}
+@media screen and (max-width: 1199px){
+    .myaccordion_btn .def_btn_admin{
+        width: 100%;
+    }
+}
+@media (min-width: 768px) and (max-width: 1199px){
+    .myaccordion_btn .def_btn_admin{
+        font-size: 14px;
+        padding: 7px 10px;
+    }
+}
+
+/*size chart css*/
+.highest-size-box {
+    border: 1px solid #E8E8E8;
     font-size: 18px;
+    text-align: center;
+    font-weight: 500;
+    cursor: pointer;
+    width: 25%;
 }
+.highest-size-box input {
+    display: none;
+}
+.highest-size-box label {
+    display: block;
+    padding: 15px 0px;
+    margin-bottom: 0;
+    cursor: pointer;
+}
+.highest-size-box span {
+    font-weight: 600;
+    font-size: 14px;
+    color: #666C76;
+    display: block;
+}
+.highest-size-box input[type="checkbox"]:checked + label{
+    color: #fff;
+}
+.highest-size-box input[type="checkbox"]:checked + label span{
+    color: #fff;
+}
+#size_chart_modal .close{
+    color: #fff;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 12px;
+    opacity: 1;
+    right: -40px;
+    top: 0;
+}
+@media screen and (max-width: 767px){
+    #size_chart_modal .close{
+        right: 0;
+        top: -40px;
+    }    
+    .highest-size-box label{
+        font-size: 14px;
+        padding: 10px 0px;
+    }
+    .highest-size-box span{
+        font-size: 12px;
+    }
+    #size_chart_modal .close{
+        font-size: 10px;
+    }
+}
+
+
+/*suggest_new_product*/
+#suggest_new_product .close-icon {
+    top: 15px;
+    right: 15px;
+}
+#suggest_new_product .close-icon i {
+    font-size: 18px;
 }
