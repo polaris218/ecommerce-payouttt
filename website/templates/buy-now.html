@@ -39,16 +39,16 @@
                                                     <div class="buy-now-top-sec">
                                                         <div class="inner-buy-now inner-buy-now1">
                                                             <p>Buy or Bid</p>
-                                                            <span><b>$215 </b> lowest ask</span>
+                                                            <span><b>${{ lowest_ask }} </b> lowest ask</span>
                                                         </div>
                                                         <div class="inner-buy-now inner-buy-now2">
                                                             <p>Sell or Ask</p>
-                                                            <span><b>$305 </b> highest BId</span>
+                                                            <span><b>${{ highest_bid }} </b> highest BId</span>
                                                         </div>
                                                         <div class="inner-buy-now inner-buy-now3">
                                                             <p>Last Sale</p>
                                                             <div class="last-sale-price">
-                                                                <h3>$273.00</h3>
+                                                                {#                                                                <h3>$273.00</h3>#}
                                                                 <a href="#"><i class="fa fa-arrow-down"
                                                                                aria-hidden="true"></i> -$1 (0%)</a>
                                                             </div>
@@ -82,6 +82,14 @@
                                                                     class="default-btn next-step text-uppercase open_sans bold_500 text-white bg_green shop_btn d-inline-block  mt-lg-2 mt-xl-4">
                                                                 confirm
                                                             </button>
+                                                            <button type="button"
+                                                                    data-toggle="modal"
+                                                                    data-target="#size_chart_modal"
+                                                                    href="javascript:void(0);"
+                                                                    class="default-btn text-uppercase open_sans bold_500 text-white bg_green shop_btn d-inline-block  mt-lg-2 mt-xl-4"
+                                                                    style="padding: 13px 50px 13px 50px;border: none;letter-spacing: 1px;font-weight: 600;">
+                                                                Size Chart
+                                                            </button>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -96,8 +104,8 @@
                                                     <h3>Total Price</h3>
                                                     <div class="border-line"></div>
                                                     <div class="shiping-sec-top">
-                                                        <p>Ask</p>
-                                                        <span>$100</span>
+                                                        <p>Asking Price</p>
+                                                        <span>${{ lowest_ask }}</span>
                                                     </div>
                                                     <div class="shiping-sec-top">
                                                         <p>Shipping </p>
@@ -115,7 +123,7 @@
                                                     <div class="buy-now-price">
                                                         <p>Total Price</p>
                                                         <div class="inner-buy-now-price">
-                                                            <p><b>105</b></p>
+                                                            <p><b>{{ product.listing_price }}</b></p>
                                                             <span><b>$</b></span>
                                                         </div>
                                                     </div>
@@ -137,6 +145,114 @@
             </div>
         </section>
     </main>
+    <!-- size chart modal -->
+    <div class="modal fade" id="size_chart_modal" tabindex="-1" role="dialog" aria-labelledby="size_chart_modal"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body position-relative">
+                    <button type="button" class="close position-absolute" data-dismiss="modal" aria-label="Close">
+                        <i class="flaticon-cancel" aria-hidden="true"></i>
+                    </button>
+                    <div class="sell-detail m-r-20 m-l-20">
+                        <h2 class="text-uppercase text-dark oswald_font font_30 bold_600 text-center">Size Chart</h2>
+                        <div class="highest-size mt-3">
+                            <div class="highest-size-inner d-flex align-items-center justify-content-between mx-n2">
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us1">
+                                    <label for="us1">US4<span>$217</span></label>
+                                </div>
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us2">
+                                    <label for="us2">US4.5<span>$220</span></label>
+                                </div>
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us3">
+                                    <label for="us3">US5<span class="bid">Bid</span></label>
+                                </div>
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us4">
+                                    <label for="us4">US5.5<span>$226</span></label>
+                                </div>
+                            </div>
+                            <div class="highest-size-inner d-flex align-items-center justify-content-between mx-n2 mt-2">
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us5">
+                                    <label for="us5">US6<span>$238</span></label>
+                                </div>
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us6">
+                                    <label for="us6">US6.5<span>$240</span></label>
+                                </div>
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us7">
+                                    <label for="us7">US7<span>$246</span></label>
+                                </div>
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us8">
+                                    <label for="us8">US7.5<span>$250</span></label>
+                                </div>
+                            </div>
+                            <div class="highest-size-inner d-flex align-items-center justify-content-between mx-n2 mt-2">
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us9">
+                                    <label for="us9">US8<span>$232</span></label>
+                                </div>
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us10">
+                                    <label for="us10">US8.5<span>$230</span></label>
+                                </div>
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us11">
+                                    <label for="us11">US9<span>$242</span></label>
+                                </div>
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us12">
+                                    <label for="us12">US9.5<span>$200</span></label>
+                                </div>
+                            </div>
+                            <div class="highest-size-inner d-flex align-items-center justify-content-between mx-n2 mt-2">
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us13">
+                                    <label for="us13">US10<span class="bid">Bid</span></label>
+                                </div>
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us14">
+                                    <label for="us14">US10.5<span>$241</span></label>
+                                </div>
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us15">
+                                    <label for="us15">US11<span>$217</span></label>
+                                </div>
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us16">
+                                    <label for="us16">US11.5<span>$217</span></label>
+                                </div>
+                            </div>
+                            <div class="highest-size-inner d-flex align-items-center justify-content-between mx-n2 mt-2">
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us17">
+                                    <label for="us17">US12<span>$217</span></label>
+                                </div>
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us18">
+                                    <label for="us18">US12.5<span>$236</span></label>
+                                </div>
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us19">
+                                    <label for="us19">US13<span>$241</span></label>
+                                </div>
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us20">
+                                    <label for="us20">US13.5<span>$217</span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block js_block %}

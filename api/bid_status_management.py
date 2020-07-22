@@ -35,3 +35,29 @@ class BidStatusManagement(object):
             product.on_hold = True
             product.save()
             bid.save()
+
+    def get_lowest_highest_bid(self, sku_number):
+        bids = Bid.objects.filter(sku_number=sku_number).order_by('-bid_amount')
+        data = []
+        if bids.first():
+            data.append(bids.first().bid_amount)
+        else:
+            data.append(0)
+        if bids.last() and bids.last() not in data:
+            data.append(bids.last().bid_amount)
+        else:
+            data.append(0)
+        return data
+
+    def get_lowest_highest_listing_price(self, sku_number):
+        products = Product.objects.filter(sku_number=sku_number, ).order_by('-listing_price')
+        data = []
+        if products.first():
+            data.append(products.first().listing_price)
+        else:
+            data.append(0)
+        if products.last() and products.last() not in data:
+            data.append(products.last().listing_price)
+        else:
+            data.append(0)
+        return data

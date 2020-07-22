@@ -90,11 +90,11 @@
                                                     <div class="buy-now-top-sec">
                                                         <div class="inner-buy-now inner-buy-now1">
                                                             <p>Buy or Bid</p>
-                                                            <span><b>$215 </b> lowest ask</span>
+                                                            <span><b>${{ lowest_ask }} </b> lowest ask</span>
                                                         </div>
                                                         <div class="inner-buy-now inner-buy-now2">
                                                             <p>Sell or Ask</p>
-                                                            <span><b>$305 </b> highest BId</span>
+                                                            <span><b>${{ highest_bid }} </b> highest BId</span>
                                                         </div>
                                                         <div class="inner-buy-now inner-buy-now3">
                                                             <p>Last Sale</p>
@@ -112,7 +112,9 @@
                                                         <li><span>100% Authentic</span></li>
                                                     </ul>
                                                     <div class="product-prize-sec-top">
-                                                        <h2>$65.00<span>$70.00</span></h2>
+                                                        <h2>${{ product.listing_price }}
+                                                            {#                                                            <span>$70.00</span>#}
+                                                        </h2>
                                                         <div class="select_filed size-selected">
                                                             <select class="Wide" name="Selectbox"
                                                                     class="wpcf7-form-control wpcf7-select"
@@ -136,6 +138,17 @@
                                                             <p>Retail Price:<b> ${{ product.retail_price }}</b></p>
                                                         </div>
                                                     </div>
+                                                    <ul class="list-inline confirm-btn">
+                                                        <li>
+                                                            <button type="button"
+                                                                    data-toggle="modal"
+                                                                    data-target="#size_chart_modal"
+                                                                    href="javascript:void(0);"
+                                                                    class="default-btn text-uppercase open_sans bold_500 text-white bg_green shop_btn d-inline-block  mt-lg-2 mt-xl-4">
+                                                                Size Chart
+                                                            </button>
+                                                        </li>
+                                                    </ul>
                                                     <div class="date-picker-sec-top">
                                                         <div class="inner-date-picker">
                                                             <img src="{% static 'web/images/date-picker-icon.png' %}"
@@ -223,14 +236,14 @@
                                                             Add To Cart</a>
                                                     </div>
                                                     <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">
-{#                                                        <a href="{% url 'web_cart_bid' %}"#}
-{#                                                           class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>#}
-{#                                                        <a href="{% url 'web_cart_buy' %}"#}
-{#                                                           class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">#}
-{#                                                            Buy Now#}
-{#                                                        </a>#}
-{#                                                        <a href="{% url 'web_cart_sell' %}"#}
-{#                                                           class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>#}
+                                                        {#                                                        <a href="{% url 'web_cart_bid' %}"#}
+                                                        {#                                                           class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>#}
+                                                        {#                                                        <a href="{% url 'web_cart_buy' %}"#}
+                                                        {#                                                           class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">#}
+                                                        {#                                                            Buy Now#}
+                                                        {#                                                        </a>#}
+                                                        {#                                                        <a href="{% url 'web_cart_sell' %}"#}
+                                                        {#                                                           class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>#}
                                                     </div>
                                                 </div>
                                             </div>
@@ -264,16 +277,16 @@
                                                                        aria-hidden="true"></i>
                                                             Add To Cart</a>
                                                     </div>
-{#                                                    <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">#}
-{#                                                        <a href="{% url 'web_cart_bid' %}"#}
-{#                                                           class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>#}
-{#                                                        <a href="{% url 'web_cart_buy' %}"#}
-{#                                                           class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">#}
-{#                                                            Buy Now#}
-{#                                                        </a>#}
-{#                                                        <a href="{% url 'web_cart_sell' %}"#}
-{#                                                           class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>#}
-{#                                                    </div>#}
+                                                    {#                                                    <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">#}
+                                                    {#                                                        <a href="{% url 'web_cart_bid' %}"#}
+                                                    {#                                                           class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>#}
+                                                    {#                                                        <a href="{% url 'web_cart_buy' %}"#}
+                                                    {#                                                           class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">#}
+                                                    {#                                                            Buy Now#}
+                                                    {#                                                        </a>#}
+                                                    {#                                                        <a href="{% url 'web_cart_sell' %}"#}
+                                                    {#                                                           class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>#}
+                                                    {#                                                    </div>#}
                                                 </div>
                                             </div>
                                         </div>
@@ -306,16 +319,16 @@
                                                                        aria-hidden="true"></i>
                                                             Add To Cart</a>
                                                     </div>
-{#                                                    <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">#}
-{#                                                        <a href="{% url 'web_cart_bid' %}"#}
-{#                                                           class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>#}
-{#                                                        <a href="{% url 'web_cart_buy' %}"#}
-{#                                                           class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">#}
-{#                                                            Buy Now#}
-{#                                                        </a>#}
-{#                                                        <a href="{% url 'web_cart_sell' %}"#}
-{#                                                           class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>#}
-{#                                                    </div>#}
+                                                    {#                                                    <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">#}
+                                                    {#                                                        <a href="{% url 'web_cart_bid' %}"#}
+                                                    {#                                                           class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>#}
+                                                    {#                                                        <a href="{% url 'web_cart_buy' %}"#}
+                                                    {#                                                           class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">#}
+                                                    {#                                                            Buy Now#}
+                                                    {#                                                        </a>#}
+                                                    {#                                                        <a href="{% url 'web_cart_sell' %}"#}
+                                                    {#                                                           class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>#}
+                                                    {#                                                    </div>#}
                                                 </div>
                                             </div>
                                         </div>
@@ -348,14 +361,14 @@
                                                             Add To Cart</a>
                                                     </div>
                                                     <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">
-{#                                                        <a href="{% url 'web_cart_bid' %}"#}
-{#                                                           class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>#}
-{#                                                        <a href="{% url 'web_cart_buy' %}"#}
-{#                                                           class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">#}
-{#                                                            Buy Now#}
-{#                                                        </a>#}
-{#                                                        <a href="{% url 'web_cart_sell' %}"#}
-{#                                                           class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>#}
+                                                        {#                                                        <a href="{% url 'web_cart_bid' %}"#}
+                                                        {#                                                           class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>#}
+                                                        {#                                                        <a href="{% url 'web_cart_buy' %}"#}
+                                                        {#                                                           class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">#}
+                                                        {#                                                            Buy Now#}
+                                                        {#                                                        </a>#}
+                                                        {#                                                        <a href="{% url 'web_cart_sell' %}"#}
+                                                        {#                                                           class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>#}
                                                     </div>
                                                 </div>
                                             </div>
@@ -375,7 +388,114 @@
             </div>
         </section>
     </main>
-
+    <!-- size chart modal -->
+    <div class="modal fade" id="size_chart_modal" tabindex="-1" role="dialog" aria-labelledby="size_chart_modal"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body position-relative">
+                    <button type="button" class="close position-absolute" data-dismiss="modal" aria-label="Close">
+                        <i class="flaticon-cancel" aria-hidden="true"></i>
+                    </button>
+                    <div class="sell-detail m-r-20 m-l-20">
+                        <h2 class="text-uppercase text-dark oswald_font font_30 bold_600 text-center">Size Chart</h2>
+                        <div class="highest-size mt-3">
+                            <div class="highest-size-inner d-flex align-items-center justify-content-between mx-n2">
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us1">
+                                    <label for="us1">US4<span>$217</span></label>
+                                </div>
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us2">
+                                    <label for="us2">US4.5<span>$220</span></label>
+                                </div>
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us3">
+                                    <label for="us3">US5<span class="bid">Bid</span></label>
+                                </div>
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us4">
+                                    <label for="us4">US5.5<span>$226</span></label>
+                                </div>
+                            </div>
+                            <div class="highest-size-inner d-flex align-items-center justify-content-between mx-n2 mt-2">
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us5">
+                                    <label for="us5">US6<span>$238</span></label>
+                                </div>
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us6">
+                                    <label for="us6">US6.5<span>$240</span></label>
+                                </div>
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us7">
+                                    <label for="us7">US7<span>$246</span></label>
+                                </div>
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us8">
+                                    <label for="us8">US7.5<span>$250</span></label>
+                                </div>
+                            </div>
+                            <div class="highest-size-inner d-flex align-items-center justify-content-between mx-n2 mt-2">
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us9">
+                                    <label for="us9">US8<span>$232</span></label>
+                                </div>
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us10">
+                                    <label for="us10">US8.5<span>$230</span></label>
+                                </div>
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us11">
+                                    <label for="us11">US9<span>$242</span></label>
+                                </div>
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us12">
+                                    <label for="us12">US9.5<span>$200</span></label>
+                                </div>
+                            </div>
+                            <div class="highest-size-inner d-flex align-items-center justify-content-between mx-n2 mt-2">
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us13">
+                                    <label for="us13">US10<span class="bid">Bid</span></label>
+                                </div>
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us14">
+                                    <label for="us14">US10.5<span>$241</span></label>
+                                </div>
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us15">
+                                    <label for="us15">US11<span>$217</span></label>
+                                </div>
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us16">
+                                    <label for="us16">US11.5<span>$217</span></label>
+                                </div>
+                            </div>
+                            <div class="highest-size-inner d-flex align-items-center justify-content-between mx-n2 mt-2">
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us17">
+                                    <label for="us17">US12<span>$217</span></label>
+                                </div>
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us18">
+                                    <label for="us18">US12.5<span>$236</span></label>
+                                </div>
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us19">
+                                    <label for="us19">US13<span>$241</span></label>
+                                </div>
+                                <div class="highest-size-box mx-1">
+                                    <input type="checkbox" id="us20">
+                                    <label for="us20">US13.5<span>$217</span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 {% block js_block %}
 

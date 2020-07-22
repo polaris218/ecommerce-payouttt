@@ -13,8 +13,9 @@
                                 <ul class="nav nav-tabs" role="tablist">
                                     <li role="presentation" class="active">
                                         <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab"
-                                           aria-expanded="true"><span class="round-tab">1 </span> <i>Confirm
-                                            Size</i></a>
+                                           aria-expanded="true"><span class="round-tab" id="step-shoe_size">1 </span>
+                                            <i>Confirm
+                                                Size</i></a>
                                     </li>
                                     <li role="presentation" class="disabled">
                                         <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab"
@@ -23,7 +24,7 @@
                                 </ul>
                             </div>
 
-                            <form action="index.html" class="login-box">
+                            <form class="login-box">
                                 <div class="tab-content" id="main_form">
                                     <div class="tab-pane active" role="tabpanel" id="step1">
                                         <div class="col-12">
@@ -39,16 +40,16 @@
                                                     <div class="buy-now-top-sec">
                                                         <div class="inner-buy-now inner-buy-now1">
                                                             <p>Buy or Bid</p>
-                                                            <span><b>$215 </b> lowest ask</span>
+                                                            <span><b>${{ lowest_ask }} </b> lowest ask</span>
                                                         </div>
                                                         <div class="inner-buy-now inner-buy-now2">
                                                             <p>Sell or Ask</p>
-                                                            <span><b>$305 </b> highest BId</span>
+                                                            <span><b>${{ highest_bid }} </b> highest BId</span>
                                                         </div>
                                                         <div class="inner-buy-now inner-buy-now3">
                                                             <p>Last Sale</p>
                                                             <div class="last-sale-price">
-                                                                <h3>$273.00</h3>
+                                                                {#                                                                <h3>$273.00</h3>#}
                                                                 <a href="#"><i class="fa fa-arrow-down"
                                                                                aria-hidden="true"></i> -$1 (0%)</a>
                                                             </div>
@@ -56,12 +57,13 @@
                                                     </div>
                                                     <h2 class="sec-heading">{{ product.title }}</h2>
                                                     <div class="select_filed size-selected">
-                                                        <select name="Selectbox"
+                                                        <select required id="shoe_size_selected"
                                                                 class="wpcf7-form-control wpcf7-select Wide"
                                                                 aria-invalid="false">
-                                                            <option value="AQI India">Size</option>
-                                                            {% for size in product.shoe_sizes.all %}
-                                                                <option value="{{ size.shoe_size }}">{{ size.shoe_size }}</option>
+                                                            <option value="Size">Size</option>
+                                                            {% for shoe_size in product.shoe_sizes.all %}
+                                                                <option value="{{ shoe_size.id }}"
+                                                                >{{ shoe_size }}</option>
                                                             {% endfor %}
                                                         </select>
                                                     </div>
@@ -76,11 +78,32 @@
                                                             <p>Retail Price:<b>${{ product.retail_price }}</b></p>
                                                         </div>
                                                     </div>
+                                                    {% if not can_bid %}
+                                                        <p style="color: green">You Have already bid on this
+                                                            product</p>
+                                                    {% elif not valid_address %}
+                                                        {% if user.is_authenticated %}
+                                                            <p style="color: red">Kindly Add Your Address Detail
+                                                                First.</p>
+                                                        {% endif %}
+                                                    {% endif %}
                                                     <ul class="list-inline confirm-btn">
                                                         <li>
-                                                            <button type="button"
+                                                            <button hidden type="button"
+                                                                    id="shoe_size_dropdown_selected_next"
                                                                     class="default-btn next-step text-uppercase open_sans bold_500 text-white bg_green shop_btn d-inline-block  mt-lg-2 mt-xl-4">
                                                                 confirm
+                                                            </button>
+                                                            <button type="button" id="shoe_size_dropdown_selected"
+                                                                    class="default-btn text-uppercase open_sans bold_500 text-white bg_green shop_btn d-inline-block  mt-lg-2 mt-xl-4">
+                                                                confirm
+                                                            </button>
+                                                            <button type="button"
+                                                                    data-toggle="modal"
+                                                                    data-target="#size_chart_modal"
+                                                                    href="javascript:void(0);"
+                                                                    class="default-btn text-uppercase open_sans bold_500 text-white bg_green shop_btn d-inline-block  mt-lg-2 mt-xl-4">
+                                                                Size Chart
                                                             </button>
                                                         </li>
                                                     </ul>
@@ -96,8 +119,8 @@
                                                     <h3>Total Price</h3>
                                                     <div class="border-line"></div>
                                                     <div class="shiping-sec-top">
-                                                        <p>Ask</p>
-                                                        <span>$100</span>
+                                                        <p>Lowest Ask</p>
+                                                        <span>${{ lowest_ask }}</span>
                                                     </div>
                                                     <div class="shiping-sec-top">
                                                         <p>Shipping </p>
@@ -113,14 +136,56 @@
                                                 <div class="total-price-sec total-price-sec2">
                                                     <h3>Place Bid</h3>
                                                     <div class="buy-now-field">
-                                                        <input type="text" name="Lowest Bid" placeholder="Lowest Bid">
-                                                        <span>$</span>
+                                                        {% if valid_address and can_bid %}
+
+                                                            <input required type="number" id="bid_amount"
+                                                                   name="Lowest Bid"
+                                                                   min="1"
+                                                                   placeholder="Bid amount">
+                                                            <span>$</span>
+                                                        {% elif not user.is_authenticated %}
+                                                            <input required type="number" id="bid_amount"
+                                                                   name="Lowest Bid"
+                                                                   min="1"
+                                                                   placeholder="Bid amount">
+                                                            <span>$</span>
+                                                        {% else %}
+                                                            <input disabled type="number" id="bid_amount"
+                                                                   name="Lowest Bid"
+                                                                   placeholder="Bid amount">
+                                                            <span>$</span>
+                                                        {% endif %}
                                                     </div>
                                                     <div class="top_selling_product_box payouttt_offers_content">
-                                                        <a data-toggle="modal" data-target="#exampleModal"
-                                                           href="javascript:void(0);"
-                                                           class="text-uppercase open_sans bold_700 text-white shop_btn d-inline-block font_26">Confirm
-                                                            Bid</a>
+                                                        {% if valid_address and can_bid %}
+                                                            <button type="button" hidden
+                                                                    id="success-btn"
+                                                                    data-toggle="modal"
+                                                                    data-target="#exampleModal"
+                                                                    href="javascript:void(0);"
+                                                                    class="text-uppercase open_sans bold_700 text-white shop_btn d-inline-block font_26">
+                                                            </button>
+                                                            <button type="button" id="create_bid"
+                                                                    class="text-uppercase open_sans bold_700 text-white shop_btn d-inline-block font_26">
+                                                                Confirm
+                                                                Bid
+                                                            </button>
+                                                        {% elif not user.is_authenticated %}
+                                                            <a href='/login/?next=/product-bid/{{ product.id }}/'>
+                                                                <button type="button"
+                                                                        class="text-uppercase open_sans bold_700 text-white shop_btn d-inline-block font_26">
+                                                                    Confirm Bid
+                                                                </button>
+                                                            </a>
+
+                                                        {% else %}
+                                                            </p>
+                                                            <button disabled
+                                                                    class="text-uppercase open_sans bold_700 text-white shop_btn d-inline-block font_26">
+                                                                Confirm Bid
+                                                            </button>
+                                                        {% endif %}
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -152,10 +217,16 @@
                             <div class="icon-fix"></div>
                         </div>
                     </div>
-                    <h2>Bid Completed</h2>
-                    <p>Thank you for ordering. We received your order and will begin processing it soon. Your order
-                        information appears below</p>
+                    <h2 id="message-head"></h2>
+                    <p id="message-body"></p>
+
                 </div>
+                <a href="{% url 'web_cart_bid' product.id %}" class="text-center pb-3">
+                    <button type="submit" id="Done_close_modal"
+                            class="default-btn text-uppercase open_sans bold_500 text-white bg_green shop_btn d-inline-block  mt-lg-2 mt-xl-4">
+                        Done
+                    </button>
+                </a>
             </div>
         </div>
     </div>
@@ -320,6 +391,49 @@
             $('select').niceSelect();
         });
 
+        $("#create_bid").on('click', function (e) {
 
+            e.preventDefault(); // avoid to execute the actual submit of the form.
+
+            var shoe_size_id = $('#shoe_size_selected option:selected').val();
+            var bid_amount = $("#bid_amount").val();
+            if (shoe_size_id !== "Size" && bid_amount !== '' && bid_amount !== '0') {
+                $.ajax({
+                    type: 'Post',
+                    url: "{% url 'web_cart_bid' product.id %}",
+                    data: {
+                        "shoe_size_id": shoe_size_id,
+                        'bid_amount': bid_amount,
+                        'sku_number': '{{product.sku_number}}'
+                    },
+                    success: function (data) {
+                        if (data['bid_success']) {
+                            $('#message-body').text(data['message']);
+                            $('#message-head').text(data['bid']);
+                            $('#success-btn').click()
+                        } else {
+                            $('#message-body').text(data['message']);
+                            $('#message-head').text(data['bid']);
+                            $('#success-btn').click()
+                        }
+                    }
+                });
+            } else {
+                $('#bid_amount').css({'border-color': 'red'});
+            }
+
+        });
+        $("#shoe_size_dropdown_selected").on('click', function (e) {
+            var shoe_size_id = $('#shoe_size_selected option:selected').val();
+            if (shoe_size_id === 'Size') {
+
+                alert("please select shoe size first");
+
+            } else {
+                $('#shoe_size_dropdown_selected_next').click();
+            }
+
+        });
     </script>
+
 {% endblock %}

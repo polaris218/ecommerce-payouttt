@@ -13,6 +13,8 @@ from accounts.STRIPE_payments import StripePayment
 from accounts.models import User
 from addresses.address_validation import ShippoAddressManagement
 from addresses.models import Address
+from api.bid_status_management import BidStatusManagement
+from api.models import Product, Bid
 from core.models import FeedbackModel
 from dashboard.views import AddressView
 from profiles.forms import MyPasswordChangeForm, MyAddressForm
@@ -74,6 +76,16 @@ class SellingView(LoginRequiredMixin, TemplateView):
         kwargs['selling'] = 'active'
         return kwargs
 
+    def get(self, request, *args, **kwargs):
+        products = Product.objects.filter(seller=self.request.user)
+        prices = {}
+        all_prices = []
+        for product in products:
+            prices['highest'], prices['lowest'] = BidStatusManagement().get_lowest_highest_bid(product.sku_number)
+            all_prices.append(prices)
+            prices = {}
+        return render(request, self.template_name, {'products': zip(products, all_prices)})
+
 
 class BuyingView(LoginRequiredMixin, TemplateView):
     template_name = 'admin-buying.html'
@@ -85,6 +97,16 @@ class BuyingView(LoginRequiredMixin, TemplateView):
 
         kwargs['buying'] = 'active'
         return kwargs
+
+    def get(self, request, *args, **kwargs):
+        prices = {}
+        all_prices = []
+        all_bids = Bid.objects.filter(user=self.request.user, paid=False)
+        for bid in all_bids:
+            prices['highest'], prices['lowest'] = BidStatusManagement().get_lowest_highest_bid(bid.sku_number)
+            all_prices.append(prices)
+            prices = {}
+        return render(request, self.template_name, {'bids': zip(all_bids, all_prices)})
 
 
 class DashboardView(LoginRequiredMixin, TemplateView):

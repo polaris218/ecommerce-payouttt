@@ -2,6 +2,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django import forms
 
 from addresses.models import Address
+from localflavor.us.us_states import STATE_CHOICES
 
 
 class MyPasswordChangeForm(PasswordChangeForm):
@@ -31,10 +32,12 @@ class MyAddressForm(forms.ModelForm):
         self.fields['company'].widget.attrs.update({'class': 'form-control', 'placeholder': "Company"})
         self.fields['street1'].widget.attrs.update({'class': 'form-control', 'placeholder': "Stareet Address"})
         self.fields['city'].widget.attrs.update({'class': 'form-control', 'placeholder': "City"})
+
         self.fields['state'].widget.attrs.update({'class': 'form-control', 'placeholder': "State"})
+
         self.fields['zip'].widget.attrs.update({'class': 'form-control', 'placeholder': "Zip"})
         self.fields['country'].widget.attrs.update({'class': 'form-control', 'placeholder': "Country"})
-        self.fields['state'].widget=forms.TextInput()
+        # self.fields['state'].widget = forms.TextInput()
         self.fields['user'].widget = forms.HiddenInput()
-
-
+        self.fields['company'].initial = 'Payouttt'
+        self.fields['company'].widget = forms.HiddenInput()

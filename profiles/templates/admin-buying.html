@@ -45,102 +45,31 @@
                                         </tr>
                                         </thead>
                                         <tbody class="option-tbl-body" id="option-tbl">
-                                        <tr class="bodr-gray-top gray_c">
-                                            <td class="msg-tbl-body">01</td>
-                                            <td class="msg-tbl-body">CD8179-300</td>
-                                            <td class="msg-tbl-body">Off-White x Wmns Air Zoom Terra Kiger 5(W)-Athlete
-                                                in Progress(Electric Green)
-                                            </td>
-                                            <td class="msg-tbl-body">86</td>
-                                            <td class="msg-tbl-body">$222.00</td>
-                                            <td class="msg-tbl-body">$230.00</td>
-                                            <td class="msg-tbl-body">$180.00</td>
-                                            <td class="msg-tbl-body">
-                                                <a href="#" class="pro_img">
-                                                    <img src="{% static 'web_admin/images/selling.png' %}" alt="" class="img-fluid">
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr class="bodr-gray-top gray_c">
-                                            <td class="msg-tbl-body">02</td>
-                                            <td class="msg-tbl-body">CD8179-300</td>
-                                            <td class="msg-tbl-body">Off-White x Wmns Air Zoom Terra Kiger 5(W)-Athlete
-                                                in Progress(Electric Green)
-                                            </td>
-                                            <td class="msg-tbl-body">86</td>
-                                            <td class="msg-tbl-body">$222.00</td>
-                                            <td class="msg-tbl-body">$230.00</td>
-                                            <td class="msg-tbl-body">$180.00</td>
-                                            <td class="msg-tbl-body">
-                                                <a href="#" class="pro_img">
-                                                    <img src="{% static 'web_admin/images/selling.png' %}" alt="" class="img-fluid">
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr class="bodr-gray-top gray_c">
-                                            <td class="msg-tbl-body">03</td>
-                                            <td class="msg-tbl-body">CD8179-300</td>
-                                            <td class="msg-tbl-body">Off-White x Wmns Air Zoom Terra Kiger 5(W)-Athlete
-                                                in Progress(Electric Green)
-                                            </td>
-                                            <td class="msg-tbl-body">86</td>
-                                            <td class="msg-tbl-body">$222.00</td>
-                                            <td class="msg-tbl-body">$230.00</td>
-                                            <td class="msg-tbl-body">$180.00</td>
-                                            <td class="msg-tbl-body">
-                                                <a href="#" class="pro_img">
-                                                    <img src="{% static 'web_admin/images/selling.png' %}" alt="" class="img-fluid">
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr class="bodr-gray-top gray_c">
-                                            <td class="msg-tbl-body">04</td>
-                                            <td class="msg-tbl-body">CD8179-300</td>
-                                            <td class="msg-tbl-body">Off-White x Wmns Air Zoom Terra Kiger 5(W)-Athlete
-                                                in Progress(Electric Green)
-                                            </td>
-                                            <td class="msg-tbl-body">86</td>
-                                            <td class="msg-tbl-body">$222.00</td>
-                                            <td class="msg-tbl-body">$230.00</td>
-                                            <td class="msg-tbl-body">$180.00</td>
-                                            <td class="msg-tbl-body">
-                                                <a href="#" class="pro_img">
-                                                    <img src="{% static 'web_admin/images/selling.png' %}" alt="" class="img-fluid">
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr class="bodr-gray-top gray_c">
-                                            <td class="msg-tbl-body">05</td>
-                                            <td class="msg-tbl-body">CD8179-300</td>
-                                            <td class="msg-tbl-body">Off-White x Wmns Air Zoom Terra Kiger 5(W)-Athlete
-                                                in Progress(Electric Green)
-                                            </td>
-                                            <td class="msg-tbl-body">86</td>
-                                            <td class="msg-tbl-body">$222.00</td>
-                                            <td class="msg-tbl-body">$230.00</td>
-                                            <td class="msg-tbl-body">$180.00</td>
-                                            <td class="msg-tbl-body">
-                                                <a href="#" class="pro_img">
-                                                    <img src="{% static 'web_admin/images/selling.png' %}" alt="" class="img-fluid">
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr class="bodr-gray-top gray_c">
-                                            <td class="msg-tbl-body">06</td>
-                                            <td class="msg-tbl-body">CD8179-300</td>
-                                            <td class="msg-tbl-body">Off-White x Wmns Air Zoom Terra Kiger 5(W)-Athlete
-                                                in Progress(Electric Green)
-                                            </td>
-                                            <td class="msg-tbl-body">86</td>
-                                            <td class="msg-tbl-body">$222.00</td>
-                                            <td class="msg-tbl-body">$230.00</td>
-                                            <td class="msg-tbl-body">$180.00</td>
-                                            <td class="msg-tbl-body">
-                                                <a href="#" class="pro_img">
-                                                    <img src="{% static 'web_admin/images/selling.png' %}" alt="" class="img-fluid">
-                                                </a>
-                                            </td>
-                                        </tr>
+                                        {% for bid,prices in bids %}
+                                            <tr class="bodr-gray-top gray_c">
+                                                {% if bid.product_to_bid_on %}
+                                                    <td class="msg-tbl-body">{{ bid.product_to_bid_on.id }}</td>
+                                                {% else %}
+                                                    <td class="msg-tbl-body" style="color: red">#</td>
+                                                {% endif %}
+                                                <td class="msg-tbl-body">{{ bid.sku_number }}</td>
+                                                {% if bid.product_to_bid_on %}
+                                                    <td class="msg-tbl-body">{{ bid.product_to_bid_on.title }}</td>
+                                                {% else %}
+                                                    <td class="msg-tbl-body" style="color: red">Bid Not Accepted</td>
+                                                {% endif %}
+                                                <td class="msg-tbl-body">{{ bid.shoe_size }}</td>
+                                                <td class="msg-tbl-body">${{ bid.bid_amount }}</td>
+                                                <td class="msg-tbl-body">${{ prices.highest }}</td>
+                                                <td class="msg-tbl-body">${{ prices.lowest }}</td>
+                                                <td class="msg-tbl-body">
+                                                    <a href="#" class="pro_img">
+                                                        <img src="{{ bid.product_to_bid_on.url }}" alt=""
+                                                             class="img-fluid">
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>
@@ -186,7 +115,8 @@
                                             <td class="msg-tbl-body">$180.00</td>
                                             <td class="msg-tbl-body">
                                                 <a href="#" class="pro_img">
-                                                    <img src="{% static 'web_admin/images/selling.png' %}" alt="" class="img-fluid">
+                                                    <img src="{% static 'web_admin/images/selling.png' %}" alt=""
+                                                         class="img-fluid">
                                                 </a>
                                             </td>
                                         </tr>
@@ -202,7 +132,8 @@
                                             <td class="msg-tbl-body">$180.00</td>
                                             <td class="msg-tbl-body">
                                                 <a href="#" class="pro_img">
-                                                    <img src="{% static 'web_admin/images/selling.png' %}" alt="" class="img-fluid">
+                                                    <img src="{% static 'web_admin/images/selling.png' %}" alt=""
+                                                         class="img-fluid">
                                                 </a>
                                             </td>
                                         </tr>
@@ -218,7 +149,8 @@
                                             <td class="msg-tbl-body">$180.00</td>
                                             <td class="msg-tbl-body">
                                                 <a href="#" class="pro_img">
-                                                    <img src="{% static 'web_admin/images/selling.png' %}" alt="" class="img-fluid">
+                                                    <img src="{% static 'web_admin/images/selling.png' %}" alt=""
+                                                         class="img-fluid">
                                                 </a>
                                             </td>
                                         </tr>
@@ -234,7 +166,8 @@
                                             <td class="msg-tbl-body">$180.00</td>
                                             <td class="msg-tbl-body">
                                                 <a href="#" class="pro_img">
-                                                    <img src="{% static 'web_admin/images/selling.png' %}" alt="" class="img-fluid">
+                                                    <img src="{% static 'web_admin/images/selling.png' %}" alt=""
+                                                         class="img-fluid">
                                                 </a>
                                             </td>
                                         </tr>
@@ -250,7 +183,8 @@
                                             <td class="msg-tbl-body">$180.00</td>
                                             <td class="msg-tbl-body">
                                                 <a href="#" class="pro_img">
-                                                    <img src="{% static 'web_admin/images/selling.png' %}" alt="" class="img-fluid">
+                                                    <img src="{% static 'web_admin/images/selling.png' %}" alt=""
+                                                         class="img-fluid">
                                                 </a>
                                             </td>
                                         </tr>
@@ -266,7 +200,8 @@
                                             <td class="msg-tbl-body">$180.00</td>
                                             <td class="msg-tbl-body">
                                                 <a href="#" class="pro_img">
-                                                    <img src="{% static 'web_admin/images/selling.png' %}" alt="" class="img-fluid">
+                                                    <img src="{% static 'web_admin/images/selling.png' %}" alt=""
+                                                         class="img-fluid">
                                                 </a>
                                             </td>
                                         </tr>
@@ -315,7 +250,8 @@
                                             <td class="msg-tbl-body">$180.00</td>
                                             <td class="msg-tbl-body">
                                                 <a href="#" class="pro_img">
-                                                    <img src="{% static 'web_admin/images/selling.png' %}" alt="" class="img-fluid">
+                                                    <img src="{% static 'web_admin/images/selling.png' %}" alt=""
+                                                         class="img-fluid">
                                                 </a>
                                             </td>
                                         </tr>
@@ -331,7 +267,8 @@
                                             <td class="msg-tbl-body">$180.00</td>
                                             <td class="msg-tbl-body">
                                                 <a href="#" class="pro_img">
-                                                    <img src="{% static 'web_admin/images/selling.png' %}" alt="" class="img-fluid">
+                                                    <img src="{% static 'web_admin/images/selling.png' %}" alt=""
+                                                         class="img-fluid">
                                                 </a>
                                             </td>
                                         </tr>
@@ -347,7 +284,8 @@
                                             <td class="msg-tbl-body">$180.00</td>
                                             <td class="msg-tbl-body">
                                                 <a href="#" class="pro_img">
-                                                    <img src="{% static 'web_admin/images/selling.png' %}" alt="" class="img-fluid">
+                                                    <img src="{% static 'web_admin/images/selling.png' %}" alt=""
+                                                         class="img-fluid">
                                                 </a>
                                             </td>
                                         </tr>
@@ -363,7 +301,8 @@
                                             <td class="msg-tbl-body">$180.00</td>
                                             <td class="msg-tbl-body">
                                                 <a href="#" class="pro_img">
-                                                    <img src="{% static 'web_admin/images/selling.png' %}" alt="" class="img-fluid">
+                                                    <img src="{% static 'web_admin/images/selling.png' %}" alt=""
+                                                         class="img-fluid">
                                                 </a>
                                             </td>
                                         </tr>
@@ -379,7 +318,8 @@
                                             <td class="msg-tbl-body">$180.00</td>
                                             <td class="msg-tbl-body">
                                                 <a href="#" class="pro_img">
-                                                    <img src="{% static 'web_admin/images/selling.png' %}" alt="" class="img-fluid">
+                                                    <img src="{% static 'web_admin/images/selling.png' %}" alt=""
+                                                         class="img-fluid">
                                                 </a>
                                             </td>
                                         </tr>
@@ -395,7 +335,8 @@
                                             <td class="msg-tbl-body">$180.00</td>
                                             <td class="msg-tbl-body">
                                                 <a href="#" class="pro_img">
-                                                    <img src="{% static 'web_admin/images/selling.png' %}" alt="" class="img-fluid">
+                                                    <img src="{% static 'web_admin/images/selling.png' %}" alt=""
+                                                         class="img-fluid">
                                                 </a>
                                             </td>
                                         </tr>

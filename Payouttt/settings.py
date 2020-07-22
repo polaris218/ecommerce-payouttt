@@ -162,6 +162,9 @@ CORS_ORIGIN_WHITELIST = [
     'https://payouttt.com',
 ]
 
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+
 AUTH_USER_MODEL = 'accounts.User'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

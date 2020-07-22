@@ -5,12 +5,14 @@ Copyright (c) 2019 - present AppSeed.us
 """
 
 from django.urls import path, re_path
+from django.views.decorators.csrf import csrf_exempt
+
 from website import views
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
-    path('', views.IndexView.as_view(), name='web-home'),
+    path('', csrf_exempt(views.IndexView.as_view()), name='web-home'),
     path('category-details/', views.CategoryDetailsView.as_view(), name='web-category-detail'),
     path('selling/', views.SellingView.as_view(), name='selling'),
     path('app/', views.AppView.as_view(), name='web_app'),
@@ -19,9 +21,9 @@ urlpatterns = [
     path('news-detail/', views.NewsDetailView.as_view(), name='web_news_detail'),
     path('product-detail/<int:product_id>/', views.ProductDetailView.as_view(), name='product_detail'),
     path('cart/', views.WebCartView.as_view(), name='web_cart'),
-    path('product-bid/<int:product_id>/', views.WebCartBidView.as_view(), name='web_cart_bid'),
+    path('product-bid/<int:product_id>/', csrf_exempt(views.WebCartBidView.as_view()), name='web_cart_bid'),
     path('product-buy/<int:product_id>/', views.WebCartBuyView.as_view(), name='web_cart_buy'),
-    path('product-sell/<int:product_id>/', views.WebCartSellView.as_view(), name='web_cart_sell'),
+    path('product-sell/<int:product_id>/', csrf_exempt(views.WebCartSellView.as_view()), name='web_cart_sell'),
     path('cart/checkout', views.WebCartCheckoutView.as_view(), name='web_cart_checkout'),
     path('cart/confirmation', views.WebCartConfirmationView.as_view(), name='web_cart_confirmation'),
     path('cart/thank-you', views.WebCartThankYouView.as_view(), name='web_cart_thank_you'),
