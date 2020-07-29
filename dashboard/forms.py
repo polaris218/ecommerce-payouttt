@@ -9,6 +9,7 @@ from django.contrib.auth.forms import UserCreationForm
 
 from accounts.models import User
 from addresses.models import Address
+from api.models import SuggestProduct
 
 
 class LoginForm(forms.Form):
@@ -97,3 +98,17 @@ class AddressForm(forms.ModelForm):
     class Meta:
         model = Address
         exclude = ('created_at', 'updated_at', 'is_valid',)
+
+
+class ProductSuggestForm(forms.ModelForm):
+    class Meta:
+        model = SuggestProduct
+        exclude = ('created_at', 'updated_at', 'is_valid', 'user')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs.update(
+            {'type': 'input', 'class': 'input-field w-100 border py-3 px-3', 'placeholder': "Product Name"})
+        self.fields['description'].widget.attrs.update(
+            {'type': 'textarea', 'class': 'input-field w-100 border py-3 px-3', 'placeholder': " Product Info",
+             'rows': '4', 'aria-invalid': 'false'})

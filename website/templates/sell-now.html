@@ -150,27 +150,50 @@
                                                                     data-toggle="modal"
                                                                     data-target="#exampleModal"
                                                                     href="javascript:void(0);"
-                                                                    class="text-uppercase open_sans bold_700 text-white shop_btn d-inline-block font_26">
+                                                                    class="text-uppercase open_sans bold_700 bold_500 bg_green text-white shop_btn d-inline-block font_26">
                                                             </button>
                                                             <button type="button" id="check_input_value"
-                                                                    class="text-uppercase open_sans bold_700 text-white shop_btn d-inline-block font_26">
+                                                                    class="text-uppercase open_sans bold_700 bold_500 bg_green text-white shop_btn d-inline-block font_26">
                                                                 List Ask
                                                             </button>
+                                                            <button type="button"
+                                                                    data-toggle="modal"
+                                                                    data-target="#suggest_new_product"
+                                                                    href="javascript:void(0);"
+                                                                    class="text-uppercase open_sans bold_700 bold_500 bg_green text-white shop_btn d-inline-block font_26">
+                                                                Suggest Product
+                                                            </button>
                                                         {% elif not user.is_authenticated %}
-                                                            <a href='/login/?next=/product-bid/{{ product.id }}/'>
+                                                            <a href='/login/?next=/product-sell/{{ product.id }}/'>
                                                                 <button type="button" id="check_input_value_login"
-                                                                        class="text-uppercase open_sans bold_700 text-white shop_btn d-inline-block font_26">
+                                                                        class="text-uppercase open_sans bold_700 bold_500 bg_green text-white shop_btn d-inline-block font_26">
                                                                     List
                                                                     Ask
+                                                                </button>
+                                                            </a>
+                                                            <a href='/login/?next=/product-sell/{{ product.id }}/'>
+                                                                <button type="button" id="check_input_value_login"
+                                                                        class="text-uppercase open_sans bold_700 bold_500 bg_green text-white shop_btn d-inline-block font_26">
+                                                                    Suggest Product
                                                                 </button>
                                                             </a>
 
                                                         {% else %}
                                                             <button disabled type="button"
-                                                                    class="text-uppercase open_sans bold_700 text-white shop_btn d-inline-block font_26">
+                                                                    class="text-uppercase open_sans bold_700 bold_500 bg_green text-white shop_btn d-inline-block font_26">
                                                                 list
                                                                 ask
                                                             </button>
+                                                            <a>
+                                                                <button id="check_input_value_login"
+                                                                        type="button"
+                                                                        data-toggle="modal"
+                                                                        data-target="#suggest_new_product"
+                                                                        href="javascript:void(0);"
+                                                                        class="text-uppercase open_sans bold_700 bold_500 bg_green text-white shop_btn d-inline-block font_26">
+                                                                    Suggest Product
+                                                                </button>
+                                                            </a>
                                                         {% endif %}
                                                     </a>
                                                 </div>
@@ -234,19 +257,25 @@
                     </div>
                 </div>
                 <div class="modal-body border-0 pb-4 pt-0 px-4">
-                    <form>
+                    <form action="{% url 'product_suggest' %}" method="post">
                         <div class="name-active ">
                             <div class="modal-header border-0 justify-content-start align-items-center pb-3 px-0 pt-0">
-                                <input class="input-field w-100 border py-3 px-3" type="text" id="new-product"
-                                       name="new-product" placeholder="New Product">
+                                {#                                <input class="input-field w-100 border py-3 px-3" type="text" id="new-product"#}
+                                {#                                       name="new-product" placeholder="New Product">#}
+                                {{ product_suggest_form.name }}
+                                <input hidden class="input-field w-100 border py-3 px-3" type="text" id="product-id"
+                                       name="product-id" value="{{ product.id }}">
                             </div>
                             <div class="field_row_pop gray_c position-relative w-100 d-inline-block">
-                                <textarea aria-invalid="false" class="input-field w-100 border py-3 px-3"
-                                          name="product-info" rows="4" placeholder="Product Info"></textarea>
+                                {#                                <textarea aria-invalid="false" class="input-field w-100 border py-3 px-3"#}
+                                {#                                          name="product-info" rows="4" placeholder="Product Info"></textarea>#}
+                                {{ product_suggest_form.description }}
                             </div>
                             <div class="field_row_pop field_btn mt-3">
-                                <input type="submit" name="send-to-payouttt" value="Send To Payouttt"
-                                       class="d-block text-white text-center bg_green text-uppercase def_btn_admin border-0 w-100 bold_600 font_20"/>
+                                <button type="submit" name="send-to-payouttt"
+                                        class="d-block text-white text-center bg_green text-uppercase def_btn_admin border-0 w-100 bold_600 font_20">
+                                    Send To Payouttt
+                                </button>
                             </div>
                         </div>
                     </form>

@@ -6,13 +6,13 @@
                 <a href="javascript:void(0);" class="bg-transparent border-0 p-0 d-inline-block text-dark"><i
                         class="flaticon-cancel" aria-hidden="true"></i></a>
             </div>
-            <form class="products-search">
+            <form class="products-search" action="{% url 'web_search' %}" method="get">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search entire store...">
+                    <input type="text" class="form-control" id="product_search" name="product_search"
+                           placeholder="Search entire store...">
                     <div class="input-group-append">
-                        <button class="btn btn-secondary" type="button">
-                            <a href="{% url 'web_search' %}" class="flaticon-search position-relative text-dark"
-                               aria-hidden="true"></a>
+                        <button class="btn btn-secondary" type="submit">
+                            <a class="flaticon-search position-relative text-dark" aria-hidden="true"></a>
                         </button>
                     </div>
                 </div>
@@ -81,11 +81,19 @@
                     <div class="responsive_toggle d-flex align-content-center justify-content-end">
                         <a href="javascript:void(0);" class="search_scroll mr-3 mr-sm-4 d-inline-block sreach-icon"><i
                                 class="flaticon-search position-relative text-dark" aria-hidden="true"></i></a>
-                        <a href="{% url 'web_cart' %}"
-                           class="shop_cart_icon d-inline-block position-relative inner-cart-icon-right">
-                            <i class="shop_bg d-inline-block"></i>
-                            <span class="bg_green position-absolute open_sans bold_700 font_10 text-white shop_count d-flex align-items-center justify-content-center">0</span>
-                        </a>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'web_cart' %}"
+                               class="shop_cart_icon d-inline-block position-relative inner-cart-icon-right">
+                                <i class="shop_bg d-inline-block"></i>
+                                <span class="bg_green position-absolute open_sans bold_700 font_10 text-white shop_count d-flex align-items-center justify-content-center">0</span>
+                            </a>
+                        {% else %}
+                            <a href='/login/?next=/cart/'
+                               class="shop_cart_icon d-inline-block position-relative inner-cart-icon-right">
+                                <i class="shop_bg d-inline-block"></i>
+                                <span class="bg_green position-absolute open_sans bold_700 font_10 text-white shop_count d-flex align-items-center justify-content-center">0</span>
+                            </a>
+                        {% endif %}
                         <a href="javascript:void(0);"
                            class="bg-transparent responsive_side_toggle border-0 p-0 d-inline-block d-lg-none text-dark menu-icon-mobile"><i
                                 class="flaticon-menu position-relative" aria-hidden="true"></i></a>

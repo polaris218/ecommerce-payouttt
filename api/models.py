@@ -199,3 +199,34 @@ class BidStatus(BaseModel):
 
     def __str__(self):
         return '{},{}'.format(self.bid.product_to_bid_on.title, self.status)
+
+
+class CartItem(models.Model):
+    buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='buyer')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    shoe_size = models.ForeignKey(ShoeSize, on_delete=models.CASCADE, null=True, blank=True)
+
+
+class CartModel(BaseModel):
+    PENDING = 'PENDING'
+    PAID = 'PAID'
+    DISPATCH = 'DISPATCH'
+    DELIVERED = 'DELIVERED'
+    ORDER_STATUS = (
+        (PENDING, 'PENDING'),
+        (PAID, 'PAID'),
+        (DISPATCH, 'DISPATCH'),
+        (DELIVERED, 'DELIVERED'),
+    )
+
+    cart_item = models.ManyToManyField(CartItem, null=True, blank=True)
+    paid = models.BooleanField(default=False)
+    transaction_id = models.IntegerField(default=0)
+    status = models.CharField(max_length=50, choices=ORDER_STATUS, default=PENDING)
+    is_active = models.BooleanField(default=True)
+
+
+class SuggestProduct(BaseModel):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)

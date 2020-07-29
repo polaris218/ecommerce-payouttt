@@ -1,6 +1,9 @@
+from datetime import datetime
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Sum
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -11,10 +14,10 @@ from Payouttt.constants import BID_SUCCESS_MESSAGE, BID_FAIL, BID_COMPLETE, \
     SELL_FAIL, SELL_SUCCESS_MESSAGE, SELL_COMPLETE, FAIL_MESSAGE
 from addresses.address_validation import ShippoAddressManagement
 from api.bid_status_management import BidStatusManagement
-from api.models import Product, Bid, ShoeSize
+from api.models import Product, Bid, ShoeSize, CartModel, CartItem, SuggestProduct
 from core import EmailHelper
 from core.EmailHelper import Email
-from dashboard.forms import LoginForm, WebSignUpForm
+from dashboard.forms import LoginForm, WebSignUpForm, ProductSuggestForm
 
 
 class IndexView(TemplateView):
@@ -44,6 +47,26 @@ class NewsView(TemplateView):
 class SearchView(TemplateView):
     template_name = 'search.html'
 
+    def get(self, request, *args, **kwargs):
+        query_dict = {}
+        query_dict['seller__is_staff'] = True
+        if request.GET.get('product_search'):
+            query_dict['title__contains'] = request.GET.get('product_search')
+        products = Product.objects.filter(**query_dict)
+        brands = Product.objects.all().values('brand').distinct()
+        brands = [brand['brand'].strip(',') for brand in brands]
+        return render(request, self.template_name, {'products': products, 'brands': brands})
+
+    def post(self, request, *args, **kwargs):
+        query_dict = {}
+        query_dict['seller__is_staff'] = True
+        if request.POST.get('product_search'):
+            query_dict['title__contains'] = request.POST.get('product_search')
+        if request.POST.getlist('selected_brands[]'):
+            query_dict['brand__in'] = request.POST.getlist('selected_brands[]')
+        products = Product.objects.filter(**query_dict)
+        return render(request, 'search_ajax.html', {'products': products})
+
 
 class NewsDetailView(TemplateView):
     template_name = 'news-detail.html'
@@ -64,6 +87,50 @@ class ProductDetailView(TemplateView):
 
 class WebCartView(TemplateView):
     template_name = 'cart.html'
+
+    def get(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            cart = CartModel.objects.filter(cart_item__buyer=self.request.user, is_active=True).first()
+            total_price = 0
+            if cart:
+                total_price = cart.cart_item.all().aggregate(Sum('product__listing_price'))
+                total_price = total_price['product__listing_price__sum']
+                cart = cart.cart_item.all()
+            return render(request, self.template_name, {'cart': cart, 'total_price': total_price})
+
+
+class WebCartAddView(TemplateView):
+    def post(self, request, *args, **kwargs):
+        product_id = kwargs.get('product_id')
+        valid_address = ShippoAddressManagement().user_valid_address(self.request.user)
+        if valid_address:
+            cart = CartModel.objects.filter(cart_item__buyer=self.request.user, is_active=True).first()
+            if not cart:
+                cart = CartModel()
+                cart.save()
+            dict = {}
+            if request.POST.get('shoe_size_id'):
+                shoe_size = ShoeSize.objects.get(id=request.POST.get('shoe_size_id'))
+                dict['shoe_size'] = shoe_size
+            dict['buyer'] = self.request.user
+            dict['product'] = Product.objects.get(id=product_id)
+            cart_item_obj = CartItem.objects.create(**dict)
+            cart.updated_at = datetime.today()
+            cart.cart_item.add(cart_item_obj)
+            cart.save()
+        return redirect('web_cart')
+
+
+class WebCartItemDeleteView(TemplateView):
+    template_name = 'cart.html'
+
+    def post(self, request, *args, **kwargs):
+        cart_item_id = kwargs.get('cart_item_id')
+        cart = CartModel.objects.filter(cart_item__buyer=self.request.user).first()
+        cart_item = CartItem.objects.get(id=cart_item_id)
+        cart.cart_item.remove(cart_item)
+        cart.save()
+        return redirect('web_cart')
 
 
 class WebCartBidView(TemplateView):
@@ -100,7 +167,8 @@ class WebCartBidView(TemplateView):
                 bid = Bid.objects.filter(sku_number=sku_number, user=self.request.user)
                 if not bid:
                     obj = Bid.objects.create(sku_number=sku_number, user=self.request.user,
-                                             verified_account=self.request.user.verified_account, shoe_size=shoe_size,
+                                             verified_account=self.request.user.verified_account,
+                                             shoe_size=shoe_size,
                                              bid_amount=bid_amount)
                     if obj:
                         if not obj.product_to_bid_on:
@@ -123,12 +191,19 @@ class WebCartBuyView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         product_id = kwargs.get('product_id')
+        can_buy = False
         product = Product.objects.get(id=product_id)
         highest_ask, lowest_ask = BidStatusManagement().get_lowest_highest_listing_price(product.sku_number)
         highest_bid, lowest_bid = BidStatusManagement().get_lowest_highest_bid(product.sku_number)
-
-        return render(request, self.template_name,
-                      {'product': product, 'lowest_ask': lowest_ask, 'highest_bid': highest_bid})
+        context = {'product': product, 'lowest_ask': lowest_ask, 'highest_bid': highest_bid}
+        product = Product.objects.get(id=product_id)
+        if request.user.is_authenticated:
+            context['valid_address'] = ShippoAddressManagement().user_valid_address(self.request.user)
+            cart_item_obj = CartItem.objects.filter(buyer=self.request.user, product=product)
+            if not cart_item_obj:
+                can_buy = True
+        context['can_buy'] = can_buy
+        return render(request, self.template_name, context)
 
 
 class WebCartSellView(TemplateView):
@@ -140,6 +215,8 @@ class WebCartSellView(TemplateView):
         highest_ask, lowest_ask = BidStatusManagement().get_lowest_highest_listing_price(product.sku_number)
         highest_bid, lowest_bid = BidStatusManagement().get_lowest_highest_bid(product.sku_number)
         context = {'product': product, 'highest_bid': highest_bid, 'lowest_ask': lowest_ask}
+        product_suggest_form = ProductSuggestForm(request.POST or None)
+        context['product_suggest_form'] = product_suggest_form
         if request.user.is_authenticated:
             context['valid_address'] = ShippoAddressManagement().user_valid_address(self.request.user)
         return render(request, self.template_name, context)
@@ -179,6 +256,22 @@ class WebCartSellView(TemplateView):
             context['bid_success'] = sell_success
 
             return JsonResponse(context)
+
+
+class WebProductSuggestView(TemplateView):
+    template_name = 'sell-now.html'
+
+    def post(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            valid_address = ShippoAddressManagement().user_valid_address(self.request.user)
+            product_id = request.POST.get('product-id')
+            if valid_address:
+                form = ProductSuggestForm(request.POST or None)
+                if form.is_valid():
+                    form = form.save(commit=False)
+                    form.user = self.request.user
+                    form.save()
+            return redirect(reverse('web_cart_sell', args=[product_id]))
 
 
 class WebCartCheckoutView(TemplateView):

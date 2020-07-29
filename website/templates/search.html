@@ -5,14 +5,22 @@
     <main class="bg-white position-relative">
         <!-- search bar -->
         <div class="container">
-            <div class="input-group search-bar-top">
-                <input type="text" class="form-control" placeholder="Adidas Yeezy Boost">
-                <div class="input-group-append">
-                    <button class="btn btn-secondary" type="button">
-                        <i class="flaticon-search position-relative text-dark" aria-hidden="true"></i>
-                    </button>
+            <form>
+                <div class="input-group search-bar-top">
+                    {% if not request.GET.product_search %}
+                        <input type="text" class="form-control" id="product_search_name" name="product_search_name"
+                               placeholder="Search">
+                    {% else %}
+                        <input type="text" class="form-control" id="product_search_name" name="product_search_name"
+                               placeholder="Search" value="{{ request.GET.product_search }}">
+                    {% endif %}
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary" id="search_btn_id" type="submit">
+                            <i class="flaticon-search position-relative text-dark" aria-hidden="true"></i>
+                        </button>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
         <!-- top_selling_sec -->
         <section id="top_selling_sec" class="position-relative overflow-hidden">
@@ -58,18 +66,20 @@
                                         </span>
                                             </div>
                                             <div class="inner-accordion">
-                                                <div class="checkbox checkbox-inline">
-                                                    <input type="checkbox" id="inlineCheckbox3" value="option1"/>
-                                                    <label for="inlineCheckbox3"> Air Jordan </label>
-                                                </div>
-                                                <div class="checkbox checkbox-inline">
-                                                    <input type="checkbox" id="inlineCheckbox1" value="option2"/>
-                                                    <label for="inlineCheckbox1"> Adidas </label>
-                                                </div>
-                                                <div class="checkbox checkbox-inline">
-                                                    <input type="checkbox" id="inlineCheckbox2" value="option3"/>
-                                                    <label for="inlineCheckbox2"> Nike </label>
-                                                </div>
+                                                {% for brand in brands %}
+                                                    <div class="checkbox checkbox-inline">
+                                                        <input type="checkbox" id="{{ brand }}" value="{{ brand }}"/>
+                                                        <label for="{{ brand }}"> {{ brand }} </label>
+                                                    </div>
+                                                    {#                                                    <div class="checkbox checkbox-inline">#}
+                                                    {#                                                        <input type="checkbox" id="inlineCheckbox1" value="{{brand}}"/>#}
+                                                    {#                                                        <label for="inlineCheckbox1"> {{brand}} </label>#}
+                                                    {#                                                    </div>#}
+                                                    {#                                                    <div class="checkbox checkbox-inline">#}
+                                                    {#                                                        <input type="checkbox" id="inlineCheckbox2" value="option3"/>#}
+                                                    {#                                                        <label for="inlineCheckbox2"> Nike </label>#}
+                                                    {#                                                    </div>#}
+                                                {% endfor %}
                                             </div>
                                         </div>
                                         <div class="myaccordion active padd-top-40">
@@ -183,207 +193,8 @@
                                 </div>
                             </div>
                             <div class="top_selling_slider col-md-8 col-lg-9">
-                                <div class="row">
-                                    <div class="top_selling_product_box col-lg-4 col-md-6">
-                                        <div class="top_sell_img border bg-white position-relative overflow-hidden">
-                                            <div class="add-top-cart-btn">
-                                                <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add
-                                                    To Cart</a>
-                                            </div>
-                                            <a href="javascript:void(0);"
-                                               class="d-block w-100 h-100 image_hover position-relative">
-                                                <img src="{% static 'web/images/top_selling_product_1.png' %}" alt=""
-                                                     class="img-fluid"/></a>
-                                        </div>
-                                        <div class="top_sell_title text-center mt-3">
-                                            <h3><a href="javascript:void(0);" class="open_sans bold_400 font_20">Off-White
-                                                x Air Force 1 Low-The Ten</a></h3>
-                                            <h4 class="mt-lg-1 mt-xl-2 oswald_font bold_600 font_20 text-dark">
-                                                $230.00</h4>
-                                        </div>
-                                        <div class="cart-btn-mobile ">
-                                            <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To
-                                                Cart</a>
-                                        </div>
-                                    </div>
-                                    <div class="top_selling_product_box col-lg-4 col-md-6 mobile-top-product">
-                                        <div class="top_sell_img border bg-white position-relative overflow-hidden">
-                                            <div class="add-top-cart-btn">
-                                                <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add
-                                                    To Cart</a>
-                                            </div>
-                                            <a href="javascript:void(0);"
-                                               class="d-block w-100 h-100 image_hover position-relative">
-                                                <img src="{% static 'web/images/top_selling_product_2.png' %}" alt=""
-
-                                                     class="img-fluid"/></a>
-                                        </div>
-                                        <div class="top_sell_title text-center mt-3">
-                                            <h3><a href="javascript:void(0);" class="open_sans bold_400 font_20">Off-White
-                                                x Air Force 1 Low '07'-MoMA</a></h3>
-                                            <h4 class="mt-lg-1 mt-xl-2 oswald_font bold_600 font_20 text-dark">
-                                                $270.00</h4>
-                                        </div>
-                                        <div class="cart-btn-mobile ">
-                                            <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To
-                                                Cart</a>
-                                        </div>
-                                    </div>
-                                    <div class="top_selling_product_box col-lg-4 col-md-6 mobile-top-product mobile-top-product1">
-                                        <div class="top_sell_img border bg-white position-relative overflow-hidden">
-                                            <div class="add-top-cart-btn">
-                                                <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add
-                                                    To Cart</a>
-                                            </div>
-                                            <a href="javascript:void(0);"
-                                               class="d-block w-100 h-100 image_hover position-relative"> <img
-                                                    src="{% static 'web/images/top_selling_product_3.png' %}" alt=""
-
-                                                    class="img-fluid"/></a>
-                                        </div>
-                                        <div class="top_sell_title text-center mt-3">
-                                            <h3><a href="javascript:void(0);" class="open_sans bold_400 font_20">Off-White
-                                                x Air Max 90-Desert Ore</a></h3>
-                                            <h4 class="mt-lg-1 mt-xl-2 oswald_font bold_600 font_20 text-dark">
-                                                $200.00</h4>
-                                        </div>
-                                        <div class="cart-btn-mobile ">
-                                            <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To
-                                                Cart</a>
-                                        </div>
-                                    </div>
-                                    <div class="top_selling_product_box col-lg-4 col-md-6  padd-top-product">
-                                        <div class="top_sell_img border bg-white position-relative overflow-hidden">
-                                            <div class="add-top-cart-btn">
-                                                <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add
-                                                    To Cart</a>
-                                            </div>
-                                            <a href="javascript:void(0);"
-                                               class="d-inline-block w-100 h-100 image_hover position-relative"> <img
-                                                    src="{% static 'web/images/new_releases_product_1.png.png' %}"
-                                                    alt="" class="img-fluid"/></a>
-                                        </div>
-                                        <div class="top_sell_title text-center mt-3">
-                                            <h3><a href="javascript:void(0);" class="open_sans bold_400 font_20">Jordan
-                                                6 Retro DMP (2020)</a></h3>
-                                            <h4 class="mt-2 oswald_font bold_600 font_20 text-dark">$230.00</h4>
-                                        </div>
-                                        <div class="cart-btn-mobile ">
-                                            <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To
-                                                Cart</a>
-                                        </div>
-                                    </div>
-                                    <div class="top_selling_product_box col-lg-4 col-md-6 padd-top-product">
-                                        <div class="top_sell_img border bg-white overflow-hidden">
-                                            <div class="add-top-cart-btn">
-                                                <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add
-                                                    To Cart</a>
-                                            </div>
-                                            <a href="javascript:void(0);"
-                                               class="d-inline-block w-100 h-100 image_hover position-relative"> <img
-                                                    src="{% static 'web/images/new_releases_product_2.png.png' %}"
-                                                    alt="" class="img-fluid"/></a>
-                                        </div>
-                                        <div class="top_sell_title text-center mt-3">
-                                            <h3><a href="javascript:void(0);" class="open_sans bold_400 font_20">Adidas
-                                                Yeezy Boost 350 V2 Linen</a></h3>
-                                            <h4 class="mt-2 oswald_font bold_600 font_20 text-dark">$270.00</h4>
-                                        </div>
-                                        <div class="cart-btn-mobile ">
-                                            <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To
-                                                Cart</a>
-                                        </div>
-                                    </div>
-                                    <div class="top_selling_product_box col-lg-4 col-md-6 padd-top-product">
-                                        <div class="top_sell_img border bg-white overflow-hidden">
-                                            <div class="add-top-cart-btn">
-                                                <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add
-                                                    To Cart</a>
-                                            </div>
-                                            <a href="javascript:void(0);"
-                                               class="d-inline-block w-100 h-100 image_hover position-relative"> <img
-                                                    src="{% static 'web/images/new_releases_product_3.png.png' %}"
-                                                    alt="" class="img-fluid"/></a>
-                                        </div>
-                                        <div class="top_sell_title text-center mt-3">
-                                            <h3><a href="javascript:void(0);" class="open_sans bold_400 font_20">Jordan
-                                                1 Retro High Court Purple White</a></h3>
-                                            <h4 class="mt-2 oswald_font bold_600 font_20 text-dark">$200.00</h4>
-                                        </div>
-                                        <div class="cart-btn-mobile ">
-                                            <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To
-                                                Cart</a>
-                                        </div>
-                                    </div>
-                                    <div class="top_selling_product_box col-lg-4 col-md-6 padd-top-product">
-                                        <div class="top_sell_img border bg-white position-relative overflow-hidden">
-                                            <div class="add-top-cart-btn">
-                                                <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add
-                                                    To Cart</a>
-                                            </div>
-                                            <a href="javascript:void(0);"
-                                               class="d-inline-block w-100 h-100 image_hover position-relative"> <img
-                                                    src="{% static 'web/images/featured_products_product_1.png.png' %}"
-                                                    alt="" class="img-fluid"/></a>
-                                        </div>
-                                        <div class="top_sell_title text-center mt-3">
-                                            <h3><a href="javascript:void(0);" class="open_sans bold_400 font_20">Adidas
-                                                Yeezy Boost 350 V2 Cinder</a></h3>
-                                            <h4 class="mt-2 oswald_font bold_600 font_20 text-dark">$255.00</h4>
-                                        </div>
-                                        <div class="cart-btn-mobile ">
-                                            <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To
-                                                Cart</a>
-                                        </div>
-                                    </div>
-                                    <div class="top_selling_product_box col-lg-4 col-md-6 padd-top-product">
-                                        <div class="top_sell_img border bg-white overflow-hidden">
-                                            <div class="add-top-cart-btn">
-                                                <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add
-                                                    To Cart</a>
-                                            </div>
-                                            <a href="javascript:void(0);"
-                                               class="d-inline-block w-100 h-100 image_hover position-relative"><img
-                                                <img src="{% static 'web/images/featured_products_product_2.png.png' %}"
-                                                     alt="" class="img-fluid"/></a>
-                                        </div>
-                                        <div class="top_sell_title text-center mt-3">
-                                            <h3><a href="javascript:void(0);" class="open_sans bold_400 font_20">Adidas
-                                                Yeezy Boost 350 V2 Zebra</a></h3>
-                                            <h4 class="mt-2 oswald_font bold_600 font_20 text-dark">$270.00</h4>
-                                        </div>
-                                        <div class="cart-btn-mobile ">
-                                            <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To
-                                                Cart</a>
-                                        </div>
-                                    </div>
-                                    <div class="top_selling_product_box col-lg-4 col-md-6 padd-top-product">
-                                        <div class="top_sell_img border bg-white overflow-hidden">
-                                            <div class="add-top-cart-btn">
-                                                <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add
-                                                    To Cart</a>
-                                            </div>
-                                            <a href="javascript:void(0);"
-                                               class="d-inline-block w-100 h-100 image_hover position-relative"> <img
-                                                    src="{% static 'web/images/featured_products_product_3.pngea.png' %}"
-                                                    alt="" class="img-fluid"/></a>
-                                        </div>
-                                        <div class="top_sell_title text-center mt-3 ">
-                                            <h3><a href="javascript:void(0);" class="open_sans bold_400 font_20">Jordan
-                                                1 Retro High Court Purple White</a></h3>
-                                            <h4 class="mt-2 oswald_font bold_600 font_20 text-dark">$200.00</h4>
-                                        </div>
-                                        <div class="cart-btn-mobile ">
-                                            <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To
-                                                Cart</a>
-                                        </div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                    <div class="top_selling_product_box col-12 padd-top-product payouttt_offers_content text-center">
-                                        <a href="javascript:void(0);"
-                                           class="text-uppercase open_sans bold_700 text-white bg_green shop_btn d-inline-block font_26">View
-                                            more</a>
-                                    </div>
+                                <div class="row" id="search_filter_products">
+                                    {% include 'search_ajax.html' %}
                                 </div>
                             </div>
                         </div>
@@ -428,5 +239,52 @@
         $(document).ready(function () {
             $('select').niceSelect();
         });
+
+        $(":checkbox").on("click", function () {
+            var selected_brands = [];
+            $(':checkbox:checked').each(function (i) {
+                if ($(this).val() !== 'on')
+                    selected_brands[i] = $(this).val();
+            });
+            $.ajax({
+                type: 'Post',
+                url: "{% url 'web_search'%}",
+                data: {
+                    "selected_brands": selected_brands,
+                    "product_search": $("#product_search_name").val(),
+                },
+                success: function (data) {
+                    $('#search_filter_products').html(data);
+                }
+            });
+        });
+        $('#search_btn_id').on('click', function (e) {
+            e.preventDefault();
+            var product_search = $('#product_search_name').val();
+            $.ajax({
+                type: 'Post',
+                url: "{% url 'web_search'%}",
+                data: {
+                    "product_search": product_search,
+                },
+                success: function (data) {
+                    $('#search_filter_products').html(data);
+                }
+            });
+        });
+        $('#product_search_name').on('keyup', function (e) {
+            e.preventDefault();
+            var product_search = $('#product_search_name').val();
+            $.ajax({
+                type: 'Post',
+                url: "{% url 'web_search'%}",
+                data: {
+                    "product_search": product_search,
+                },
+                success: function (data) {
+                    $('#search_filter_products').html(data);
+                }
+            });
+        })
     </script>
 {% endblock %}

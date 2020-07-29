@@ -12,6 +12,7 @@ from django.views.generic import TemplateView
 from Payouttt.decorators import staff_required
 from addresses.address_validation import ShippoAddressManagement
 from addresses.models import Address
+from api.models import SuggestProduct
 from core.models import FeedbackModel
 from dashboard.forms import LoginForm, SignUpForm, AddressForm
 from dashboard.services import BidManagement
@@ -98,6 +99,16 @@ class AddressView(LoginRequiredMixin, TemplateView):
         return self.render_to_response(context)
 
 
+@method_decorator(staff_required, name='dispatch')
+class ProductSuggestionsView(LoginRequiredMixin, TemplateView):
+    template_name = 'suggestions_products.html'
+
+    def get(self, request, *args, **kwargs):
+        suggestions = SuggestProduct.objects.all().order_by('-id')
+        return render(request, self.template_name, {'suggestions': suggestions})
+
+
+@method_decorator(staff_required, name='dispatch')
 class DashboardFeedback(LoginRequiredMixin, TemplateView):
     template_name = 'feedbacks.html'
 

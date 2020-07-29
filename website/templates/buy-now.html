@@ -56,12 +56,12 @@
                                                     </div>
                                                     <h2 class="sec-heading">{{ product.title }}</h2>
                                                     <div class="select_filed size-selected">
-                                                        <select name="Selectbox"
+                                                        <select name="Selectbox" id="shoe_size_selected"
                                                                 class="wpcf7-form-control wpcf7-select Wide"
                                                                 aria-invalid="false">
-                                                            <option value="AQI India">Size</option>
+                                                            <option value="Size">Size</option>
                                                             {% for size in product.shoe_sizes.all %}
-                                                                <option value="size.shoe_size">{{ size.shoe_size }}</option>
+                                                                <option value="{{ size.id }}">{{ size }}</option>
                                                             {% endfor %}
                                                         </select>
                                                     </div>
@@ -76,10 +76,23 @@
                                                             <p>Retail Price:<b> ${{ product.retail_price }}</b></p>
                                                         </div>
                                                     </div>
+                                                    {% if not valid_address %}
+                                                        {% if user.is_authenticated %}
+                                                            <p style="color: red">Kindly Add Your Address Detail
+                                                                First.</p>
+                                                        {% endif %}
+                                                    {% elif not can_buy %}
+                                                        <p style="color: green">Product Already in Cart.</p>
+                                                    {% endif %}
                                                     <ul class="list-inline confirm-btn">
                                                         <li>
-                                                            <button type="button"
+                                                            <button type="button" hidden
+                                                                    id="shoe_size_dropdown_selected_next"
                                                                     class="default-btn next-step text-uppercase open_sans bold_500 text-white bg_green shop_btn d-inline-block  mt-lg-2 mt-xl-4">
+                                                            </button>
+                                                            <button type="button" id="shoe_size_dropdown_selected"
+                                                                    class="default-btn text-uppercase open_sans bold_500 text-white bg_green shop_btn d-inline-block  mt-lg-2 mt-xl-4"
+                                                                    style="padding: 13px 50px 13px 50px;border: none;letter-spacing: 1px;font-weight: 600;">
                                                                 confirm
                                                             </button>
                                                             <button type="button"
@@ -128,9 +141,32 @@
                                                         </div>
                                                     </div>
                                                     <div class="top_selling_product_box payouttt_offers_content">
-                                                        <a href="javascript:void(0);"
-                                                           class="text-uppercase open_sans bold_700 text-white shop_btn d-inline-block font_26">Buy
-                                                            Now</a>
+                                                        {% if valid_address  and can_buy %}
+                                                            <button type="button" hidden
+                                                                    id="success-btn"
+                                                                    data-toggle="modal"
+                                                                    data-target="#exampleModal"
+                                                                    href="javascript:void(0);"
+                                                                    class="text-uppercase open_sans bold_700 text-white shop_btn d-inline-block font_26">
+                                                            </button>
+                                                            <button type="button" id="buy-item"
+                                                                    class="text-uppercase open_sans bold_700 text-white shop_btn d-inline-block font_26">
+                                                                Buy now
+                                                            </button>
+                                                        {% elif not user.is_authenticated %}
+                                                            <a href='/login/?next=/product-buy/{{ product.id }}/'>
+                                                                <button type="button"
+                                                                        class="text-uppercase open_sans bold_700 text-white shop_btn d-inline-block font_26">
+                                                                    Buy now
+                                                                </button>
+                                                            </a>
+                                                        {% else %}
+                                                            </p>
+                                                            <button disabled
+                                                                    class="text-uppercase open_sans bold_700 text-white shop_btn d-inline-block font_26">
+                                                                Buy now
+                                                            </button>
+                                                        {% endif %}
                                                     </div>
                                                 </div>
                                             </div>
@@ -253,6 +289,37 @@
             </div>
         </div>
     </div>
+    <!-- modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <div class="success-checkmark">
+                        <div class="check-icon">
+                            <span class="icon-line line-tip"></span>
+                            <span class="icon-line line-long"></span>
+                            <div class="icon-circle"></div>
+                            <div class="icon-fix"></div>
+                        </div>
+                    </div>
+                    <h2 id="message-head">Thank You</h2>
+                    <p id="message-body">Product added to cart.</p>
+
+                </div>
+                <a href="{% url 'web_cart_buy' product.id %}" class="text-center pb-3">
+                    <button type="submit" id="Done_close_modal"
+                            class="default-btn text-uppercase open_sans bold_500 text-white bg_green shop_btn d-inline-block  mt-lg-2 mt-xl-4">
+                        Done
+                    </button>
+                </a>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
 
 {% block js_block %}
@@ -305,6 +372,44 @@
             $('select').niceSelect();
         });
 
+        $("#buy-item").on('click', function (e) {
+
+            e.preventDefault(); // avoid to execute the actual submit of the form.
+
+            var shoe_size_id = $('#shoe_size_selected option:selected').val();
+            if (shoe_size_id !== "Size") {
+                $.ajax({
+                    type: 'Post',
+                    url: "{% url 'web_cart_add_product' product.id %}",
+                    data: {
+                        "shoe_size_id": shoe_size_id,
+                    },
+                    success: function (data) {
+                        if (data['buy_success']) {
+                            $('#message-body').text(data['message']);
+                            $('#message-head').text(data['buy']);
+                            $('#success-btn').click()
+                        } else {
+                            $('#message-body').text(data['message']);
+                            $('#message-head').text(data['buy']);
+                            $('#success-btn').click()
+                        }
+                    }
+                });
+            }
+        });
+        $("#shoe_size_dropdown_selected").on('click', function (e) {
+            e.preventDefault();
+            var shoe_size_id = $('#shoe_size_selected option:selected').val();
+            if (shoe_size_id === 'Size') {
+
+                alert("please select shoe size first");
+
+            } else {
+                $('#shoe_size_dropdown_selected_next').click();
+            }
+
+        });
 
     </script>
 {% endblock %}

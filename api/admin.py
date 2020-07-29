@@ -16,3 +16,8 @@ admin.site.register(models.Feedback)
 
 admin.site.register(models.ContactUs)
 admin.site.register(models.BidStatus)
+
+admin.site.register(models.CartModel)
+admin.site.register(models.CartItem)
+
+admin.site.register(models.SuggestProduct)

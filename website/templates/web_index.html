@@ -130,43 +130,67 @@
                     <div class="top_selling_slider_main mt-4 pt-2">
                         <div class="top_selling_slider owl-carousel owl-theme">
                             {% for product in products %}
-                                <div class="item">
-                                    <div class="top_selling_product_box">
-                                        <div class="top_sell_img border bg-white position-relative overflow-hidden">
-                                            <div class="label_sell position-absolute bg-light px-sm-3 px-lg-3 px-xl-4 py-sm-2">
-                                                <span class="text-uppercase open_sans bold_700 font_20">{{ product.release_date }}</span>
+                                <form action="{% url 'web_cart_add_product' product.id %}" method="post">
+                                    <div class="item">
+                                        <div class="top_selling_product_box">
+                                            <div class="top_sell_img border bg-white position-relative overflow-hidden">
+                                                <div class="label_sell position-absolute bg-light px-sm-3 px-lg-3 px-xl-4 py-sm-2">
+                                                    <span class="text-uppercase open_sans bold_700 font_20">{{ product.release_date }}</span>
+                                                </div>
+                                                {# <div class="add-top-cart-btn">#}
+                                                {#      <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add#}
+                                                {#          To Cart#}
+                                                {#      </a>#}
+                                                {# </div>#}
+                                                {% if user.is_authenticated %}
+                                                    <div class="add-top-cart-btn">
+                                                        <button type="submit">
+                                                            <a>
+                                                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                                                Add To Cart
+                                                            </a>
+                                                        </button>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="add-top-cart-btn">
+                                                        <button type="button">
+                                                            <a href='/login/?next=/'>
+                                                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                                                Add To Cart
+                                                            </a>
+                                                        </button>
+                                                    </div>
+                                                {% endif %}
+                                                <a href="javascript:void(0);"
+                                                   class="d-block w-100 h-100 image_hover position-relative"><img
+                                                        src="{{ product.url }}" alt=""
+                                                        class="img-fluid"/></a>
                                             </div>
-                                            <div class="add-top-cart-btn">
-                                                <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add
-                                                    To
-                                                    Cart</a>
+                                            <div class="top_sell_title text-center mt-3">
+                                                <h3><a href="{% url 'product_detail' product.id %}"
+                                                       class="open_sans bold_400 font_20">{{ product.title }}</a></h3>
+                                                <h4 class="mt-lg-1 mt-xl-2 oswald_font bold_600 font_20 text-dark">
+                                                    ${{ product.listing_price }}</h4>
                                             </div>
-                                            <a href="javascript:void(0);"
-                                               class="d-block w-100 h-100 image_hover position-relative"><img
-                                                    src="{{ product.url }}" alt=""
-                                                    class="img-fluid"/></a>
-                                        </div>
-                                        <div class="top_sell_title text-center mt-3">
-                                            <h3><a href="{% url 'product_detail' product.id %}"
-                                                   class="open_sans bold_400 font_20">{{ product.title }}</a></h3>
-                                            <h4 class="mt-lg-1 mt-xl-2 oswald_font bold_600 font_20 text-dark">
-                                                ${{ product.listing_price }}</h4>
-                                        </div>
-                                        <div class="cart-btn-mobile ">
-                                            <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To
-                                                Cart</a>
-                                        </div>
-                                        <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">
-                                            <a href="{% url 'web_cart_bid' product.id %}"
-                                               class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>
-                                            <a href="{% url 'web_cart_buy' product.id %}"
-                                               class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Buy
-                                                Now</a>
-                                            <a href="{% url 'web_cart_sell' product.id %}"
-                                               class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>
+                                            <div class="cart-btn-mobile ">
+                                                <button type="submit">
+                                                    <a href="javascript:void(0);">
+                                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                                    </a>
+                                                </button>
+                                            </div>
+                                            <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">
+                                                <a href="{% url 'web_cart_bid' product.id %}"
+                                                   class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>
+                                                <a href="{% url 'web_cart_buy' product.id %}"
+                                                   class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Buy
+                                                    Now</a>
+                                                <a href="{% url 'web_cart_sell' product.id %}"
+                                                   class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </form>
                             {% endfor %}
                         </div>
                     </div>
@@ -220,15 +244,15 @@
                                             <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To
                                                 Cart</a>
                                         </div>
-{#                                        <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">#}
-{#                                            <a href="{% url 'web_cart_bid' %}"#}
-{#                                               class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>#}
-{#                                            <a href="{% url 'web_cart_buy' %}"#}
-{#                                               class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Buy#}
-{#                                                Now</a>#}
-{#                                            <a href="{% url 'web_cart_sell' %}"#}
-{#                                               class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>#}
-{#                                        </div>#}
+                                        {#                                        <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">#}
+                                        {#                                            <a href="{% url 'web_cart_bid' %}"#}
+                                        {#                                               class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>#}
+                                        {#                                            <a href="{% url 'web_cart_buy' %}"#}
+                                        {#                                               class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Buy#}
+                                        {#                                                Now</a>#}
+                                        {#                                            <a href="{% url 'web_cart_sell' %}"#}
+                                        {#                                               class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>#}
+                                        {#                                        </div>#}
                                     </div>
                                 </div>
                                 <div class="item">
@@ -255,15 +279,15 @@
                                             <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To
                                                 Cart</a>
                                         </div>
-{#                                        <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">#}
-{#                                            <a href="{% url 'web_cart_bid' %}"#}
-{#                                               class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>#}
-{#                                            <a href="{% url 'web_cart_buy' %}"#}
-{#                                               class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Buy#}
-{#                                                Now</a>#}
-{#                                            <a href="{% url 'web_cart_sell' %}"#}
-{#                                               class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>#}
-{#                                        </div>#}
+                                        {#                                        <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">#}
+                                        {#                                            <a href="{% url 'web_cart_bid' %}"#}
+                                        {#                                               class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>#}
+                                        {#                                            <a href="{% url 'web_cart_buy' %}"#}
+                                        {#                                               class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Buy#}
+                                        {#                                                Now</a>#}
+                                        {#                                            <a href="{% url 'web_cart_sell' %}"#}
+                                        {#                                               class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>#}
+                                        {#                                        </div>#}
                                     </div>
                                 </div>
                                 <div class="item">
@@ -290,15 +314,15 @@
                                             <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To
                                                 Cart</a>
                                         </div>
-{#                                        <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">#}
-{#                                            <a href="{% url 'web_cart_bid' %}"#}
-{#                                               class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>#}
-{#                                            <a href="{% url 'web_cart_buy' %}"#}
-{#                                               class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Buy#}
-{#                                                Now</a>#}
-{#                                            <a href="{% url 'web_cart_sell' %}"#}
-{#                                               class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>#}
-{#                                        </div>#}
+                                        {#                                        <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">#}
+                                        {#                                            <a href="{% url 'web_cart_bid' %}"#}
+                                        {#                                               class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>#}
+                                        {#                                            <a href="{% url 'web_cart_buy' %}"#}
+                                        {#                                               class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Buy#}
+                                        {#                                                Now</a>#}
+                                        {#                                            <a href="{% url 'web_cart_sell' %}"#}
+                                        {#                                               class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>#}
+                                        {#                                        </div>#}
                                     </div>
                                 </div>
                                 <div class="item">
@@ -325,15 +349,15 @@
                                             <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To
                                                 Cart</a>
                                         </div>
-{#                                        <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">#}
-{#                                            <a href="{% url 'web_cart_bid' %}"#}
-{#                                               class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>#}
-{#                                            <a href="{% url 'web_cart_buy' %}"#}
-{#                                               class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Buy#}
-{#                                                Now</a>#}
-{#                                            <a href="{% url 'web_cart_sell' %}"#}
-{#                                               class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>#}
-{#                                        </div>#}
+                                        {#                                        <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">#}
+                                        {#                                            <a href="{% url 'web_cart_bid' %}"#}
+                                        {#                                               class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>#}
+                                        {#                                            <a href="{% url 'web_cart_buy' %}"#}
+                                        {#                                               class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Buy#}
+                                        {#                                                Now</a>#}
+                                        {#                                            <a href="{% url 'web_cart_sell' %}"#}
+                                        {#                                               class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>#}
+                                        {#                                        </div>#}
                                     </div>
                                 </div>
                             </div>
@@ -387,15 +411,15 @@
                                             <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To
                                                 Cart</a>
                                         </div>
-{#                                        <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">#}
-{#                                            <a href="{% url 'web_cart_bid' %}"#}
-{#                                               class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>#}
-{#                                            <a href="{% url 'web_cart_buy' %}"#}
-{#                                               class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Buy#}
-{#                                                Now</a>#}
-{#                                            <a href="{% url 'web_cart_sell' %}"#}
-{#                                               class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>#}
-{#                                        </div>#}
+                                        {#                                        <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">#}
+                                        {#                                            <a href="{% url 'web_cart_bid' %}"#}
+                                        {#                                               class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>#}
+                                        {#                                            <a href="{% url 'web_cart_buy' %}"#}
+                                        {#                                               class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Buy#}
+                                        {#                                                Now</a>#}
+                                        {#                                            <a href="{% url 'web_cart_sell' %}"#}
+                                        {#                                               class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>#}
+                                        {#                                        </div>#}
                                     </div>
                                 </div>
                                 <div class="item">
@@ -420,15 +444,15 @@
                                             <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To
                                                 Cart</a>
                                         </div>
-{#                                        <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">#}
-{#                                            <a href="{% url 'web_cart_bid' %}"#}
-{#                                               class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>#}
-{#                                            <a href="{% url 'web_cart_buy' %}"#}
-{#                                               class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Buy#}
-{#                                                Now</a>#}
-{#                                            <a href="{% url 'web_cart_sell' %}"#}
-{#                                               class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>#}
-{#                                        </div>#}
+                                        {#                                        <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">#}
+                                        {#                                            <a href="{% url 'web_cart_bid' %}"#}
+                                        {#                                               class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>#}
+                                        {#                                            <a href="{% url 'web_cart_buy' %}"#}
+                                        {#                                               class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Buy#}
+                                        {#                                                Now</a>#}
+                                        {#                                            <a href="{% url 'web_cart_sell' %}"#}
+                                        {#                                               class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>#}
+                                        {#                                        </div>#}
                                     </div>
                                 </div>
                                 <div class="item">
@@ -453,15 +477,15 @@
                                             <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To
                                                 Cart</a>
                                         </div>
-{#                                        <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">#}
-{#                                            <a href="{% url 'web_cart_bid' %}"#}
-{#                                               class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>#}
-{#                                            <a href="{% url 'web_cart_buy' %}"#}
-{#                                               class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Buy#}
-{#                                                Now</a>#}
-{#                                            <a href="{% url 'web_cart_sell' %}"#}
-{#                                               class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>#}
-{#                                        </div>#}
+                                        {#                                        <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">#}
+                                        {#                                            <a href="{% url 'web_cart_bid' %}"#}
+                                        {#                                               class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>#}
+                                        {#                                            <a href="{% url 'web_cart_buy' %}"#}
+                                        {#                                               class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Buy#}
+                                        {#                                                Now</a>#}
+                                        {#                                            <a href="{% url 'web_cart_sell' %}"#}
+                                        {#                                               class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>#}
+                                        {#                                        </div>#}
                                     </div>
                                 </div>
                                 <div class="item">
@@ -486,15 +510,15 @@
                                             <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To
                                                 Cart</a>
                                         </div>
-{#                                        <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">#}
-{#                                            <a href="{% url 'web_cart_bid' %}"#}
-{#                                               class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>#}
-{#                                            <a href="{% url 'web_cart_buy' %}"#}
-{#                                               class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Buy#}
-{#                                                Now</a>#}
-{#                                            <a href="{% url 'web_cart_sell' %}"#}
-{#                                               class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>#}
-{#                                        </div>#}
+                                        {#                                        <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">#}
+                                        {#                                            <a href="{% url 'web_cart_bid' %}"#}
+                                        {#                                               class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>#}
+                                        {#                                            <a href="{% url 'web_cart_buy' %}"#}
+                                        {#                                               class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Buy#}
+                                        {#                                                Now</a>#}
+                                        {#                                            <a href="{% url 'web_cart_sell' %}"#}
+                                        {#                                               class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>#}
+                                        {#                                        </div>#}
                                     </div>
                                 </div>
                             </div>
@@ -521,9 +545,9 @@
                                             pricing for the hottest releases. Browse thousands of limited sneakers on
                                             the marketplace. Place a bid or <br> buy now!</p>
                                         <div class="mt-md-1 mt-xl-2">
-{#                                            <a href="{% url 'web_cart_buy' %}"#}
-{#                                               class="text-uppercase open_sans bold_700 text-white bg_green shop_btn d-inline-block font_26 mt-md-2 mt-xl-4">Buy#}
-{#                                                Now</a>#}
+                                            {#                                            <a href="{% url 'web_cart_buy' %}"#}
+                                            {#                                               class="text-uppercase open_sans bold_700 text-white bg_green shop_btn d-inline-block font_26 mt-md-2 mt-xl-4">Buy#}
+                                            {#                                                Now</a>#}
                                         </div>
                                     </div>
                                 </div>
@@ -541,9 +565,9 @@
                                             fees available on the marketplace. Offering top notch security and the best
                                             tools for selling. Use the app today to become a verified seller!</p>
                                         <div class="mt-md-1 mt-xl-2">
-{#                                            <a href="{% url 'web_cart_sell' '45'%}"#}
-{#                                               class="text-uppercase open_sans bold_700 text-white bg_green shop_btn d-inline-block font_16 mt-md-2 mt-xl-4">Sell#}
-{#                                                Now</a>#}
+                                            {#                                            <a href="{% url 'web_cart_sell' '45'%}"#}
+                                            {#                                               class="text-uppercase open_sans bold_700 text-white bg_green shop_btn d-inline-block font_16 mt-md-2 mt-xl-4">Sell#}
+                                            {#                                                Now</a>#}
                                         </div>
                                     </div>
                                 </div>
