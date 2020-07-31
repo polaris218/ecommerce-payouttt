@@ -29,20 +29,20 @@
                     <div class="top_selling_slider_main categories-page">
                         <div class="row">
                             <div class="col-md-4 col-lg-3">
-                                <div class="row align-items-center moblie-cate-title">
+                                <div class="row align-items-center">
                                     <div class="col-md-6 category-title-top"><h4><b>Home/</b> Category</h4></div>
                                     <div class="col-md-6">
                                         <div class="popularity-right-sec">
                                             <h4><b>Sort By:</b></h4>
                                             <div class="nice-select Wide" tabindex="0"><span
                                                     class="current">Popularity</span>
-                                                <ul class="list">
-                                                    <li data-value="Price" class="option selected">Price High to Low
-                                                    </li>
-                                                    <li data-value="High" class="option">Price Low to High</li>
-                                                    <li data-value="Arrivals" class="option">New Arrivals</li>
-                                                    <li data-value="Alphabetical" class="option">Alphabetical</li>
-                                                    <li data-value="Reccomended" class="option">Reccomended for me</li>
+                                                <ul class="list" id="selected_popularity">
+                                                    <li value="A-Z" class="option"><a>A-Z</a></li>
+                                                    <li value="Z-A" class="option"><a>Z-A</a></li>
+                                                    <li value="High" class="option"><a>Price High to Low</a></li>
+                                                    <li value="Low" class="option"><a>Price Low to High</a></li>
+                                                    {#<li value="Arrivals" class="option">New Arrivals</li>#}
+                                                    {#<li value="Reccomended" class="option">Reccomended for me</li>#}
                                                 </ul>
                                             </div>
                                         </div>
@@ -65,7 +65,7 @@
                                             <i class="flaticon-minus" aria-hidden="true"></i>
                                         </span>
                                             </div>
-                                            <div class="inner-accordion">
+                                            <div class="inner-accordion" id="selected_brand">
                                                 {% for brand in brands %}
                                                     <div class="checkbox checkbox-inline">
                                                         <input type="checkbox" id="{{ brand }}" value="{{ brand }}"/>
@@ -82,42 +82,42 @@
                                                 {% endfor %}
                                             </div>
                                         </div>
-                                        <div class="myaccordion active padd-top-40">
-                                            <div class="brand-header">
-                                                <h3>Sizes</h3>
-                                                <span class="mines-plus-circle">
-                                            <i class="flaticon-minus" aria-hidden="true"></i>
-                                        </span>
-                                            </div>
-                                            <div class="inner-accordion releasing-year-top">
-                                                <div class="sizes-input-field">
-                                                    <div class="checkbox checkbox-inline">
-                                                        <input type="checkbox" id="inlineCheckbox10" value="option10"/>
-                                                        <label for="inlineCheckbox10"> Mens </label>
-                                                    </div>
-                                                    <div class="checkbox checkbox-inline">
-                                                        <input type="checkbox" id="inlineCheckbox11" value="option11"/>
-                                                        <label for="inlineCheckbox11"> Gradeschool</label>
-                                                    </div>
-                                                    <div class="checkbox checkbox-inline">
-                                                        <input type="checkbox" id="inlineCheckbox12" value="option12"/>
-                                                        <label for="inlineCheckbox12"> Kids </label>
-                                                    </div>
-                                                    <div class="checkbox checkbox-inline">
-                                                        <input type="checkbox" id="inlineCheckbox13" value="option13"/>
-                                                        <label for="inlineCheckbox13"> Toddlers </label>
-                                                    </div>
-                                                    <div class="checkbox checkbox-inline">
-                                                        <input type="checkbox" id="inlineCheckbox14" value="option14"/>
-                                                        <label for="inlineCheckbox14"> Womens </label>
-                                                    </div>
-                                                    <div class="checkbox checkbox-inline">
-                                                        <input type="checkbox" id="inlineCheckbox15" value="option15"/>
-                                                        <label for="inlineCheckbox15"> Infant </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        {#                                        <div class="myaccordion active padd-top-40">#}
+                                        {#                                            <div class="brand-header">#}
+                                        {#                                                <h3>Sizes</h3>#}
+                                        {#                                                <span class="mines-plus-circle">#}
+                                        {#                                            <i class="flaticon-minus" aria-hidden="true"></i>#}
+                                        {#                                        </span>#}
+                                        {#                                            </div>#}
+                                        {#                                            <div class="inner-accordion releasing-year-top">#}
+                                        {#                                                <div class="sizes-input-field">#}
+                                        {#                                                    <div class="checkbox checkbox-inline">#}
+                                        {#                                                        <input type="checkbox" id="inlineCheckbox10" value="option10"/>#}
+                                        {#                                                        <label for="inlineCheckbox10"> Mens </label>#}
+                                        {#                                                    </div>#}
+                                        {#                                                    <div class="checkbox checkbox-inline">#}
+                                        {#                                                        <input type="checkbox" id="inlineCheckbox11" value="option11"/>#}
+                                        {#                                                        <label for="inlineCheckbox11"> Gradeschool</label>#}
+                                        {#                                                    </div>#}
+                                        {#                                                    <div class="checkbox checkbox-inline">#}
+                                        {#                                                        <input type="checkbox" id="inlineCheckbox12" value="option12"/>#}
+                                        {#                                                        <label for="inlineCheckbox12"> Kids </label>#}
+                                        {#                                                    </div>#}
+                                        {#                                                    <div class="checkbox checkbox-inline">#}
+                                        {#                                                        <input type="checkbox" id="inlineCheckbox13" value="option13"/>#}
+                                        {#                                                        <label for="inlineCheckbox13"> Toddlers </label>#}
+                                        {#                                                    </div>#}
+                                        {#                                                    <div class="checkbox checkbox-inline">#}
+                                        {#                                                        <input type="checkbox" id="inlineCheckbox14" value="option14"/>#}
+                                        {#                                                        <label for="inlineCheckbox14"> Womens </label>#}
+                                        {#                                                    </div>#}
+                                        {#                                                    <div class="checkbox checkbox-inline">#}
+                                        {#                                                        <input type="checkbox" id="inlineCheckbox15" value="option15"/>#}
+                                        {#                                                        <label for="inlineCheckbox15"> Infant </label>#}
+                                        {#                                                    </div>#}
+                                        {#                                                </div>#}
+                                        {#                                            </div>#}
+                                        {#                                        </div>#}
                                         <div class="myaccordion active padd-top-40">
                                             <div class="brand-header">
                                                 <h3>Colors</h3>
@@ -125,27 +125,13 @@
                                             <i class="flaticon-minus" aria-hidden="true"></i>
                                         </span>
                                             </div>
-                                            <div class="inner-accordion">
-                                                <div class="checkbox checkbox-inline">
-                                                    <input type="checkbox" id="inlineCheckbox4" value="option4"/>
-                                                    <label for="inlineCheckbox4"> Red </label>
-                                                </div>
-                                                <div class="checkbox checkbox-inline">
-                                                    <input type="checkbox" id="inlineCheckbox5" value="option5"/>
-                                                    <label for="inlineCheckbox5"> Blue</label>
-                                                </div>
-                                                <div class="checkbox checkbox-inline">
-                                                    <input type="checkbox" id="inlineCheckbox6" value="option6"/>
-                                                    <label for="inlineCheckbox6"> Green </label>
-                                                </div>
-                                                <div class="checkbox checkbox-inline">
-                                                    <input type="checkbox" id="inlineCheckbox7" value="option7"/>
-                                                    <label for="inlineCheckbox7"> Black </label>
-                                                </div>
-                                                <div class="checkbox checkbox-inline">
-                                                    <input type="checkbox" id="inlineCheckbox8" value="option8"/>
-                                                    <label for="inlineCheckbox8"> White </label>
-                                                </div>
+                                            <div class="inner-accordion" id="selected_color">
+                                                {% for color in all_colors %}
+                                                    <div class="checkbox checkbox-inline">
+                                                        <input type="checkbox" id="{{ color }}" value="{{ color }}"/>
+                                                        <label for="{{ color }}"> {{ color }} </label>
+                                                    </div>
+                                                {% endfor %}
                                             </div>
                                         </div>
                                         <!--  <div class="padd-top-40">
@@ -239,25 +225,37 @@
         $(document).ready(function () {
             $('select').niceSelect();
         });
+        var popularity = '';
+        var selected_brands = [];
+        var selected_colors = [];
 
-        $(":checkbox").on("click", function () {
-            var selected_brands = [];
-            $(':checkbox:checked').each(function (i) {
-                if ($(this).val() !== 'on')
-                    selected_brands[i] = $(this).val();
+        $(':checkbox').on('change', function () {
+            selected_colors = [];
+            selected_brands = [];
+            $('#selected_brand input:checked').each(function () {
+                selected_brands.push($(this).attr('value'));
             });
-            $.ajax({
-                type: 'Post',
-                url: "{% url 'web_search'%}",
-                data: {
-                    "selected_brands": selected_brands,
-                    "product_search": $("#product_search_name").val(),
-                },
-                success: function (data) {
-                    $('#search_filter_products').html(data);
-                }
+
+            $('#selected_color input:checked').each(function () {
+                selected_colors.push($(this).attr('value'));
             });
+            if (($(this).attr('value')) !== undefined) {
+                $.ajax({
+                    type: 'Post',
+                    url: "{% url 'web_search'%}",
+                    data: {
+                        "popularity": popularity,
+                        "selected_brands": selected_brands,
+                        "selected_colors": selected_colors,
+                        "product_search": $("#product_search_name").val(),
+                    },
+                    success: function (data) {
+                        $('#search_filter_products').html(data);
+                    }
+                });
+            }
         });
+
         $('#search_btn_id').on('click', function (e) {
             e.preventDefault();
             var product_search = $('#product_search_name').val();
@@ -285,6 +283,26 @@
                     $('#search_filter_products').html(data);
                 }
             });
-        })
+        });
+
+        $(".list li").on('click', function (e) {
+            popularity = $(this).attr('value');
+            if (($(this).attr('value')) !== undefined) {
+                $.ajax({
+                    type: 'Post',
+                    url: "{% url 'web_search'%}",
+                    data: {
+                        "popularity": popularity,
+                        "selected_brands": selected_brands,
+                        "selected_colors": selected_colors,
+                        "product_search": $("#product_search_name").val(),
+                    },
+                    success: function (data) {
+                        $('#search_filter_products').html(data);
+                    }
+                });
+            }
+        });
+
     </script>
 {% endblock %}

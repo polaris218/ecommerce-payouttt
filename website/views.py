@@ -1,9 +1,11 @@
+import operator
 from datetime import datetime
+from functools import reduce
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Sum
+from django.db.models import Sum, Q
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -49,22 +51,43 @@ class SearchView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         query_dict = {}
+        all_colors = []
         query_dict['seller__is_staff'] = True
         if request.GET.get('product_search'):
             query_dict['title__contains'] = request.GET.get('product_search')
         products = Product.objects.filter(**query_dict)
         brands = Product.objects.all().values('brand').distinct()
         brands = [brand['brand'].strip(',') for brand in brands]
-        return render(request, self.template_name, {'products': products, 'brands': brands})
+        colors = list(Product.objects.all().values('colorway'))
+        [all_colors.append(nested_color.upper()) for color in colors if color and color['colorway'].split('/') for
+         nested_color in color['colorway'].split('/') if nested_color.upper() not in all_colors]
+        return render(request, self.template_name, {'products': products, 'brands': brands, 'all_colors': all_colors})
 
     def post(self, request, *args, **kwargs):
+        filter_products = []
         query_dict = {}
         query_dict['seller__is_staff'] = True
+        colors = []
         if request.POST.get('product_search'):
             query_dict['title__contains'] = request.POST.get('product_search')
         if request.POST.getlist('selected_brands[]'):
             query_dict['brand__in'] = request.POST.getlist('selected_brands[]')
-        products = Product.objects.filter(**query_dict)
+        if request.POST.get('selected_colors[]'):
+            colors = request.POST.getlist('selected_colors[]')
+        if request.POST.get('popularity') == 'High':
+            products = Product.objects.filter(**query_dict).order_by('-listing_price')
+        elif request.POST.get('popularity') == 'Low':
+            products = Product.objects.filter(**query_dict).order_by('listing_price')
+        elif request.POST.get('popularity') == 'A-Z':
+            products = Product.objects.filter(**query_dict).order_by('title')
+        elif request.POST.get('popularity') == 'Z-A':
+            products = Product.objects.filter(**query_dict).order_by('-title')
+        else:
+            products = Product.objects.filter(**query_dict)
+        if colors:
+            [filter_products.append(product) for product in products for color in colors if
+             product.colorway.upper().__contains__(color.upper()) and product not in filter_products]
+            products = filter_products
         return render(request, 'search_ajax.html', {'products': products})
 
 
