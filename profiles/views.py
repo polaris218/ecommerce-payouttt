@@ -3,6 +3,7 @@ import json
 from django.conf import settings
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Sum
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from django.views import View
@@ -14,7 +15,7 @@ from accounts.models import User
 from addresses.address_validation import ShippoAddressManagement
 from addresses.models import Address
 from api.bid_status_management import BidStatusManagement
-from api.models import Product, Bid
+from api.models import Product, Bid, CartModel
 from core.models import FeedbackModel
 from dashboard.views import AddressView
 from profiles.forms import MyPasswordChangeForm, MyAddressForm
@@ -107,6 +108,24 @@ class BuyingView(LoginRequiredMixin, TemplateView):
             all_prices.append(prices)
             prices = {}
         return render(request, self.template_name, {'bids': zip(all_bids, all_prices)})
+
+
+class OrdersView(LoginRequiredMixin, TemplateView):
+    template_name = 'orders.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs.setdefault('view', self)
+        if self.extra_context is not None:
+            kwargs.update(self.extra_context)
+
+        kwargs['orders'] = 'active'
+        return kwargs
+
+    def get(self, request, *args, **kwargs):
+        orders = CartModel.objects.all()
+        prices = [(cart.cart_item.all().aggregate(Sum('product__listing_price')))['product__listing_price__sum'] for
+                  cart in orders]
+        return render(request, self.template_name, {'orders': zip(orders, prices)})
 
 
 class DashboardView(LoginRequiredMixin, TemplateView):

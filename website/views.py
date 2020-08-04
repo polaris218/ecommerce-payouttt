@@ -59,21 +59,27 @@ class SearchView(TemplateView):
         brands = Product.objects.all().values('brand').distinct()
         brands = [brand['brand'].strip(',') for brand in brands]
         colors = list(Product.objects.all().values('colorway'))
+        release_years = Product.objects.all().values('release_date__year').distinct()
+        release_years = [year['release_date__year'] for year in release_years]
         [all_colors.append(nested_color.upper()) for color in colors if color and color['colorway'].split('/') for
          nested_color in color['colorway'].split('/') if nested_color.upper() not in all_colors]
-        return render(request, self.template_name, {'products': products, 'brands': brands, 'all_colors': all_colors})
+        return render(request, self.template_name,
+                      {'products': products, 'brands': brands, 'all_colors': all_colors, 'release_year': release_years})
 
     def post(self, request, *args, **kwargs):
         filter_products = []
         query_dict = {}
         query_dict['seller__is_staff'] = True
         colors = []
+        years = []
         if request.POST.get('product_search'):
             query_dict['title__contains'] = request.POST.get('product_search')
         if request.POST.getlist('selected_brands[]'):
             query_dict['brand__in'] = request.POST.getlist('selected_brands[]')
-        if request.POST.get('selected_colors[]'):
+        if request.POST.getlist('selected_colors[]'):
             colors = request.POST.getlist('selected_colors[]')
+        if request.POST.getlist('selected_years[]'):
+            years = request.POST.getlist('selected_years[]')
         if request.POST.get('popularity') == 'High':
             products = Product.objects.filter(**query_dict).order_by('-listing_price')
         elif request.POST.get('popularity') == 'Low':
@@ -88,6 +94,8 @@ class SearchView(TemplateView):
             [filter_products.append(product) for product in products for color in colors if
              product.colorway.upper().__contains__(color.upper()) and product not in filter_products]
             products = filter_products
+        if years:
+            products = [product for product in products if str(product.release_date.year) in years]
         return render(request, 'search_ajax.html', {'products': products})
 
 

@@ -1,0 +1,172 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+{% block content %}
+    <div class="page_title p-30">
+        <h3 class="mb-0">Orders</h3>
+    </div>
+    <div class="content cart_tab">
+        <div class="content_inner p-30">
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="active_bids" role="tabpanel" aria-labelledby="bids-tab">
+                    <div class="option-table-wrap">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="tbl-shadow clearfix rounded ">
+                                    <table class="w-100  border-gray table-hover" id="example">
+                                        <thead>
+                                        <tr class="option-tbl-head">
+                                            <th class="msg-tbl-head">#</th>
+                                            <th class="msg-tbl-head">Items Count</th>
+                                            <th class="msg-tbl-head">Total Price</th>
+                                            <th class="msg-tbl-head">Status</th>
+                                            <th class="msg-tbl-head">Detail</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="option-tbl-body" id="option-tbl">
+                                        {% for order,price in orders %}
+                                            <tr class="bodr-gray-top gray_c">
+                                                <td class="msg-tbl-body">{{ order.id }}</td>
+                                                <td class="msg-tbl-body">{{ order.cart_item.count }}</td>
+                                                <td class="msg-tbl-body">${{ price }}</td>
+                                                <td class="msg-tbl-body">{{ order.status }}</td>
+                                                <td class="msg-tbl-body">
+                                                    <a href="#!" data-toggle="modal"
+                                                       data-target="#order-{{ order.id }}">Detail</a>
+                                                    <div class="modal fade" id="order-{{ order.id }}" tabindex="-1"
+                                                         role="dialog" aria-labelledby="Order_modal"
+                                                         aria-hidden="false">
+                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title"
+                                                                        id="modalHeader">Order Detail</h5>
+                                                                </div>
+                                                                <div class="modal-body position-relative">
+                                                                    <div class="">
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-bordered ">
+                                                                                <thead>
+                                                                                <tr>
+                                                                                    <th>ID</th>
+                                                                                    <th>Title</th>
+                                                                                    <th>SKU</th>
+                                                                                    <th>Size</th>
+                                                                                    <th>Price</th>
+                                                                                </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                {% for item in order.cart_item.all %}
+                                                                                    <tr>
+                                                                                        <td>{{ item.product.id }}</td>
+                                                                                        <td>{{ item.product.title }}</td>
+                                                                                        <td>{{ item.product.sku_number }}</td>
+                                                                                        <td>{{ item.shoe_size }}</td>
+                                                                                        <td>{{ item.product.listing_price }}</td>
+                                                                                    </tr>
+                                                                                {% endfor %}
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+
+
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer bg-white">
+            <div class="footer_copyright text-center">
+                <p class="gray_c">Payouttt | Buy & Sell Verified Sneakers<br> All rights reserved © Payouttt Marketplace
+                    2020</p>
+                <ul class="pl-0 mb-0 d-flex align-items-center justify-content-center social_icon">
+                    <li><a href="#" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    <li class="ml-3 mr-3"><a href="#" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                    </li>
+                    <li><a href="#" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+{% block extra_js %}
+    <script>
+
+        $('#example').DataTable({
+            "dom": 'rt<"bottom","i"flp><"clear">',
+            "pageLength": 10,
+            language: {
+                lengthMenu: "Items per page _MENU_",
+                info: " _START_ - _END_ of _TOTAL_",
+                paginate: {
+                    next: '<i class="fa fa-angle-right right_table" aria-hidden="true"></i>', // or '→'
+                    previous: '<i class="fa fa-angle-left left_table" aria-hidden="true"></i>', // or '←'
+                }
+            }
+        });
+
+        $('#pending_table').DataTable({
+            "dom": 'rt<"bottom","i"flp><"clear">',
+            "pageLength": 10,
+            language: {
+                lengthMenu: "Items per page _MENU_",
+                info: " _START_ - _END_ of _TOTAL_",
+                paginate: {
+                    next: '<i class="fa fa-angle-right right_table" aria-hidden="true"></i>', // or '→'
+                    previous: '<i class="fa fa-angle-left left_table" aria-hidden="true"></i>', // or '←'
+                }
+            }
+        });
+
+        $('#complted_table').DataTable({
+            "dom": 'rt<"bottom","i"flp><"clear">',
+            "pageLength": 10,
+            language: {
+                lengthMenu: "Items per page _MENU_",
+                info: " _START_ - _END_ of _TOTAL_",
+                paginate: {
+                    next: '<i class="fa fa-angle-right right_table" aria-hidden="true"></i>', // or '→'
+                    previous: '<i class="fa fa-angle-left left_table" aria-hidden="true"></i>', // or '←'
+                }
+            }
+        });
+
+
+        $("table").wrap("<div class='table-responsive'></div>");
+        $(".dataTables_length").wrap("<div class='filter_box'></div>");
+        $('.filter_box').append('<div class="w-100  position-relative search_filter"><input type="text" name="name" placeholder="Search actve bids" class="search-box w-100" id="search-box"><i class="fa fa-search result-search position-absolute" aria-hidden="true"></i></div>');
+        $('.filter_box').append('<div class="sorting"><span></span><span></span><span></span></div>');
+
+        $("#search-box").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#option-tbl tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        $(document).ready(function () {
+            $('table.dataTable').DataTable();
+            $('table.dataTable').dataTable();
+        });
+
+    </script>
+{% endblock %}
+

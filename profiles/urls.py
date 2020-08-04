@@ -15,6 +15,7 @@ urlpatterns = [
     path('security/', views.SecurityView.as_view(), name='web-security'),
     path('selling/', views.SellingView.as_view(), name='web-selling'),
     path('web-buying/', views.BuyingView.as_view(), name='web-admin-buying'),
+    path('web-orders/', views.OrdersView.as_view(), name='web-orders'),
     path('wen-dashboard/', views.DashboardView.as_view(), name='web-dashboard'),
     path('web-setting/', views.SettingsView.as_view(), name='web-setting'),
     path('password-reset/', views.PasswordResetView.as_view(), name='password-reset'),
