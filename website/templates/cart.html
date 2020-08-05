@@ -28,147 +28,150 @@
         </div>
 
         <!-- cart table -->
-        <section class="product-table-sec padd-top-bot">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="table-responsive">
-                            <table class="display product-detail-table">
-                                <thead>
-                                <tr>
-                                    <th>Product</th>
-                                    <th>Sneaker</th>
-                                    <th>SKU</th>
-                                    <th>Size</th>
-                                    <th class="qty-sec">qty</th>
-                                    <th>Price</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for item in cart %}
-                                    <form action="{% url 'web_cart_item_delete' item.id %}" method="post">
-                                        <tr>
-                                            <td class="msg-tbl-body"><a href="#" class="pro_img">
-                                                <img src="{{ item.product.url }}" alt="" class="img-fluid"></a>
-                                            </td>
-                                            <td class="sneaker-sec"><p>{{ item.product.title }} </p></td>
-                                            <td>{{ item.product.sku_number }}</td>
-                                            {% if item.shoe_size %}
-                                                <td>{{ item.shoe_size }}</td>
-                                            {% else %}
-                                                <td>-</td>
-                                            {% endif %}
-                                            <td class="qty-sec">
-                                                <div id="field1" class="quantity-sec-top">
-                                                    <button type="button" id="add" class="add"><i
-                                                            class="fa fa-angle-down"
-                                                            aria-hidden="true"></i>
-                                                    </button>
-                                                    <input type="number" value="1" min="1" disabled
-                                                           max="30"/>
-                                                    <button type="button" id="sub" class="sub"><i
-                                                            class="fa fa-angle-up"
-                                                            aria-hidden="true"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                            <td>${{ item.product.listing_price }}</td>
-                                            <td>
-                                                <button type="submit" style="background: transparent;border: none;">
-                                                    <a href="javascript:void(0);">
-                                                        <i class="fa fa-trash" aria-hidden="true"></i>
-                                                    </a>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </form>
-                                {% endfor %}
-                                </tbody>
-                            </table>
+        <form method="post" action="{% url 'web_cart' %}">
+            {% csrf_token %}
+            <section class="product-table-sec padd-top-bot">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="table-responsive">
+                                <table class="display product-detail-table">
+                                    <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Sneaker</th>
+                                        <th>SKU</th>
+                                        <th>Size</th>
+                                        <th class="qty-sec">qty</th>
+                                        <th>Price</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for item in cart %}
+                                        <form action="{% url 'web_cart_item_delete' item.id %}" method="post">
+                                            <tr>
+                                                <td class="msg-tbl-body"><a href="#" class="pro_img">
+                                                    <img src="{{ item.product.url }}" alt="" class="img-fluid"></a>
+                                                </td>
+                                                <td class="sneaker-sec"><p>{{ item.product.title }} </p></td>
+                                                <td>{{ item.product.sku_number }}</td>
+                                                {% if item.shoe_size %}
+                                                    <td>{{ item.shoe_size }}</td>
+                                                {% else %}
+                                                    <td>-</td>
+                                                {% endif %}
+                                                <td class="qty-sec">
+                                                    <div id="field1" class="quantity-sec-top">
+                                                        <button type="button" id="add" class="add"><i
+                                                                class="fa fa-angle-down"
+                                                                aria-hidden="true"></i>
+                                                        </button>
+                                                        <input type="number" value="1" min="1" disabled
+                                                               max="30"/>
+                                                        <button type="button" id="sub" class="sub"><i
+                                                                class="fa fa-angle-up"
+                                                                aria-hidden="true"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                                <td>${{ item.product.listing_price }}</td>
+                                                <td>
+                                                    <form></form>
+                                                    <form method="post" action="{% url 'web_cart_item_delete'  item.id %}">
+                                                        <button type="submit"
+                                                                style="background: transparent;border: none;">
+                                                            <a href="javascript:void(0);">
+                                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                                            </a>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        </form>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="cart-totale-sec">
-                            <div class="inner-cart-totale">
-                                <h2>CART TOTALS</h2>
-                                <div class="sub-total-sec padd-top-bot-25">
-                                    <h3>Subtotal</h3>
-                                    <h3>${{ total_price }}</h3>
-                                </div>
-                                <div class="shipping-sec padd-top-bot-25">
-                                    <h3>Shipping</h3>
-                                    <div class="shipping-radio-sec">
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" id="customRadioInline1" name="customRadioInline1"
-                                                   class="custom-control-input">
-                                            <label class="custom-control-label" for="customRadioInline1">Flat Rate:
-                                                $100.00</label>
-                                        </div>
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" id="customRadioInline2" name="customRadioInline1"
-                                                   class="custom-control-input">
-                                            <label class="custom-control-label" for="customRadioInline2">Free
-                                                Shipping</label>
-                                        </div>
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" id="customRadioInline3" name="customRadioInline1"
-                                                   class="custom-control-input">
-                                            <label class="custom-control-label" for="customRadioInline3">International
-                                                Delivery: $170.00</label>
-                                        </div>
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" id="customRadioInline4" name="customRadioInline1"
-                                                   class="custom-control-input">
-                                            <label class="custom-control-label" for="customRadioInline4">Local Delivery:
-                                                $60.00</label>
-                                        </div>
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" id="customRadioInline5" name="customRadioInline1"
-                                                   class="custom-control-input">
-                                            <label class="custom-control-label" for="customRadioInline5">Local Pickup
-                                                (Free)</label>
+                        <div class="col-md-4">
+                            <div class="cart-totale-sec">
+                                <div class="inner-cart-totale">
+                                    <h2>CART TOTALS</h2>
+                                    <div class="sub-total-sec padd-top-bot-25">
+                                        <h3>Subtotal</h3>
+                                        <h3>${{ total_price }}</h3>
+                                    </div>
+                                    <div class="shipping-sec padd-top-bot-25">
+                                        <h3>Shipping</h3>
+                                        <div class="shipping-radio-sec" id="shipping_radio">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="customRadioInline1" name="shipping"
+                                                       class="custom-control-input" value="100-Flat Rate">
+                                                <label class="custom-control-label" for="customRadioInline1">Flat
+                                                    Rate:
+                                                    $100.00</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="customRadioInline3" name="shipping"
+                                                       class="custom-control-input"
+                                                       value="170-International Delivery">
+                                                <label class="custom-control-label" for="customRadioInline3">International
+                                                    Delivery: $170.00</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="customRadioInline4" name="shipping"
+                                                       class="custom-control-input" value="60-Local Delivery">
+                                                <label class="custom-control-label" for="customRadioInline4">Local
+                                                    Delivery:
+                                                    $60.00</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="customRadioInline5" name="shipping"
+                                                       class="custom-control-input" value="0-Local Pickup">
+                                                <label class="custom-control-label" for="customRadioInline5">Local
+                                                    Pickup
+                                                    (Free)</label>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="myaccordion calculate-shipping-sec">
-                                    <div class="brand-header">
-                                        <h3>Calculate Shipping</h3>
-                                        <span class="mines-plus-circle">
+                                    <div class="myaccordion calculate-shipping-sec">
+                                        <div class="brand-header">
+                                            <h3>Calculate Shipping</h3>
+                                            <span class="mines-plus-circle">
                                             <i class="fa fa-angle-down" aria-hidden="true"></i>
                                         </span>
-                                    </div>
-                                    <div class="inner-accordion">
-                                        <div class="sub-total-sec padd-top-bot-25 total-sec">
-                                            <h3>SUBTOTAL</h3>
-                                            <h3>$222.00</h3>
                                         </div>
-                                        <div class="sub-total-sec padd-top-bot-25 total-sec">
-                                            <h3>SUBTOTAL</h3>
-                                            <h3>$222.00</h3>
-                                        </div>
-                                        <div class="sub-total-sec padd-top-bot-25 total-sec">
-                                            <h3>SUBTOTAL</h3>
-                                            <h3>$222.00</h3>
+                                        <div class="inner-accordion">
+                                            <div class="sub-total-sec padd-top-bot-25 total-sec">
+                                                <h3>SUBTOTAL</h3>
+                                                <h3 hidden id="sub_total"> {{ total_price }}</h3>
+                                                <h3>${{ total_price }}</h3>
+                                            </div>
+                                            <div class="sub-total-sec padd-top-bot-25 total-sec">
+                                                <h3>Shipping</h3>
+                                                <h3 id="shipping_amount">$0</h3>
+                                            </div>
                                         </div>
                                     </div>
+                                    <div class="sub-total-sec padd-top-bot-25 total-sec">
+                                        <h3>TOTAL</h3>
+                                        <h3><b id="total_amount">${{ total_price }}</b></h3>
+                                    </div>
                                 </div>
-                                <div class="sub-total-sec padd-top-bot-25 total-sec">
-                                    <h3>TOTAL</h3>
-                                    <h3><b>$222.00</b></h3>
+                                <div class="proceed-checkout-btn">
+                                    <a id="proceed_to_checkout">PROCEED TO CHECKOUT</a>
                                 </div>
+                                <button type="submit" id="proceed_success" hidden></button>
                             </div>
-                            <div class="proceed-checkout-btn">
-                                <a href="{% url 'web_cart_checkout' %}">PROCEED TO CHECKOUT</a>
+                            <div>
                             </div>
-                        </div>
-
-                        <div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </form>
+
     </main>
 {% endblock %}
 
@@ -197,6 +200,27 @@
                 if ($(this).next().val() > 1) $(this).next().val(+$(this).next().val() - 1);
             }
         });
+
+        $('#shipping_radio').on('change', function (e) {
+            e.preventDefault();
+            var radioValue = $("input[name='shipping']:checked").val();
+            radioValue = radioValue.split("-");
+            $('#shipping_amount').text('$' + radioValue[0]);
+            var sub_total = $('#sub_total').text();
+            $('#total_amount').text('$' + (parseFloat(sub_total) + parseFloat(radioValue[0])));
+        });
+
+        $('#proceed_to_checkout').on('click', function (e) {
+            e.preventDefault();
+            var radioValue = $("input[name='shipping']:checked").val();
+            if (radioValue)
+                radioValue = radioValue.split("-");
+            if (radioValue) {
+                $('#proceed_success').click();
+            } else {
+                alert("please select shipping first");
+            }
+        })
     </script>
 
 {% endblock %}

@@ -21,6 +21,7 @@ urlpatterns = [
     path('feedbacks/', views.DashboardFeedback.as_view(), name='dashboard-feedback'),
     path('dashboard/typo/', views.TypoView.as_view(), name='typo'),
     path('dashboard/paid/orders/', views.NonPaidOrdersView.as_view(), name='non_paid_orders'),
+    path('dashboard/all_orders/', views.AllOrdersView.as_view(), name='all_orders'),
     path('dashboard/remove/order/<int:id>/', views.OrderDeleteView.as_view(), name='remove-order'),
     path('login/', views.login_view, name="login"),
     path('register/', views.register_user, name="register"),

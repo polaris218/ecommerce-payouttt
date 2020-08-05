@@ -82,11 +82,19 @@
                         <a href="javascript:void(0);" class="search_scroll mr-3 mr-sm-4 d-inline-block sreach-icon"><i
                                 class="flaticon-search position-relative text-dark" aria-hidden="true"></i></a>
                         {% if user.is_authenticated %}
-                            <a href="{% url 'web_cart' %}"
-                               class="shop_cart_icon d-inline-block position-relative inner-cart-icon-right">
-                                <i class="shop_bg d-inline-block"></i>
-                                <span class="bg_green position-absolute open_sans bold_700 font_10 text-white shop_count d-flex align-items-center justify-content-center">0</span>
-                            </a>
+                            {% if total_cart_items %}
+                                <a href="{% url 'web_cart' %}"
+                                   class="shop_cart_icon d-inline-block position-relative inner-cart-icon-right">
+                                    <i class="shop_bg d-inline-block"></i>
+                                    <span class="bg_green position-absolute open_sans bold_700 font_10 text-white shop_count d-flex align-items-center justify-content-center">{{ total_cart_items }}</span>
+                                </a>
+                            {% else %}
+                                <a title="Cart is Empty"
+                                        class="shop_cart_icon d-inline-block position-relative inner-cart-icon-right">
+                                    <i class="shop_bg d-inline-block"></i>
+                                    <span class="bg_green position-absolute open_sans bold_700 font_10 text-white shop_count d-flex align-items-center justify-content-center">{{ total_cart_items }}</span>
+                                </a>
+                            {% endif %}
                         {% else %}
                             <a href='/login/?next=/cart/'
                                class="shop_cart_icon d-inline-block position-relative inner-cart-icon-right">

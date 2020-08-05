@@ -219,11 +219,15 @@ class CartModel(BaseModel):
         (DELIVERED, 'DELIVERED'),
     )
 
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     cart_item = models.ManyToManyField(CartItem, null=True, blank=True)
     paid = models.BooleanField(default=False)
     transaction_id = models.IntegerField(default=0)
     status = models.CharField(max_length=50, choices=ORDER_STATUS, default=PENDING)
     is_active = models.BooleanField(default=True)
+    shipping_amount = models.IntegerField(default=0)
+    order_note = models.TextField(max_length=700, null=True, blank=True)
+    shipping_type = models.CharField(max_length=1000, null=True, blank=True)
 
 
 class SuggestProduct(BaseModel):

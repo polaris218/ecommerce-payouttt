@@ -27,3 +27,6 @@ class Address(BaseModel):
 
     def __str__(self):
         return self.company
+
+    def full_address(self):
+        return self.street1 + " " + self.state + " " + self.city + " " + self.country

@@ -1,7 +1,8 @@
 import operator
 from datetime import datetime
 from functools import reduce
-
+import math
+import stripe
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -15,6 +16,7 @@ from Payouttt import settings
 from Payouttt.constants import BID_SUCCESS_MESSAGE, BID_FAIL, BID_COMPLETE, \
     SELL_FAIL, SELL_SUCCESS_MESSAGE, SELL_COMPLETE, FAIL_MESSAGE
 from addresses.address_validation import ShippoAddressManagement
+from addresses.models import Address
 from api.bid_status_management import BidStatusManagement
 from api.models import Product, Bid, ShoeSize, CartModel, CartItem, SuggestProduct
 from core import EmailHelper
@@ -121,13 +123,24 @@ class WebCartView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         if self.request.user.is_authenticated:
-            cart = CartModel.objects.filter(cart_item__buyer=self.request.user, is_active=True).first()
+            cart = CartModel.objects.filter(user=self.request.user, is_active=True).first()
             total_price = 0
-            if cart:
+            if cart and cart.cart_item.all().count():
                 total_price = cart.cart_item.all().aggregate(Sum('product__listing_price'))
                 total_price = total_price['product__listing_price__sum']
                 cart = cart.cart_item.all()
+            else:
+                return redirect('web-home')
             return render(request, self.template_name, {'cart': cart, 'total_price': total_price})
+
+    def post(self, request, *args, **kwargs):
+        shipping_amount = request.POST.get('shipping')
+        shipping_amount, shipping_type = shipping_amount.split('-')
+        cart = CartModel.objects.filter(user=self.request.user, is_active=True).first()
+        cart.shipping_amount = float(shipping_amount)
+        cart.shipping_type = shipping_type
+        cart.save()
+        return redirect('web_cart_checkout')
 
 
 class WebCartAddView(TemplateView):
@@ -135,9 +148,9 @@ class WebCartAddView(TemplateView):
         product_id = kwargs.get('product_id')
         valid_address = ShippoAddressManagement().user_valid_address(self.request.user)
         if valid_address:
-            cart = CartModel.objects.filter(cart_item__buyer=self.request.user, is_active=True).first()
+            cart = CartModel.objects.filter(user=self.request.user, is_active=True).first()
             if not cart:
-                cart = CartModel()
+                cart = CartModel(user=self.request.user)
                 cart.save()
             dict = {}
             if request.POST.get('shoe_size_id'):
@@ -157,11 +170,13 @@ class WebCartItemDeleteView(TemplateView):
 
     def post(self, request, *args, **kwargs):
         cart_item_id = kwargs.get('cart_item_id')
-        cart = CartModel.objects.filter(cart_item__buyer=self.request.user).first()
+        cart = CartModel.objects.filter(user=self.request.user).first()
         cart_item = CartItem.objects.get(id=cart_item_id)
-        cart.cart_item.remove(cart_item)
-        cart.save()
-        return redirect('web_cart')
+        cart_item.delete()
+        if cart and cart.cart_item.all().count():
+            return redirect('web_cart')
+        else:
+            return redirect('web-home')
 
 
 class WebCartBidView(TemplateView):
@@ -305,12 +320,22 @@ class WebProductSuggestView(TemplateView):
             return redirect(reverse('web_cart_sell', args=[product_id]))
 
 
-class WebCartCheckoutView(TemplateView):
-    template_name = 'checkout.html'
-
-
 class WebCartConfirmationView(TemplateView):
     template_name = 'confirmation.html'
+
+    def get(self, request, *args, **kwargs):
+        address = Address.objects.filter(user=self.request.user).first()
+        cart = CartModel.objects.filter(user=self.request.user, is_active=True).first()
+        total_price = 0
+        if cart and cart.cart_item.all().count():
+            total_price = cart.cart_item.all().aggregate(Sum('product__listing_price'))
+            total_price = total_price['product__listing_price__sum']
+            grand_total = math.ceil((total_price + cart.shipping_amount) * 100)
+            stripe_key = settings.STRIPE_PUBLISHABLE_KEY
+            return render(request, self.template_name, {'address': address, 'cart': cart, 'total_price': total_price,
+                                                        'grand_total': grand_total, 'stripe_key': stripe_key})
+        else:
+            return redirect('web-home')
 
 
 class WebCartThankYouView(TemplateView):
@@ -370,3 +395,51 @@ def signup_view(request):
 def logout_view(request):
     logout(request)
     return redirect(reverse('home'))
+
+
+def stripe_payment_charge(request):  # new
+    if request.method == 'POST':
+        cart = CartModel.objects.filter(user=request.user, is_active=True).first()
+        total_price = 0
+        if cart:
+            total_price = cart.cart_item.all().aggregate(Sum('product__listing_price'))
+            total_price = total_price['product__listing_price__sum']
+        grand_total = math.ceil((total_price + cart.shipping_amount) * 100)
+        try:
+            charge = stripe.Charge.create(
+                amount=grand_total,
+                currency='usd',
+                description='A Django charge',
+                source=request.POST['stripeToken']
+            )
+        except:
+            return redirect('web_cart_failed')
+        if charge['status'] == "succeeded" and charge['paid'] == True:
+            cart.is_active = False
+            cart.paid = True
+            cart.status = CartModel.PAID
+            cart.save()
+            return redirect('web_cart_thank_you')
+        else:
+            return redirect('web_cart_failed')
+
+
+class WebCartFailedView(TemplateView):
+    template_name = 'failed.html'
+
+
+class WebCartCheckoutView(TemplateView):
+    template_name = 'checkout.html'
+
+    def get(self, request, *args, **kwargs):
+        address = Address.objects.filter(user=self.request.user).first()
+        cart = CartModel.objects.filter(user=self.request.user, is_active=True).first()
+        total_price = 0
+        if cart and cart.cart_item.all().count():
+            total_price = cart.cart_item.all().aggregate(Sum('product__listing_price'))
+            total_price = total_price['product__listing_price__sum']
+            grand_total = total_price + cart.shipping_amount
+            return render(request, self.template_name, {'address': address, 'cart': cart, 'total_price': total_price,
+                                                        'grand_total': grand_total})
+        else:
+            return redirect('web-home')

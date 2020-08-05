@@ -81,8 +81,6 @@
                                                             <p style="color: red">Kindly Add Your Address Detail
                                                                 First.</p>
                                                         {% endif %}
-                                                    {% elif not can_buy %}
-                                                        <p style="color: green">Product Already in Cart.</p>
                                                     {% endif %}
                                                     <ul class="list-inline confirm-btn">
                                                         <li>
@@ -141,7 +139,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="top_selling_product_box payouttt_offers_content">
-                                                        {% if valid_address  and can_buy %}
+                                                        {% if valid_address %}
                                                             <button type="button" hidden
                                                                     id="success-btn"
                                                                     data-toggle="modal"

@@ -30,6 +30,7 @@ urlpatterns = [
     path('cart/checkout', views.WebCartCheckoutView.as_view(), name='web_cart_checkout'),
     path('cart/confirmation', views.WebCartConfirmationView.as_view(), name='web_cart_confirmation'),
     path('cart/thank-you', views.WebCartThankYouView.as_view(), name='web_cart_thank_you'),
+    path('cart/failed-you', views.WebCartFailedView.as_view(), name='web_cart_failed'),
     path('product/suggest/', csrf_exempt(views.WebProductSuggestView.as_view()), name="product_suggest"),
     path('login/', views.login_view, name="login"),
     path('signup/', views.signup_view, name="signup"),
@@ -42,4 +43,5 @@ urlpatterns = [
         template_name='password_reset_confirm.html'), name='password_reset_confirm'),
     path('password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(
         template_name='password_reset_complete.html'), name='password_reset_complete'),
+    path('charge-stripe-payment/', views.stripe_payment_charge, name='stripe_charge'),
 ]

@@ -9,13 +9,11 @@
             <div class="thank-sec padd-top-bot row">
                 <div class="col-md-6 offset-md-3">
                     <div class="receive-sec">
-                        <i class="flaticon-checked"></i>
-                        <h2>Order completed successfully!</h2>
-                        <p>Thank you for ordering. We received your order and will begin processing it soon. Your order
-                            information appears below</p>
+                        <h2>An Error Occured</h2>
+                        <p>Something went wrong please Try again later.</p>
                         <div class="thank-btn">
                             <a class="border-btn" href="{% url 'web-home' %}">back to home</a>
-                            <a class="bg-btn" href="{% url 'web-orders' %}">view order</a>
+                            <a class="bg-btn" href="{% url 'web_cart_confirmation' %}">Try Again</a>
                         </div>
                     </div>
                 </div>

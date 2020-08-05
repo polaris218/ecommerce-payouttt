@@ -2,6 +2,7 @@ from django import template
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Sum
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.template import loader
@@ -12,7 +13,7 @@ from django.views.generic import TemplateView
 from Payouttt.decorators import staff_required
 from addresses.address_validation import ShippoAddressManagement
 from addresses.models import Address
-from api.models import SuggestProduct
+from api.models import SuggestProduct, CartModel
 from core.models import FeedbackModel
 from dashboard.forms import LoginForm, SignUpForm, AddressForm
 from dashboard.services import BidManagement
@@ -42,6 +43,22 @@ class NonPaidOrdersView(LoginRequiredMixin, TemplateView):
         kwargs['paid_bids'] = BidManagement().get_non_paid_bids()
         kwargs['orders'] = 'active'
         return kwargs
+
+
+@method_decorator(staff_required, name='dispatch')
+class AllOrdersView(LoginRequiredMixin, TemplateView):
+    template_name = 'admin-orders.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs.setdefault('view', self)
+        kwargs['all_orders'] = 'active'
+        return kwargs
+
+    def get(self, request, *args, **kwargs):
+        orders = CartModel.objects.all().order_by('-id')
+        prices = [(cart.cart_item.all().aggregate(Sum('product__listing_price')))['product__listing_price__sum'] for
+                  cart in orders]
+        return render(request, self.template_name, {'orders': zip(orders, prices)})
 
 
 @method_decorator(staff_required, name='dispatch')

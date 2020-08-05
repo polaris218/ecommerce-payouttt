@@ -39,83 +39,110 @@
                                 <h3>Billing Details</h3>
                                 <div class="billing-detail-sec">
                                 <span class="input input--yoshiko">
-                                    <input class="input__field input__field--yoshiko" required type="text"
-                                           value="Smith John" id="input-10" name="fname"/>
-                                    <label class="input__label input__label--yoshiko" for="input-10"> 
+                                    <label class="input__label " for="input-10">
                                         <span class="input__label-content input__label-content--yoshiko"
-                                              data-content="First Name">Your Name <sup>*</sup></span>
+                                              data-content=""> <sup>*</sup>Name</span>
                                     </label>
+                                    <input class="input__field input__field--yoshiko" required disabled type="text"
+                                           value="{{ address.user.full_name }}" id="input-10" name="fname"/>
+{#                                    <label class="input__label input__label--yoshiko" for="input-10"> #}
+{#                                        <span class="input__label-content input__label-content--yoshiko"#}
+{#                                              data-content="First Name"> <sup>*</sup>Name</span>#}
+{#                                    </label>#}
                                 </span>
                                 </div>
                                 <div class="select_filed size-selected">
-                                    <select class="Wide" name="Selectbox" class="wpcf7-form-control wpcf7-select"
-                                            aria-invalid="false">
-                                        <option value="Country">Country</option>
-                                        <option value="India">India</option>
-                                        <option value="Australia">Australia</option>
-                                    </select>
+                                    <label class="input__label " for="input-10">
+                                        <span class="input__label-content input__label-content--yoshiko"
+                                              data-content=""> <sup>*</sup>Country</span>
+                                    </label>
+                                    <input class="input__field input__field--yoshiko" required type="text"
+                                           value="{{ address.country }}" id="input-11" disabled name="country"/>
+                                    {#                                    <label class="input__label input__label--yoshiko" for="input-10">#}
+                                    {#                                        <span class="input__label-content input__label-content--yoshiko"#}
+                                    {#                                              data-content="Country"> <sup>*</sup></span>#}
+                                    {#                                    </label>#}
                                 </div>
                                 <div class="billing-detail-sec">
                                 <span class="input input--yoshiko">
-                                    <input class="input__field input__field--yoshiko" required type="text" id="input-11"
-                                           name="fname"/>
-                                    <label class="input__label input__label--yoshiko" for="input-11"> 
+                                    <label class="input__label " for="input-10">
                                         <span class="input__label-content input__label-content--yoshiko"
-                                              data-content="First Name">Town / City <sup>*</sup></span>
+                                              data-content=""> <sup>*</sup>City</span>
                                     </label>
+                                    <input class="input__field input__field--yoshiko" required type="text" disabled
+                                           id="input-12" value="{{ address.city }}"
+                                           name="town_city"/>
+{#                                    <label class="input__label input__label--yoshiko" for="input-11"> #}
+{#                                        <span class="input__label-content input__label-content--yoshiko"#}
+{#                                              data-content="Town City"><sup>*</sup></span>#}
+{#                                    </label>#}
                                 </span>
                                 </div>
                                 <div class="billing-detail-sec">
                                 <span class="input input--yoshiko">
-                                    <input class="input__field input__field--yoshiko" required type="text" id="input-12"
-                                           name="fname"/>
-                                    <label class="input__label input__label--yoshiko" for="input-12"> 
+                                    <label class="input__label " for="input-10">
                                         <span class="input__label-content input__label-content--yoshiko"
-                                              data-content="First Name">Postcode / ZIP <sup>*</sup></span>
+                                              data-content=""> <sup>*</sup>State</span>
                                     </label>
+                                    <input class="input__field input__field--yoshiko" required disabled type="text"
+                                           id="input-13" value="{{ address.state }}"
+                                           name="State"/>
+{#                                    <label class="input__label input__label--yoshiko" for="input-12">#}
+{#                                        <span class="input__label-content input__label-content--yoshiko"#}
+{#                                              data-content="State"><sup>*</sup></span>#}
+{#                                    </label>#}
                                 </span>
                                 </div>
                                 <div class="billing-detail-sec">
                                 <span class="input input--yoshiko">
-                                    <input class="input__field input__field--yoshiko" required type="text" id="input-13"
-                                           name="fname"/>
-                                    <label class="input__label input__label--yoshiko" for="input-13"> 
+                                    <label class="input__label " for="input-10">
                                         <span class="input__label-content input__label-content--yoshiko"
-                                              data-content="First Name">Street Address <sup>*</sup></span>
+                                              data-content=""> <sup>*</sup>Zip Code</span>
                                     </label>
+{#                                    <label class="input__label input__label--yoshiko" for="input-12">#}
+{#                                        <span class="input__label-content input__label-content--yoshiko"#}
+{#                                              data-content="Post Code">Post Code<sup>*</sup></span>#}
+{#                                    </label>#}
+                                    <input class="input__field input__field--yoshiko" required disabled type="text"
+                                           id="input-14" value="{{ address.zip }}"
+                                           name="Post_code"/>
+
                                 </span>
                                 </div>
                                 <div class="billing-detail-sec">
                                 <span class="input input--yoshiko">
-                                    <input class="input__field input__field--yoshiko" required type="text" id="input-14"
-                                           name="fname"/>
-                                    <label class="input__label input__label--yoshiko" for="input-14"> 
+                                    <label class="input__label " for="input-10">
                                         <span class="input__label-content input__label-content--yoshiko"
-                                              data-content="First Name">Phone <sup>*</sup></span>
+                                              data-content=""> <sup>*</sup>Street</span>
                                     </label>
+                                    <input class="input__field input__field--yoshiko" required  type="text"
+                                           id="input-15" value="{{ address.street1 }}"
+                                           name="Street"/>
+{#                                    <label class="input__label input__label--yoshiko" for="input-13"> #}
+{#                                        <span class="input__label-content input__label-content--yoshiko"#}
+{#                                              data-content="Street"><sup>*</sup></span>#}
+{#                                    </label>#}
                                 </span>
                                 </div>
                                 <div class="billing-detail-sec">
-                                <span class="input input--yoshiko">
-                                    <input class="input__field input__field--yoshiko" required type="text" id="input-15"
-                                           name="fname"/>
-                                    <label class="input__label input__label--yoshiko" for="input-15"> 
+                                    <span class="input input--yoshiko">
+                                    <label class="input__label " for="input-16">
                                         <span class="input__label-content input__label-content--yoshiko"
-                                              data-content="First Name">Email Address <sup>*</sup></span>
+                                              data-content=""> <sup>*</sup>Phone</span>
                                     </label>
+                                    <input class="input__field input__field--yoshiko" required type="text"
+                                           id="input-16"
+                                           name="Phone"/>
                                 </span>
-                                </div>
-                                <div class="custom-checkbox">
-                                    <input type="checkbox" id="account">
-                                    <label for="account">Create An Account</label>
                                 </div>
                                 <div class="billing-detail-sec billing-detail-textarea">
                                 <span class="input input--yoshiko">
-                                    <textarea class="input__field input__field--yoshiko" name="message" id="input-14">Notes about your order, e.g: special note for delivery
-                                    </textarea>
-                                    <label class="input__label input__label--yoshiko" for="input-14"> <span
-                                            class="input__label-content input__label-content--yoshiko"
-                                            data-content="Message">Order Notes</span> </label>
+                                    <label class="input__label " for="input-10">
+                                        <span class="input__label-content input__label-content--yoshiko"
+                                              data-content=""> <sup>*</sup>Order Note</span>
+                                    </label>
+                                    <textarea class="input__field input__field--yoshiko" name="message" id="order_note"
+                                              placeholder="Note about your order, e.g: special note for delivery"></textarea>
                                 </span>
                                 </div>
                             </div>
@@ -132,85 +159,83 @@
                                             <td>Order</td>
                                             <td>Total</td>
                                         </tr>
-                                        <tr>
-                                            <td>Off-White x Wmns Air Zoom</td>
-                                            <td>$222.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Off-White x Wmns Air Zoom</td>
-                                            <td>$222.00</td>
-                                        </tr>
+                                        {% for item in cart.cart_item.all %}
+                                            <tr>
+                                                <td>{{ item.product.title }}</td>
+                                                <td>${{ item.product.listing_price }}</td>
+                                            </tr>
+                                        {% endfor %}
                                         <tr class="shipping">
-                                            <td>Shipping</td>
-                                            <td>Local Pickup (Free)</td>
+                                            <td>Shipping Charges</td>
+                                            <td id="shipping_charges">${{ cart.shipping_amount }}</td>
                                         </tr>
                                         <tr class="sub-total">
                                             <td>Subtotal</td>
-                                            <td>$444.00</td>
+                                            <td id="product_charges">${{ total_price }}</td>
                                         </tr>
                                         <tr class="total">
                                             <td>Total</td>
-                                            <td>$444.00</td>
+                                            <td id="total_amount">${{ grand_total }}</td>
                                         </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                            <div class="payment-summery">
-                                <h2>Payment</h2>
-                                <div id="accordion" class="accordion ">
-                                    <div class="card mb-0 payment-info-sec">
-                                        <div class="card-header collapsed payment-heading" data-toggle="collapse"
-                                             href="#collapseOne">
-                                            <img src="images/google-pay.png" alt=""/>
-                                            <h3>Google Pay</h3>
-                                            <i class="fa fa-angle-down"></i>
-                                        </div>
-                                        <div id="collapseOne" class="card-body collapse" data-parent="#accordion">
-                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting
-                                                industry. Lorem Ipsum has been the industry's standard dummy text ever
-                                                since the 1500s, when an unknown printer took a galley of type and
-                                                scrambled it to make a type specimen book.</p>
-                                        </div>
-                                        <div class="card-header collapsed payment-heading" data-toggle="collapse"
-                                             data-parent="#accordion" href="#collapseTwo">
-                                            <img src="images/paypal-img.png" alt=""/>
-                                            <h3>Paypal</h3>
-                                            <i class="fa fa-angle-down"></i>
-                                        </div>
-                                        <div id="collapseTwo" class="card-body collapse" data-parent="#accordion">
-                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting
-                                                industry. Lorem Ipsum has been the industry's standard dummy text ever
-                                                since the 1500s, when an unknown printer took a galley of type and
-                                                scrambled it to make a type specimen book.</p>
-                                        </div>
-                                        <div class="card-header collapsed payment-heading credit-sec"
-                                             data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                                            <img src="images/payment-img.png" class="credit-img" alt=""/>
-                                            <h3>Credit Card</h3>
-                                            <i class="fa fa-angle-down"></i>
-                                        </div>
-                                        <div id="collapseThree" class="collapse card-body" data-parent="#accordion">
-                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting
-                                                industry. Lorem Ipsum has been the industry's standard dummy text ever
-                                                since the 1500s, when an unknown printer took a galley of type and
-                                                scrambled it to make a type specimen book.</p>
-                                        </div>
-                                        <div class="card-header collapsed payment-heading cash-delivery"
-                                             data-toggle="collapse" data-parent="#accordion" href="#collapsefour">
-                                            <h3>Cash On Delivery</h3>
-                                            <i class="fa fa-angle-down"></i>
-                                        </div>
-                                        <div id="collapsefour" class="collapse cash-delivery-detail"
-                                             data-parent="#accordion">
-                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting
-                                                industry. Lorem Ipsum has been the industry's standard dummy text ever
-                                                since the 1500s, when an unknown printer took a galley of type and
-                                                scrambled it to make a type specimen book.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            {#                            <div class="payment-summery">#}
+                            {#                                <h2>Payment</h2>#}
+                            {#                                <div id="accordion" class="accordion ">#}
+                            {#                                    <div class="card mb-0 payment-info-sec">#}
+                            {#                                        <div class="card-header collapsed payment-heading" data-toggle="collapse"#}
+                            {#                                             href="#collapseOne">#}
+                            {#                                            <img src="images/google-pay.png" alt=""/>#}
+                            {#                                            <h3>Google Pay</h3>#}
+                            {#                                            <i class="fa fa-angle-down"></i>#}
+                            {#                                        </div>#}
+                            {#                                        <div id="collapseOne" class="card-body collapse" data-parent="#accordion">#}
+                            {#                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting#}
+                            {#                                                industry. Lorem Ipsum has been the industry's standard dummy text ever#}
+                            {#                                                since the 1500s, when an unknown printer took a galley of type and#}
+                            {#                                                scrambled it to make a type specimen book.</p>#}
+                            {#                                        </div>#}
+                            {#                                        <div class="card-header collapsed payment-heading" data-toggle="collapse"#}
+                            {#                                             data-parent="#accordion" href="#collapseTwo">#}
+                            {#                                            <img src="images/paypal-img.png" alt=""/>#}
+                            {#                                            <h3>Paypal</h3>#}
+                            {#                                            <i class="fa fa-angle-down"></i>#}
+                            {#                                        </div>#}
+                            {#                                        <div id="collapseTwo" class="card-body collapse" data-parent="#accordion">#}
+                            {#                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting#}
+                            {#                                                industry. Lorem Ipsum has been the industry's standard dummy text ever#}
+                            {#                                                since the 1500s, when an unknown printer took a galley of type and#}
+                            {#                                                scrambled it to make a type specimen book.</p>#}
+                            {#                                        </div>#}
+                            {#                                        <div class="card-header collapsed payment-heading credit-sec"#}
+                            {#                                             data-toggle="collapse" data-parent="#accordion" href="#collapseThree">#}
+                            {#                                            <img src="images/payment-img.png" class="credit-img" alt=""/>#}
+                            {#                                            <h3>Credit Card</h3>#}
+                            {#                                            <i class="fa fa-angle-down"></i>#}
+                            {#                                        </div>#}
+                            {#                                        <div id="collapseThree" class="collapse card-body" data-parent="#accordion">#}
+                            {#                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting#}
+                            {#                                                industry. Lorem Ipsum has been the industry's standard dummy text ever#}
+                            {#                                                since the 1500s, when an unknown printer took a galley of type and#}
+                            {#                                                scrambled it to make a type specimen book.</p>#}
+                            {#                                        </div>#}
+                            {#                                        <div class="card-header collapsed payment-heading cash-delivery"#}
+                            {#                                             data-toggle="collapse" data-parent="#accordion" href="#collapsefour">#}
+                            {#                                            <h3>Cash On Delivery</h3>#}
+                            {#                                            <i class="fa fa-angle-down"></i>#}
+                            {#                                        </div>#}
+                            {#                                        <div id="collapsefour" class="collapse cash-delivery-detail"#}
+                            {#                                             data-parent="#accordion">#}
+                            {#                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting#}
+                            {#                                                industry. Lorem Ipsum has been the industry's standard dummy text ever#}
+                            {#                                                since the 1500s, when an unknown printer took a galley of type and#}
+                            {#                                                scrambled it to make a type specimen book.</p>#}
+                            {#                                        </div>#}
+                            {#                                    </div>#}
+                            {#                                </div>#}
+                            {#                            </div>#}
                             <div class="order-btn">
                                 <a href="{% url 'web_cart_confirmation' %}">confirm order</a>
                             </div>
@@ -274,5 +299,6 @@
                 }
             }
         })();
+
     </script>
 {% endblock %}

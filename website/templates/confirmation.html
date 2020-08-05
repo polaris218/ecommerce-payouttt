@@ -11,34 +11,34 @@
                     <div class="receive-sec">
                         <i class="flaticon-checked"></i>
                         <h2>We’ve received your order</h2>
-                        <p>Order No. : <span>#758756467564154</span></p>
+                        <p>Order No. : <span>#{{ cart.id }}</span></p>
                     </div>
                     <div class="order-info">
                         <h3>Delivery Details</h3>
                         <div class="row">
                             <div class="col-md-6 delivery-detail">
                                 <h4>First Name</h4>
-                                <p>Smith Jhon</p>
+                                <p>{{ address.user.full_name }}</p>
                             </div>
                             <div class="col-md-6 delivery-detail">
                                 <h4>Delivery Method</h4>
-                                <p>Local Pickup (Free)</p>
+                                <p>{{ cart.shipping_type }}</p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 delivery-detail">
                                 <h4>Phone Number</h4>
-                                <p>(+44) 444 555 666</p>
+                                <p>{{ cart.user.phone_number }}</p>
                             </div>
                             <div class="col-md-6 delivery-detail">
                                 <h4>Email Address</h4>
-                                <p>smithjhon@gmail.com</p>
+                                <p>{{ cart.user.email }}</p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 delivery-detail">
                                 <h4>Address</h4>
-                                <p>581 Swauger Valley Rd, Portsmouth, OH, 45662</p>
+                                <p>{{ address.full_address }}</p>
                             </div>
                             <div class="col-md-6 delivery-detail">
                             </div>
@@ -47,46 +47,41 @@
                             <h4>Order Summary</h4>
                             <table>
                                 <tbody>
+                                {% for item in cart.cart_item.all %}
+                                    <tr>
+                                        <td>{{ item.product.title }}</td>
+                                        <td>${{ item.product.listing_price }}</td>
+                                    </tr>
+                                {% endfor %}
                                 <tr>
-                                    <td>Off-White x Wmns Air Zoom</td>
-                                    <td>$222.00</td>
-                                </tr>
-                                <tr>
-                                    <td>Off-White x Wmns Air Zoom</td>
-                                    <td>$222.00</td>
-                                </tr>
-                                <tr>
-                                    <td>Shipping</td>
-                                    <td>Local Pickup (Free)</td>
-                                </tr>
-                                <tr>
-                                    <td>Subtotal</td>
-                                    <td>$444.00</td>
-                                </tr>
-                                <tr class="total">
-                                    <td>Total</td>
-                                    <td>$444.00</td>
+                                    <td>{{ cart.shipping_type }}</td>
+                                    <td>${{ cart.shipping_amount }}</td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <div class="payment-information">
-                            <h3>Payment Information</h3>
-                            <div class="row">
-                                <div class="col-md-6 delivery-detail">
-                                    <h4>Credit Card</h4>
-                                    <p>Visa ********7878</p>
-                                </div>
-                                <div class="col-md-6 delivery-detail">
-                                    <h4>Billing Address</h4>
-                                    <p>5290 Betts Rd, Greenbrier, TN, 37073</p>
-                                </div>
-                            </div>
-                        </div>
+                        {#                        <div class="payment-information">#}
+                        {#                            <h3>Payment Information</h3>#}
+                        {#                            <div class="row">#}
+                        {#                                <div class="col-md-6 delivery-detail">#}
+                        {#                                    <h4>Credit Card</h4>#}
+                        {#                                    <p>Visa ********7878</p>#}
+                        {#                                </div>#}
+                        {#                                <div class="col-md-6 delivery-detail">#}
+                        {#                                    <h4>Billing Address</h4>#}
+                        {#                                    <p>5290 Betts Rd, Greenbrier, TN, 37073</p>#}
+                        {#                                </div>#}
+                        {#                            </div>#}
+                        {#                        </div>#}
                     </div>
-                    <div class="payment-btn">
-                        <a href="{% url 'web_cart_thank_you' %}">Process</a>
-                    </div>
+                    <form action="{% url 'stripe_charge' %}" method="post">
+                        {% csrf_token %}
+                        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                data-key="{{ stripe_key }}"
+                                data-description="Payouttt Charge"
+                                data-amount="{{ grand_total }}"
+                                data-locale="auto"></script>
+                    </form>
                 </div>
             </div>
         </div>
