@@ -12,7 +12,12 @@
                         <i class="flaticon-checked"></i>
                         <h2>Order completed successfully!</h2>
                         <p>Thank you for ordering. We received your order and will begin processing it soon. Your order
-                            information appears below</p>
+                            information appears below.</p>
+                        {% if cart.tracking_url %}
+                            <a href="{{ cart.tracking_url }}" target="_blank" class="text-green">Click here to Track
+                                Your
+                                Order.</a>
+                        {% endif %}
                         <div class="thank-btn">
                             <a class="border-btn" href="{% url 'web-home' %}">back to home</a>
                             <a class="bg-btn" href="{% url 'web-orders' %}">view order</a>

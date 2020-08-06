@@ -2,6 +2,7 @@ import operator
 from datetime import datetime
 from functools import reduce
 import math
+import shippo
 import stripe
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
@@ -15,6 +16,7 @@ from django.views.generic import TemplateView
 from Payouttt import settings
 from Payouttt.constants import BID_SUCCESS_MESSAGE, BID_FAIL, BID_COMPLETE, \
     SELL_FAIL, SELL_SUCCESS_MESSAGE, SELL_COMPLETE, FAIL_MESSAGE
+from accounts.models import User
 from addresses.address_validation import ShippoAddressManagement
 from addresses.models import Address
 from api.bid_status_management import BidStatusManagement
@@ -153,9 +155,8 @@ class WebCartAddView(LoginRequiredMixin, TemplateView):
                 cart = CartModel(user=self.request.user)
                 cart.save()
             dict = {}
-            if request.POST.get('shoe_size_id'):
-                shoe_size = ShoeSize.objects.get(id=request.POST.get('shoe_size_id'))
-                dict['shoe_size'] = shoe_size
+            shoe_size = ShoeSize.objects.get(id=request.POST.get('shoe_size_id'))
+            dict['shoe_size'] = shoe_size
             dict['buyer'] = self.request.user
             dict['product'] = Product.objects.get(id=product_id)
             cart_item_obj = CartItem.objects.create(**dict)
@@ -341,6 +342,10 @@ class WebCartConfirmationView(LoginRequiredMixin, TemplateView):
 class WebCartThankYouView(TemplateView):
     template_name = 'thank-you.html'
 
+    def get(self, request, *args, **kwargs):
+        cart = CartModel.objects.filter(is_active=False, paid=True).last()
+        return render(request, self.template_name, {'cart': cart})
+
 
 def login_view(request):
     form = LoginForm(request.POST or None)
@@ -398,31 +403,43 @@ def logout_view(request):
 
 
 def stripe_payment_charge(request):  # new
-    if request.method == 'POST':
-        cart = CartModel.objects.filter(user=request.user, is_active=True).first()
-        total_price = 0
-        if cart:
-            total_price = cart.cart_item.all().aggregate(Sum('product__listing_price'))
-            total_price = total_price['product__listing_price__sum']
-        grand_total = math.ceil((total_price + cart.shipping_amount) * 100)
-        try:
-            charge = stripe.Charge.create(
-                amount=grand_total,
-                currency='usd',
-                description='Payouttt charge',
-                source=request.POST['stripeToken']
-            )
-        except:
-            return redirect('web_cart_failed')
-        if charge['status'] == "succeeded" and charge['paid'] == True:
-            cart.transaction_id = charge['id']
-            cart.is_active = False
-            cart.paid = True
-            cart.status = CartModel.PAID
-            cart.save()
-            return redirect('web_cart_thank_you')
+    if request.method == 'POST' and request.user.is_authenticated:
+        admin_address = Address.objects.filter(admin_address=True).first()
+        seller_address = ShippoAddressManagement().user_valid_address(admin_address.user)
+        buyer_address = ShippoAddressManagement().user_valid_address(request.user)
+        if seller_address and buyer_address:
+            user = User.objects.get(id=request.user.id)
+            if user.stripe_customer_id and verify_payment_method(user.stripe_payment_method):
+                cart = CartModel.objects.filter(user=request.user, is_active=True).first()
+                total_price = 0
+                if cart:
+                    total_price = cart.cart_item.all().aggregate(Sum('product__listing_price'))
+                    total_price = total_price['product__listing_price__sum']
+                grand_total = math.ceil((total_price + cart.shipping_amount) * 100)
+                try:
+                    charge = stripe.Charge.create(
+                        amount=grand_total,
+                        currency='usd',
+                        description='Payouttt charge',
+                        source=request.POST['stripeToken']
+                    )
+                except:
+                    return redirect('web_cart_failed')
+                if charge['status'] == "succeeded" and charge['paid'] == True:
+                    set_user_tracking(user, cart)
+                    cart.transaction_id = charge['id']
+                    cart.is_active = False
+                    cart.paid = True
+                    cart.status = CartModel.PAID
+                    cart.save()
+                    return redirect('web_cart_thank_you')
+                else:
+                    return redirect('web_cart_failed')
         else:
-            return redirect('web_cart_failed')
+            msg = 'User must have address added and validated.'
+            return render(request, "failed.html", {"msg": msg, })
+    else:
+        return redirect('web-home')
 
 
 class WebCartFailedView(TemplateView):
@@ -444,3 +461,73 @@ class WebCartCheckoutView(LoginRequiredMixin, TemplateView):
                                                         'grand_total': grand_total})
         else:
             return redirect('web-home')
+
+
+def verify_payment_method(payment_method):
+    try:
+        return eval(payment_method).get('paymentMethod').get('id')
+    except:
+        return False
+
+
+def set_user_tracking(user, cart):
+    success = True
+    try:
+        address = ShippoAddressManagement().user_valid_address(user)
+        buyer_addr = {
+            "name": address.full_name or 'Payoutttt',
+            "street1": address.street1,
+            "city": address.city,
+            "state": str(address.state),
+            "zip": int(address.zip),
+            "country": address.country,
+            # "phone": str(user.phone_number),
+        }
+
+        shipment = shippo.Shipment.create(
+            address_from=get_admin_address(),
+            address_to=buyer_addr,
+            parcels=[get_parcel()],
+            asynchronous=False
+        )
+        rate = shipment.rates[0]
+        transaction = shippo.Transaction.create(
+            rate=rate.object_id, asynchronous=False)
+        if transaction.status == "SUCCESS":
+            cart.tracking_number = transaction.tracking_number
+            cart.tracking_url = transaction.label_url
+        else:
+            cart.shippo_error = transaction.messages[0].get('text')
+            success = False
+    except Exception as e:
+        cart.shippo_error = str(e)
+        success = False
+    cart.save()
+    return success
+
+
+def get_admin_address():
+    admin_address = ShippoAddressManagement().get_adming_address()
+    admin_addr = {
+        "name": admin_address.full_name,
+        "street1": admin_address.street1,
+        "street2": "",
+        "city": admin_address.city,
+        "state": admin_address.state,
+        "zip": admin_address.zip,
+        "country": admin_address.country,
+        "phone": "+1 123 456 789",
+    }
+    return admin_addr
+
+
+def get_parcel():
+    parcel = {
+        "length": "14",
+        "width": "10",
+        "height": "6",
+        "distance_unit": "in",
+        "weight": "3",
+        "mass_unit": "lb",
+    }
+    return parcel

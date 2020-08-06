@@ -228,6 +228,9 @@ class CartModel(BaseModel):
     shipping_amount = models.IntegerField(default=0)
     order_note = models.TextField(max_length=700, null=True, blank=True)
     shipping_type = models.CharField(max_length=1000, null=True, blank=True)
+    tracking_url = models.URLField(max_length=255, null=True, blank=True)
+    tracking_number = models.CharField(max_length=500,null=True,blank=True)
+    shippo_error = models.TextField(max_length=700, null=True, blank=True)
 
 
 class SuggestProduct(BaseModel):

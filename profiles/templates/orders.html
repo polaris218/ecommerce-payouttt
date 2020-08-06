@@ -19,6 +19,7 @@
                                             <th class="msg-tbl-head">Items Count</th>
                                             <th class="msg-tbl-head">Total Price</th>
                                             <th class="msg-tbl-head">Status</th>
+                                            <th class="msg-tbl-head">Tracking</th>
                                             <th class="msg-tbl-head">Detail</th>
                                         </tr>
                                         </thead>
@@ -29,6 +30,12 @@
                                                 <td class="msg-tbl-body">{{ order.cart_item.count }}</td>
                                                 <td class="msg-tbl-body">${{ price }}</td>
                                                 <td class="msg-tbl-body">{{ order.status }}</td>
+                                                {% if order.tracking_url %}
+                                                    <td class="msg-tbl-body"><a href="{{ order.tracking_url }}"
+                                                                                target="_blank">View</a></td>
+                                                {% else %}
+                                                    <td class="msg-tbl-body"><a>View</a></td>
+                                                {% endif %}
                                                 <td class="msg-tbl-body">
                                                     <a href="#!" data-toggle="modal"
                                                        data-target="#order-{{ order.id }}">Detail</a>

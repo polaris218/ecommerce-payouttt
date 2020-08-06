@@ -9,8 +9,13 @@
             <div class="thank-sec padd-top-bot row">
                 <div class="col-md-6 offset-md-3">
                     <div class="receive-sec">
+                        <i class="flaticon-cancel"></i>
                         <h2>An Error Occured</h2>
-                        <p>Something went wrong please Try again later.</p>
+                        {% if msg %}
+                            <p>{{ msg }}</p>
+                        {% else %}
+                            <p>Something went wrong please Try again later.</p>
+                        {% endif %}
                         <div class="thank-btn">
                             <a class="border-btn" href="{% url 'web-home' %}">back to home</a>
                             <a class="bg-btn" href="{% url 'web_cart_confirmation' %}">Try Again</a>
