@@ -74,7 +74,7 @@
                         {#                            </div>#}
                         {#                        </div>#}
                     </div>
-                    <form action="{% url 'stripe_charge' %}" method="post">
+                    <form action="{% url 'stripe_charge' %}" method="post" class="text-center">
                         {% csrf_token %}
                         <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                 data-key="{{ stripe_key }}"
@@ -87,4 +87,11 @@
         </div>
         <!-- top_selling_sec -->
     </main>
+{% endblock %}
+
+{% block js_block %}
+    <script>
+        $('.stripe-button-el').addClass('default-btn text-uppercase open_sans bold_500 text-white bg_green shop_btn d-inline-block  mt-lg-2 mt-xl-4');
+        $('.stripe-button-el').removeClass('stripe-button-el');
+    </script>
 {% endblock %}

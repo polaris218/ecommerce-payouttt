@@ -409,12 +409,13 @@ def stripe_payment_charge(request):  # new
             charge = stripe.Charge.create(
                 amount=grand_total,
                 currency='usd',
-                description='A Django charge',
+                description='Payouttt charge',
                 source=request.POST['stripeToken']
             )
         except:
             return redirect('web_cart_failed')
         if charge['status'] == "succeeded" and charge['paid'] == True:
+            cart.transaction_id = charge['id']
             cart.is_active = False
             cart.paid = True
             cart.status = CartModel.PAID

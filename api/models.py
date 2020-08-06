@@ -222,7 +222,7 @@ class CartModel(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     cart_item = models.ManyToManyField(CartItem, null=True, blank=True)
     paid = models.BooleanField(default=False)
-    transaction_id = models.IntegerField(default=0)
+    transaction_id = models.CharField(max_length=255, null=True, blank=True)
     status = models.CharField(max_length=50, choices=ORDER_STATUS, default=PENDING)
     is_active = models.BooleanField(default=True)
     shipping_amount = models.IntegerField(default=0)
