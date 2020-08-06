@@ -118,7 +118,7 @@ class ProductDetailView(TemplateView):
                       {'product': product, 'lowest_ask': lowest_ask, 'highest_bid': highest_bid})
 
 
-class WebCartView(TemplateView):
+class WebCartView(LoginRequiredMixin, TemplateView):
     template_name = 'cart.html'
 
     def get(self, request, *args, **kwargs):
@@ -143,7 +143,7 @@ class WebCartView(TemplateView):
         return redirect('web_cart_checkout')
 
 
-class WebCartAddView(TemplateView):
+class WebCartAddView(LoginRequiredMixin, TemplateView):
     def post(self, request, *args, **kwargs):
         product_id = kwargs.get('product_id')
         valid_address = ShippoAddressManagement().user_valid_address(self.request.user)
@@ -165,7 +165,7 @@ class WebCartAddView(TemplateView):
         return redirect('web_cart')
 
 
-class WebCartItemDeleteView(TemplateView):
+class WebCartItemDeleteView(LoginRequiredMixin, TemplateView):
     template_name = 'cart.html'
 
     def post(self, request, *args, **kwargs):
@@ -320,7 +320,7 @@ class WebProductSuggestView(TemplateView):
             return redirect(reverse('web_cart_sell', args=[product_id]))
 
 
-class WebCartConfirmationView(TemplateView):
+class WebCartConfirmationView(LoginRequiredMixin, TemplateView):
     template_name = 'confirmation.html'
 
     def get(self, request, *args, **kwargs):
@@ -428,7 +428,7 @@ class WebCartFailedView(TemplateView):
     template_name = 'failed.html'
 
 
-class WebCartCheckoutView(TemplateView):
+class WebCartCheckoutView(LoginRequiredMixin, TemplateView):
     template_name = 'checkout.html'
 
     def get(self, request, *args, **kwargs):
