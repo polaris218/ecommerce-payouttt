@@ -20,7 +20,7 @@ from accounts.models import User
 from addresses.address_validation import ShippoAddressManagement
 from addresses.models import Address
 from api.bid_status_management import BidStatusManagement
-from api.models import Product, Bid, ShoeSize, CartModel, CartItem, SuggestProduct
+from api.models import Product, Bid, ShoeSize, CartModel, CartItem, SuggestProduct, FeaturedProduct
 from core import EmailHelper
 from core.EmailHelper import Email
 from dashboard.forms import LoginForm, WebSignUpForm, ProductSuggestForm
@@ -31,7 +31,10 @@ class IndexView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         products = Product.objects.filter(seller__is_staff=True)
-        return render(request, self.template_name, {'products': products})
+        new_releases = Product.objects.filter(seller__is_staff=True).order_by('-id')[:10]
+        feature_products = FeaturedProduct.objects.filter(featured__seller__is_staff=True).order_by('-id')
+        return render(request, self.template_name,
+                      {'products': products, 'feature_products': feature_products, 'new_releases': new_releases})
 
 
 class CategoryDetailsView(TemplateView):
@@ -130,7 +133,7 @@ class WebCartView(LoginRequiredMixin, TemplateView):
             if cart and cart.cart_item.all().count():
                 total_price = cart.cart_item.all().aggregate(Sum('product__listing_price'))
                 total_price = total_price['product__listing_price__sum']
-                cart = cart.cart_item.all()
+                cart = cart.cart_item.all().order_by('-id')
             else:
                 return redirect('web-home')
             return render(request, self.template_name, {'cart': cart, 'total_price': total_price})

@@ -122,7 +122,7 @@ class OrdersView(LoginRequiredMixin, TemplateView):
         return kwargs
 
     def get(self, request, *args, **kwargs):
-        orders = CartModel.objects.filter(user=self.request.user)
+        orders = CartModel.objects.filter(user=self.request.user).order_by('-id')
         prices = [(cart.cart_item.all().aggregate(Sum('product__listing_price')))['product__listing_price__sum'] for
                   cart in orders]
         return render(request, self.template_name, {'orders': zip(orders, prices)})

@@ -51,7 +51,7 @@
                                 <div class="refine-sec-top">
                                     <div class="brand-header-top">
                                         <div class="brand-header">
-                                            <p>Refine (28 results)</p>
+                                            <p>Refine</p>
                                             <span class="mines-plus-circle">
                                             <i class="flaticon-minus" aria-hidden="true"></i>
                                         </span>
@@ -96,26 +96,26 @@
                                                         <input type="checkbox" id="inlineCheckbox10" value="option10"/>
                                                         <label for="inlineCheckbox10"> Mens </label>
                                                     </div>
-{#                                                    <div class="checkbox checkbox-inline">#}
-{#                                                        <input type="checkbox" id="inlineCheckbox11" value="option11"/>#}
-{#                                                        <label for="inlineCheckbox11"> Gradeschool</label>#}
-{#                                                    </div>#}
+                                                    {#                                                    <div class="checkbox checkbox-inline">#}
+                                                    {#                                                        <input type="checkbox" id="inlineCheckbox11" value="option11"/>#}
+                                                    {#                                                        <label for="inlineCheckbox11"> Gradeschool</label>#}
+                                                    {#                                                    </div>#}
                                                     <div class="checkbox checkbox-inline">
                                                         <input type="checkbox" id="inlineCheckbox12" value="option12"/>
                                                         <label for="inlineCheckbox12"> Kids </label>
                                                     </div>
-{#                                                    <div class="checkbox checkbox-inline">#}
-{#                                                        <input type="checkbox" id="inlineCheckbox13" value="option13"/>#}
-{#                                                        <label for="inlineCheckbox13"> Toddlers </label>#}
-{#                                                    </div>#}
+                                                    {#                                                    <div class="checkbox checkbox-inline">#}
+                                                    {#                                                        <input type="checkbox" id="inlineCheckbox13" value="option13"/>#}
+                                                    {#                                                        <label for="inlineCheckbox13"> Toddlers </label>#}
+                                                    {#                                                    </div>#}
                                                     <div class="checkbox checkbox-inline">
                                                         <input type="checkbox" id="inlineCheckbox14" value="option14"/>
                                                         <label for="inlineCheckbox14"> Womens </label>
                                                     </div>
-{#                                                    <div class="checkbox checkbox-inline">#}
-{#                                                        <input type="checkbox" id="inlineCheckbox15" value="option15"/>#}
-{#                                                        <label for="inlineCheckbox15"> Infant </label>#}
-{#                                                    </div>#}
+                                                    {#                                                    <div class="checkbox checkbox-inline">#}
+                                                    {#                                                        <input type="checkbox" id="inlineCheckbox15" value="option15"/>#}
+                                                    {#                                                        <label for="inlineCheckbox15"> Infant </label>#}
+                                                    {#                                                    </div>#}
                                                 </div>
                                             </div>
                                         </div>
@@ -164,6 +164,64 @@
             </div>
         </section>
     </main>
+
+    {% for product in products %}
+        <div class="modal fade" id="shoe-modal-{{ product.id }}"
+             tabindex="-1"
+             role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered"
+                 role="document">
+                <div class="modal-content text-black-50">
+                    <form method="post" action="{% url 'web_cart_add_product' product.id %}" class="text-center">
+                        <div class="modal-body">
+                            <button type="button" class="close" id="close_modal_btn"
+                                    data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h2 id="message-head" class="text-center">Product
+                                Detail</h2>
+                            <h2 class="sec-heading text-black-50">{{ product.title }}</h2>
+                            <ul class="condition-sec">
+                                <li>Condition: <span>New</span></li>
+                                <li>SKU: <span>{{ product.sku_number }}</span></li>
+                                <li>
+                                    <div class="select_filed size-selected">
+
+                                        <select style="display: block" id="shoe_size_id" name="shoe_size_id" required>
+                                            <option value="">Size</option>
+                                            {% for shoe_size in product.shoe_sizes.all %}
+                                                <option value="{{ shoe_size.id }}">{{ shoe_size }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="border-line"></div>
+                            <div class="row release-date">
+                                <div class="col-md-8 col-md-7">
+                                    <p>Release Date: <b>{{ product.release_date }}</b></p>
+                                    <p>Colorway: <b>{{ product.colorway }}</b></p>
+                                </div>
+                                <div class="col-md-4 col-md-4">
+                                    <p>SKU: <b>{{ product.sku_number }}</b></p>
+                                    <p>Listing Price:<b> ${{ product.listing_price }}</b></p>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="text-center pb-3">
+                            <button type="submit" id="check_size_selected"
+                                    class="default-btn mb-2 border-0 text-uppercase open_sans bold_500 text-white bg_green shop_btn d-inline-block  mt-lg-2 mt-xl-4">
+                                Add
+                            </button>
+                        </a>
+                    </form>
+                    <form></form>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
 {% endblock %}
 {% block js_block %}
 

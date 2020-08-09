@@ -6,13 +6,11 @@
                 <div class="add-top-cart-btn">
                     <form method="post"
                           action="{% url 'web_cart_add_product' product.id %}">
-                        <button type="submit">
-                            <a>
-                                <i class="fa fa-shopping-cart" aria-hidden="true">
-                                </i>
-                                Add
-                                To Cart</a>
-                        </button>
+                            <a data-toggle="modal"
+                               data-target="#shoe-modal-{{ product.id }}">
+                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                Add To Cart
+                            </a>
                     </form>
                 </div>
                 <a href="javascript:void(0);"
@@ -28,9 +26,11 @@
                     ${{ product.listing_price }}</h4>
             </div>
             <div class="cart-btn-mobile ">
-                <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add
-                    To
-                    Cart</a>
+                <a data-toggle="modal"
+                   data-target="#shoe-modal-{{ product.id }}">
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                    Add To Cart
+                </a>
             </div>
             <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">
                 <a href="{% url 'web_cart_bid' product.id %}"

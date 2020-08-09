@@ -8,11 +8,14 @@
         </div>
         <div class="navbar-collapse" id="navbarSupportedContent">
             <div class="search_nav">
-                <div class="input-group">
+                <form class="products-search" action="{% url 'web_search' %}" method="get">
+                    <div class="input-group">
                         <span class="fa fa-search d-flex align-items-center gray_c f_16 pl-3 search_scroll"
                               id="basic-addon1"></span>
-                    <input type="text" class="border-0" placeholder="Search">
-                </div>
+                        <input type="text" class="border-0" id="product_search" name="product_search"
+                               placeholder="Search">
+                    </div>
+                </form>
             </div>
             <div class="profile_detalis ml-auto d-flex align-items-center">
                 <a href="#" class="d-inline-block mr-4 gray_c f_19 notification_icon">

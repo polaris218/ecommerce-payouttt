@@ -137,39 +137,20 @@
                                                 <div class="label_sell position-absolute bg-light px-sm-3 px-lg-3 px-xl-4 py-sm-2">
                                                     <span class="text-uppercase open_sans bold_700 font_20">{{ product.release_date }}</span>
                                                 </div>
-                                                {# <div class="add-top-cart-btn">#}
-                                                {#      <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add#}
-                                                {#          To Cart#}
-                                                {#      </a>#}
-                                                {# </div>#}
                                                 {% if user.is_authenticated %}
                                                     <div class="add-top-cart-btn">
-                                                        {#                                                        <button type="submit">#}
-                                                        {#                                                            <a>#}
-                                                        {#                                                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>#}
-                                                        {#                                                                Add To Cart#}
-                                                        {#                                                            </a>#}
-                                                        {#                                                        </button>#}
-
-
-                                                        {#                                                        <button #}
-                                                        {#                                                                class="text-uppercase open_sans bold_700 text-white shop_btn d-inline-block font_26">#}
                                                         <a data-toggle="modal"
                                                            data-target="#shoe-modal-{{ product.id }}">
                                                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                                                             Add To Cart
                                                         </a>
-
-
                                                     </div>
                                                 {% else %}
                                                     <div class="add-top-cart-btn">
-                                                        <button type="button">
-                                                            <a href='/login/?next=/'>
-                                                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                                                Add To Cart
-                                                            </a>
-                                                        </button>
+                                                        <a href='/login/?next=/'>
+                                                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                                            Add To Cart
+                                                        </a>
                                                     </div>
                                                 {% endif %}
                                                 <a href="javascript:void(0);"
@@ -184,11 +165,11 @@
                                                     ${{ product.listing_price }}</h4>
                                             </div>
                                             <div class="cart-btn-mobile ">
-                                                <button type="submit">
-                                                    <a href="javascript:void(0);">
-                                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                                    </a>
-                                                </button>
+                                                <a data-toggle="modal"
+                                                   data-target="#shoe-modal-{{ product.id }}">
+                                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                                    Add To Cart
+                                                </a>
                                             </div>
                                             <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">
                                                 <a href="{% url 'web_cart_bid' product.id %}"
@@ -231,146 +212,60 @@
                         </div>
                         <div class="new_releases_slider_main mt-4 pt-2">
                             <div class="top_selling_slider new_releases_slider owl-carousel owl-theme">
-                                <div class="item">
-                                    <div class="top_selling_product_box">
-                                        <div class="top_sell_img border bg-white position-relative overflow-hidden">
-                                            <div class="label_sell position-absolute bg-light px-sm-3 px-lg-3 px-xl-4 py-sm-2">
-                                                <span class="text-uppercase open_sans bold_700 font_20">April 18</span>
+                                {% for new_products in new_releases %}
+                                    <div class="item">
+                                        <div class="top_selling_product_box">
+                                            <div class="top_sell_img border bg-white position-relative overflow-hidden">
+                                                <div class="label_sell position-absolute bg-light px-sm-3 px-lg-3 px-xl-4 py-sm-2">
+                                                    <span class="text-uppercase open_sans bold_700 font_20">{{ new_products.release_date }}</span>
+                                                </div>
+                                                {% if user.is_authenticated %}
+                                                    <div class="add-top-cart-btn">
+                                                        <a data-toggle="modal"
+                                                           data-target="#new-shoe-modal-{{ new_products.id }}">
+                                                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                                            Add To Cart
+                                                        </a>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="add-top-cart-btn">
+                                                        <a href='/login/?next=/'>
+                                                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                                            Add To Cart
+                                                        </a>
+                                                    </div>
+                                                {% endif %}
+                                                <a href="javascript:void(0);"
+                                                   class="d-inline-block w-100 h-100 image_hover position-relative"><img
+                                                        src="{{ new_products.url }}"
+                                                        alt=""
+                                                        class="img-fluid"/></a>
                                             </div>
-                                            <div class="add-top-cart-btn">
-                                                <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add
-                                                    To Cart</a>
+                                            <div class="top_sell_title text-center mt-3">
+                                                <h3><a href="{% url 'product_detail' new_products.id %}"
+                                                       class="open_sans bold_400 font_20">{{ new_products.title }}</a>
+                                                </h3>
+                                                <h4 class="mt-2 oswald_font bold_600 font_20 text-dark">$230.00</h4>
                                             </div>
-                                            <a href="javascript:void(0);"
-                                               class="d-inline-block w-100 h-100 image_hover position-relative"><img
-                                                    src="{% static 'web/images/new_releases_product_1.png' %}" alt=""
-                                                    class="img-fluid"/></a>
+                                            <div class="cart-btn-mobile ">
+                                                <a data-toggle="modal"
+                                                   data-target="#new-shoe-modal-{{ new_products.id }}">
+                                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                                    Add To Cart
+                                                </a>
+                                            </div>
+                                            <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">
+                                                <a href="{% url 'web_cart_bid' new_products.id %}"
+                                                   class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>
+                                                <a href="{% url 'web_cart_buy' new_products.id %}"
+                                                   class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Buy
+                                                    Now</a>
+                                                <a href="{% url 'web_cart_sell' new_products.id %}"
+                                                   class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>
+                                            </div>
                                         </div>
-                                        <div class="top_sell_title text-center mt-3">
-                                            {#                                            <h3><a href="{% url 'product_detail'  %}" class="open_sans bold_400 font_20">Jordan#}
-                                            {#                                                6 Retro DMP (2020)</a></h3>#}
-                                            <h4 class="mt-2 oswald_font bold_600 font_20 text-dark">$230.00</h4>
-                                        </div>
-                                        <div class="cart-btn-mobile ">
-                                            <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To
-                                                Cart</a>
-                                        </div>
-                                        {#                                        <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">#}
-                                        {#                                            <a href="{% url 'web_cart_bid' %}"#}
-                                        {#                                               class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>#}
-                                        {#                                            <a href="{% url 'web_cart_buy' %}"#}
-                                        {#                                               class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Buy#}
-                                        {#                                                Now</a>#}
-                                        {#                                            <a href="{% url 'web_cart_sell' %}"#}
-                                        {#                                               class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>#}
-                                        {#                                        </div>#}
                                     </div>
-                                </div>
-                                <div class="item">
-                                    <div class="top_selling_product_box">
-                                        <div class="top_sell_img border bg-white overflow-hidden">
-                                            <div class="label_sell position-absolute bg-light px-sm-3 px-lg-3 px-xl-4 py-sm-2">
-                                                <span class="text-uppercase open_sans bold_700 font_20">April 17</span>
-                                            </div>
-                                            <div class="add-top-cart-btn">
-                                                <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add
-                                                    To Cart</a>
-                                            </div>
-                                            <a href="javascript:void(0);"
-                                               class="d-inline-block w-100 h-100 image_hover position-relative"><img
-                                                    src="{% static 'web/images/new_releases_product_2.png' %}" alt=""
-                                                    class="img-fluid"/></a>
-                                        </div>
-                                        <div class="top_sell_title text-center mt-3">
-                                            {#                                            <h3><a href="{% url 'product_detail' %}" class="open_sans bold_400 font_20">Adidas#}
-                                            {#                                                Yeezy Boost 350 V2 Linen</a></h3>#}
-                                            <h4 class="mt-2 oswald_font bold_600 font_20 text-dark">$270.00</h4>
-                                        </div>
-                                        <div class="cart-btn-mobile ">
-                                            <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To
-                                                Cart</a>
-                                        </div>
-                                        {#                                        <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">#}
-                                        {#                                            <a href="{% url 'web_cart_bid' %}"#}
-                                        {#                                               class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>#}
-                                        {#                                            <a href="{% url 'web_cart_buy' %}"#}
-                                        {#                                               class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Buy#}
-                                        {#                                                Now</a>#}
-                                        {#                                            <a href="{% url 'web_cart_sell' %}"#}
-                                        {#                                               class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>#}
-                                        {#                                        </div>#}
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="top_selling_product_box">
-                                        <div class="top_sell_img border bg-white overflow-hidden">
-                                            <div class="label_sell position-absolute bg-light px-sm-3 px-lg-3 px-xl-4 py-sm-2">
-                                                <span class="text-uppercase open_sans bold_700 font_20">April 18</span>
-                                            </div>
-                                            <div class="add-top-cart-btn">
-                                                <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add
-                                                    To Cart</a>
-                                            </div>
-                                            <a href="javascript:void(0);"
-                                               class="d-inline-block w-100 h-100 image_hover position-relative"><img
-                                                    src="{% static 'web/images/new_releases_product_3.png' %}" alt=""
-                                                    class="img-fluid"/></a>
-                                        </div>
-                                        <div class="top_sell_title text-center mt-3">
-                                            {#                                            <h3><a href="{% url 'product_detail' %}" class="open_sans bold_400 font_20">Jordan#}
-                                            {#                                                1 Retro High Court Purple White</a></h3>#}
-                                            <h4 class="mt-2  oswald_font bold_600 font_20 text-dark">$200.00</h4>
-                                        </div>
-                                        <div class="cart-btn-mobile ">
-                                            <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To
-                                                Cart</a>
-                                        </div>
-                                        {#                                        <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">#}
-                                        {#                                            <a href="{% url 'web_cart_bid' %}"#}
-                                        {#                                               class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>#}
-                                        {#                                            <a href="{% url 'web_cart_buy' %}"#}
-                                        {#                                               class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Buy#}
-                                        {#                                                Now</a>#}
-                                        {#                                            <a href="{% url 'web_cart_sell' %}"#}
-                                        {#                                               class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>#}
-                                        {#                                        </div>#}
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="top_selling_product_box">
-                                        <div class="top_sell_img border bg-white position-relative overflow-hidden">
-                                            <div class="label_sell position-absolute bg-light px-sm-3 px-lg-3 px-xl-4 py-sm-2">
-                                                <span class="text-uppercase open_sans bold_700 font_20">April 18</span>
-                                            </div>
-                                            <div class="add-top-cart-btn">
-                                                <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add
-                                                    To Cart</a>
-                                            </div>
-                                            <a href="javascript:void(0);"
-                                               class="d-inline-block w-100 h-100 image_hover position-relative"><img
-                                                    src="{% static 'web/images/new_releases_product_1.png' %}" alt=""
-                                                    class="img-fluid"/></a>
-                                        </div>
-                                        <div class="top_sell_title text-center mt-3">
-                                            {#                                            <h3><a href="{% url 'product_detail' %}" class="open_sans bold_400 font_20">Jordan#}
-                                            {#                                                6 Retro DMP (2020)</a></h3>#}
-                                            <h4 class="mt-2 oswald_font bold_600 font_20 text-dark">$230.00</h4>
-                                        </div>
-                                        <div class="cart-btn-mobile ">
-                                            <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To
-                                                Cart</a>
-                                        </div>
-                                        {#                                        <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">#}
-                                        {#                                            <a href="{% url 'web_cart_bid' %}"#}
-                                        {#                                               class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>#}
-                                        {#                                            <a href="{% url 'web_cart_buy' %}"#}
-                                        {#                                               class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Buy#}
-                                        {#                                                Now</a>#}
-                                        {#                                            <a href="{% url 'web_cart_sell' %}"#}
-                                        {#                                               class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>#}
-                                        {#                                        </div>#}
-                                    </div>
-                                </div>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
@@ -393,145 +288,66 @@
                             <div class="col-md-5 col-4">
                                 <div class="right_smll_text text-right">
                                     <h6><a href="{% url 'web-category-detail' %}"
-                                           class="open_sans bold_700 text-green text-right font_16 see-all-btn">See All
+                                           class="open_sans bold_700 text-green text-right font_16 see-all-btn">See
+                                        All
                                         <i class="fa fa-angle-right font_20" aria-hidden="true"></i></a></h6>
                                 </div>
                             </div>
                         </div>
                         <div class="featured_products_slider_main mt-4 pt-2">
                             <div class="top_selling_slider featured_products_slider owl-carousel owl-theme">
-                                <div class="item">
-                                    <div class="top_selling_product_box">
-                                        <div class="top_sell_img border bg-white position-relative overflow-hidden">
-                                            <div class="add-top-cart-btn">
-                                                <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add
-                                                    To Cart</a>
+                                {% for feature_product  in feature_products %}
+                                    <div class="item">
+                                        <div class="top_selling_product_box">
+                                            <div class="top_sell_img border bg-white position-relative overflow-hidden">
+                                                {% if user.is_authenticated %}
+                                                    <div class="add-top-cart-btn">
+                                                        <a data-toggle="modal"
+                                                           data-target="#featured-shoe-modal-{{ feature_product.featured.id }}">
+                                                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                                            Add To Cart
+                                                        </a>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="add-top-cart-btn">
+                                                        <a href='/login/?next=/'>
+                                                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                                            Add To Cart
+                                                        </a>
+                                                    </div>
+                                                {% endif %}
+                                                <a href="javascript:void(0);"
+                                                   class="d-inline-block w-100 h-100 image_hover position-relative"><img
+                                                        src="{{ feature_product.featured.url }}"
+                                                        alt=""
+                                                        class="img-fluid"/></a>
                                             </div>
-                                            <a href="javascript:void(0);"
-                                               class="d-inline-block w-100 h-100 image_hover position-relative"><img
-                                                    src="{% static 'web/images/featured_products_product_1.png' %}"
-                                                    alt=""
-                                                    class="img-fluid"/></a>
-                                        </div>
-                                        <div class="top_sell_title text-center mt-3">
-                                            {#                                            <h3><a href="{% url 'product_detail' %}" class="open_sans bold_400 font_20">Adidas#}
-                                            {#                                                Yeezy Boost 350 V2 Cinder</a></h3>#}
-                                            <h4 class="mt-2 oswald_font bold_600 font_20 text-dark">$255.00</h4>
-                                        </div>
-                                        <div class="cart-btn-mobile ">
-                                            <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To
-                                                Cart</a>
-                                        </div>
-                                        {#                                        <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">#}
-                                        {#                                            <a href="{% url 'web_cart_bid' %}"#}
-                                        {#                                               class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>#}
-                                        {#                                            <a href="{% url 'web_cart_buy' %}"#}
-                                        {#                                               class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Buy#}
-                                        {#                                                Now</a>#}
-                                        {#                                            <a href="{% url 'web_cart_sell' %}"#}
-                                        {#                                               class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>#}
-                                        {#                                        </div>#}
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="top_selling_product_box">
-                                        <div class="top_sell_img border bg-white overflow-hidden">
-                                            <div class="add-top-cart-btn">
-                                                <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add
-                                                    To Cart</a>
+                                            <div class="top_sell_title text-center mt-3">
+                                                <h3><a href="{% url 'product_detail' feature_product.featured.id %}"
+                                                       class="open_sans bold_400 font_20">{{ feature_product.featured.title }}</a>
+                                                </h3>
+                                                <h4 class="mt-2 oswald_font bold_600 font_20 text-dark">
+                                                    ${{ feature_product.featured.listing_price }}</h4>
                                             </div>
-                                            <a href="javascript:void(0);"
-                                               class="d-inline-block w-100 h-100 image_hover position-relative"><img
-                                                    src="{% static 'web/images/featured_products_product_2.png' %}"
-                                                    alt=""
-                                                    class="img-fluid"/></a>
-                                        </div>
-                                        <div class="top_sell_title text-center mt-3">
-                                            {#                                            <h3><a href="{% url 'product_detail' %}" class="open_sans bold_400 font_20">Adidas#}
-                                            {#                                                Yeezy Boost 350 V2 Zebra</a></h3>#}
-                                            <h4 class="mt-2 oswald_font bold_600 font_20 text-dark">$270.00</h4>
-                                        </div>
-                                        <div class="cart-btn-mobile ">
-                                            <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To
-                                                Cart</a>
-                                        </div>
-                                        {#                                        <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">#}
-                                        {#                                            <a href="{% url 'web_cart_bid' %}"#}
-                                        {#                                               class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>#}
-                                        {#                                            <a href="{% url 'web_cart_buy' %}"#}
-                                        {#                                               class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Buy#}
-                                        {#                                                Now</a>#}
-                                        {#                                            <a href="{% url 'web_cart_sell' %}"#}
-                                        {#                                               class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>#}
-                                        {#                                        </div>#}
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="top_selling_product_box">
-                                        <div class="top_sell_img border bg-white overflow-hidden">
-                                            <div class="add-top-cart-btn">
-                                                <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add
-                                                    To Cart</a>
+                                            <div class="cart-btn-mobile ">
+                                                <a data-toggle="modal"
+                                                   data-target="#featured-shoe-modal-{{ feature_product.featured.id }}">
+                                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                                    Add To Cart
+                                                </a>
                                             </div>
-                                            <a href="javascript:void(0);"
-                                               class="d-inline-block w-100 h-100 image_hover position-relative"><img
-                                                    src="{% static 'web/images/featured_products_product_3.png' %}"
-                                                    alt=""
-                                                    class="img-fluid"/></a>
-                                        </div>
-                                        <div class="top_sell_title text-center mt-3">
-                                            {#                                            <h3><a href="{% url 'product_detail' %}" class="open_sans bold_400 font_20">Jordan#}
-                                            {#                                                1 Retro High Court Purple White</a></h3>#}
-                                            <h4 class="mt-2 oswald_font bold_600 font_20 text-dark">$200.00</h4>
-                                        </div>
-                                        <div class="cart-btn-mobile ">
-                                            <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To
-                                                Cart</a>
-                                        </div>
-                                        {#                                        <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">#}
-                                        {#                                            <a href="{% url 'web_cart_bid' %}"#}
-                                        {#                                               class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>#}
-                                        {#                                            <a href="{% url 'web_cart_buy' %}"#}
-                                        {#                                               class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Buy#}
-                                        {#                                                Now</a>#}
-                                        {#                                            <a href="{% url 'web_cart_sell' %}"#}
-                                        {#                                               class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>#}
-                                        {#                                        </div>#}
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="top_selling_product_box">
-                                        <div class="top_sell_img border bg-white position-relative overflow-hidden">
-                                            <div class="add-top-cart-btn">
-                                                <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add
-                                                    To Cart</a>
+                                            <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">
+                                                <a href="{% url 'web_cart_bid' feature_product.featured.id %}"
+                                                   class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>
+                                                <a href="{% url 'web_cart_buy' feature_product.featured.id %}"
+                                                   class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Buy
+                                                    Now</a>
+                                                <a href="{% url 'web_cart_sell' feature_product.featured.id %}"
+                                                   class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>
                                             </div>
-                                            <a href="javascript:void(0);"
-                                               class="d-inline-block w-100 h-100 image_hover position-relative"><img
-                                                    src="{% static 'web/images/featured_products_product_1.png' %}"
-                                                    alt=""
-                                                    class="img-fluid"/></a>
                                         </div>
-                                        <div class="top_sell_title text-center mt-3">
-                                            {#                                            <h3><a href="{% url 'product_detail' %}" class="open_sans bold_400 font_20">Adidas#}
-                                            {#                                                Yeezy Boost 350 V2 Cinder</a></h3>#}
-                                            <h4 class="mt-2 oswald_font bold_600 font_20 text-dark">$255.00</h4>
-                                        </div>
-                                        <div class="cart-btn-mobile ">
-                                            <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To
-                                                Cart</a>
-                                        </div>
-                                        {#                                        <div class="top_sell_opetion d-flex align-items-center justify-content-between mt-4">#}
-                                        {#                                            <a href="{% url 'web_cart_bid' %}"#}
-                                        {#                                               class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>#}
-                                        {#                                            <a href="{% url 'web_cart_buy' %}"#}
-                                        {#                                               class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Buy#}
-                                        {#                                                Now</a>#}
-                                        {#                                            <a href="{% url 'web_cart_sell' %}"#}
-                                        {#                                               class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>#}
-                                        {#                                        </div>#}
                                     </div>
-                                </div>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
@@ -649,54 +465,169 @@
             <div class="modal-dialog modal-dialog-centered"
                  role="document">
                 <div class="modal-content text-black-50">
-                    <div class="modal-body">
-                        <button type="button" class="close" id="close_modal_btn"
-                                data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h2 id="message-head" class="text-center">Product
-                            Detail</h2>
-                        <h2 class="sec-heading text-black-50">{{ product.title }}</h2>
-                        <ul class="condition-sec">
-                            <li>Condition: <span>New</span></li>
-                            <li>SKU: <span>{{ product.sku_number }}</span></li>
-                            <li>
-                                <div class="select_filed size-selected">
+                    <form method="post" action="{% url 'web_cart_add_product' product.id %}" class="text-center">
+                        <div class="modal-body">
+                            <button type="button" class="close" id="close_modal_btn"
+                                    data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h2 id="message-head" class="text-center">Product
+                                Detail</h2>
+                            <h2 class="sec-heading text-black-50">{{ product.title }}</h2>
+                            <ul class="condition-sec">
+                                <li>Condition: <span>New</span></li>
+                                <li>SKU: <span>{{ product.sku_number }}</span></li>
+                                <li>
+                                    <div class="select_filed size-selected">
 
-                                    <select style="display: block" id="shoe_size_selected">
-                                        <option value="Size">Size</option>
-                                        {% for shoe_size in product.shoe_sizes.all %}
-                                            <option value="{{ shoe_size.id }}">{{ shoe_size }}</option>
-                                        {% endfor %}
-                                    </select>
+                                        <select style="display: block" id="shoe_size_id" name="shoe_size_id" required>
+                                            <option value="">Size</option>
+                                            {% for shoe_size in product.shoe_sizes.all %}
+                                                <option value="{{ shoe_size.id }}">{{ shoe_size }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="border-line"></div>
+                            <div class="row release-date">
+                                <div class="col-md-8 col-md-7">
+                                    <p>Release Date: <b>{{ product.release_date }}</b></p>
+                                    <p>Colorway: <b>{{ product.colorway }}</b></p>
                                 </div>
-                            </li>
-                        </ul>
-                        <div class="border-line"></div>
-                        <div class="row release-date">
-                            <div class="col-md-8 col-md-7">
-                                <p>Release Date: <b>{{ product.release_date }}</b></p>
-                                <p>Colorway: <b>{{ product.colorway }}</b></p>
-                            </div>
-                            <div class="col-md-4 col-md-4">
-                                <p>SKU: <b>{{ product.sku_number }}</b></p>
-                                <p>Listing Price:<b> ${{ product.listing_price }}</b></p>
+                                <div class="col-md-4 col-md-4">
+                                    <p>SKU: <b>{{ product.sku_number }}</b></p>
+                                    <p>Listing Price:<b> ${{ product.listing_price }}</b></p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <form method="post" action="{% url 'web_cart_add_product' product.id %}" class="text-center">
-                        <input type="text" id="shoe_size_id" name="shoe_size_id" hidden>
-                        <button type="submit" id="Done_close_modal" hidden></button>
                         <a class="text-center pb-3">
-                            <button type="button" id="check_size_selected"
-                                    class="mb-2 default-btn border-0 text-uppercase open_sans bold_500 text-white bg_green shop_btn d-inline-block  mt-lg-2 mt-xl-4">
+                            <button type="submit" id="check_size_selected"
+                                    class="default-btn mb-2 border-0 text-uppercase open_sans bold_500 text-white bg_green shop_btn d-inline-block  mt-lg-2 mt-xl-4">
                                 Add
                             </button>
                         </a>
                     </form>
+                    <form></form>
                 </div>
             </div>
         </div>
+    {% endfor %}
+    {% for feature_product in feature_products %}
+        <div class="modal fade" id="featured-shoe-modal-{{ feature_product.featured.id }}"
+             tabindex="-1"
+             role="dialog" aria-labelledby="example2ModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered"
+                 role="document">
+                <div class="modal-content text-black-50">
+                    <form method="post" action="{% url 'web_cart_add_product' feature_product.featured.id %}"
+                          class="text-center">
+                        <div class="modal-body">
+                            <button type="button" class="close" id="close_modal_btn"
+                                    data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h2 id="message-head" class="text-center">Product
+                                Detail</h2>
+                            <h2 class="sec-heading text-black-50">{{ feature_product.featured.title }}</h2>
+                            <ul class="condition-sec">
+                                <li>Condition: <span>New</span></li>
+                                <li>SKU: <span>{{ feature_product.featured.sku_number }}</span></li>
+                                <li>
+                                    <div class="select_filed size-selected">
+                                        <select style="display: block" id="shoe_size_id" name="shoe_size_id" required>
+                                            <option value="">Size</option>
+                                            {% for shoe_size in feature_product.featured.shoe_sizes.all %}
+                                                <option value="{{ shoe_size.id }}">{{ shoe_size }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="border-line"></div>
+                            <div class="row release-date">
+                                <div class="col-md-8 col-md-7">
+                                    <p>Release Date: <b>{{ feature_product.featured.release_date }}</b></p>
+                                    <p>Colorway: <b>{{ feature_product.featured.colorway }}</b></p>
+                                </div>
+                                <div class="col-md-4 col-md-4">
+                                    <p>SKU: <b>{{ feature_product.featured.sku_number }}</b></p>
+                                    <p>Listing Price:<b> ${{ feature_product.featured.listing_price }}</b></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {#                        <input type="text" id="shoe_size_id_featured" name="shoe_size_id" hidden>#}
+                        {#                        <button type="submit" id="Done_close_modal_featured" ></button>#}
+                        <a class="text-center pb-3">
+                            <button type="submit" id="check_size_selected_featured"
+                                    class="default-btn mb-2 border-0 text-uppercase open_sans bold_500 text-white bg_green shop_btn d-inline-block  mt-lg-2 mt-xl-4">
+                                Add
+                            </button>
+                        </a>
+                    </form>
+                    <form></form>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    {% for product in new_releases %}
+        <div class="modal fade" id="new-shoe-modal-{{ product.id }}"
+             tabindex="-1"
+             role="dialog" aria-labelledby="example3ModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered"
+                 role="document">
+                <div class="modal-content text-black-50">
+                    <form method="post" action="{% url 'web_cart_add_product' product.id %}"
+                          class="text-center">
+                        <div class="modal-body">
+                            <button type="button" class="close" id="close_modal_btn"
+                                    data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h2 id="message-head" class="text-center">Product
+                                Detail</h2>
+                            <h2 class="sec-heading text-black-50">{{ product.title }}</h2>
+                            <ul class="condition-sec">
+                                <li>Condition: <span>New</span></li>
+                                <li>SKU: <span>{{ product.sku_number }}</span></li>
+                                <li>
+                                    <div class="select_filed size-selected">
+                                        <select style="display: block" id="shoe_size_id" name="shoe_size_id" required>
+                                            <option value="">Size</option>
+                                            {% for shoe_size in product.shoe_sizes.all %}
+                                                <option value="{{ shoe_size.id }}">{{ shoe_size }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="border-line"></div>
+                            <div class="row release-date">
+                                <div class="col-md-8 col-md-7">
+                                    <p>Release Date: <b>{{ product.release_date }}</b></p>
+                                    <p>Colorway: <b>{{ product.colorway }}</b></p>
+                                </div>
+                                <div class="col-md-4 col-md-4">
+                                    <p>SKU: <b>{{ product.sku_number }}</b></p>
+                                    <p>Listing Price:<b> ${{ product.listing_price }}</b></p>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="text-center pb-3">
+                            <button type="submit" id="check_size_selected_featured"
+                                    class="default-btn mb-2 border-0 text-uppercase open_sans bold_500 text-white bg_green shop_btn d-inline-block  mt-lg-2 mt-xl-4">
+                                Add
+                            </button>
+                        </a>
+                    </form>
+                    <form></form>
+                </div>
+            </div>
+        </div>
+
     {% endfor %}
 
 {% endblock %}
@@ -779,15 +710,5 @@
                 }
             }
         });
-        $('#check_size_selected').on('click', function (e) {
-            e.preventDefault();
-            var shoe_size_id = $('#shoe_size_selected option:selected').val();
-            if (shoe_size_id === 'Size') {
-                alert("please select shoe size first");
-            } else {
-                $('#shoe_size_id').val(shoe_size_id);
-                $('#Done_close_modal').click();
-            }
-        })
     </script>
 {% endblock %}
