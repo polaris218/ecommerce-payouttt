@@ -116,11 +116,13 @@ class ProductDetailView(TemplateView):
     def get(self, request, *args, **kwargs):
         product_id = kwargs.get('product_id')
         product = Product.objects.filter(id=product_id, seller__is_staff=True).first()
+        all_sizes = get_product_sizes_list(product)
         highest_ask, lowest_ask = BidStatusManagement().get_lowest_highest_listing_price(product.sku_number)
         highest_bid, lowest_bid = BidStatusManagement().get_lowest_highest_bid(product.sku_number)
 
         return render(request, self.template_name,
-                      {'product': product, 'lowest_ask': lowest_ask, 'highest_bid': highest_bid})
+                      {'product': product, 'lowest_ask': lowest_ask, 'highest_bid': highest_bid,
+                       'all_sizes': all_sizes})
 
 
 class WebCartView(LoginRequiredMixin, TemplateView):
@@ -196,7 +198,9 @@ class WebCartBidView(TemplateView):
                 can_bid = False
         highest_ask, lowest_ask = BidStatusManagement().get_lowest_highest_listing_price(product.sku_number)
         highest_bid, lowest_bid = BidStatusManagement().get_lowest_highest_bid(product.sku_number)
-        context = {'product': product, 'can_bid': can_bid, 'lowest_ask': lowest_ask, 'highest_bid': highest_bid}
+        all_sizes = get_product_sizes_list(product)
+        context = {'product': product, 'can_bid': can_bid, 'lowest_ask': lowest_ask, 'highest_bid': highest_bid,
+                   'all_sizes': all_sizes}
         if request.user.is_authenticated:
             context['valid_address'] = ShippoAddressManagement().user_valid_address(self.request.user)
         return render(request, self.template_name, context)
@@ -245,7 +249,8 @@ class WebCartBuyView(TemplateView):
         product = Product.objects.get(id=product_id)
         highest_ask, lowest_ask = BidStatusManagement().get_lowest_highest_listing_price(product.sku_number)
         highest_bid, lowest_bid = BidStatusManagement().get_lowest_highest_bid(product.sku_number)
-        context = {'product': product, 'lowest_ask': lowest_ask, 'highest_bid': highest_bid}
+        all_sizes = get_product_sizes_list(product)
+        context = {'product': product, 'lowest_ask': lowest_ask, 'highest_bid': highest_bid, 'all_sizes': all_sizes}
         product = Product.objects.get(id=product_id)
         if request.user.is_authenticated:
             context['valid_address'] = ShippoAddressManagement().user_valid_address(self.request.user)
@@ -264,7 +269,8 @@ class WebCartSellView(TemplateView):
         product = Product.objects.get(id=product_id)
         highest_ask, lowest_ask = BidStatusManagement().get_lowest_highest_listing_price(product.sku_number)
         highest_bid, lowest_bid = BidStatusManagement().get_lowest_highest_bid(product.sku_number)
-        context = {'product': product, 'highest_bid': highest_bid, 'lowest_ask': lowest_ask}
+        all_sizes = get_product_sizes_list(product)
+        context = {'product': product, 'highest_bid': highest_bid, 'lowest_ask': lowest_ask, 'all_sizes': all_sizes, }
         product_suggest_form = ProductSuggestForm(request.POST or None)
         context['product_suggest_form'] = product_suggest_form
         if request.user.is_authenticated:
@@ -534,3 +540,12 @@ def get_parcel():
         "mass_unit": "lb",
     }
     return parcel
+
+
+def get_product_sizes_list(product):
+    all_sizes = []
+    for i in range(4, int(product.shoe_sizes.all().count()) + 1, 4):
+        new_sizes = (product.shoe_sizes.all()[i:i + 4])
+        if new_sizes:
+            all_sizes.append(new_sizes)
+    return all_sizes

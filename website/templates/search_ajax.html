@@ -1,7 +1,7 @@
 {% load static %}
 {% if products %}
     {% for product in products %}
-        <div class="top_selling_product_box col-lg-4 col-md-6">
+        <div class="top_selling_product_box col-lg-4 col-md-6 padd-top-product">
             <div class="top_sell_img border bg-white position-relative overflow-hidden">
                 <div class="add-top-cart-btn">
                     <form method="post"
@@ -36,8 +36,7 @@
                 <a href="{% url 'web_cart_bid' product.id %}"
                    class="top_sell_a_tag top_sell_a_tag_1 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Bid</a>
                 <a href="{% url 'web_cart_buy' product.id %}"
-                   class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Buy
-                    Now</a>
+                   class="top_sell_a_tag top_sell_a_tag_2 text-center d-inline-block text-white bg-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Buy</a>
                 <a href="{% url 'web_cart_sell' product.id %}"
                    class="top_sell_a_tag top_sell_a_tag_3 text-center d-inline-block text-dark border text-uppercase font_16 px-lg-4 py-lg-2 px-xl-5 py-xl-2 bold_700">Sell</a>
             </div>

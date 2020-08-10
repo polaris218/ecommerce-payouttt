@@ -56,17 +56,6 @@
                                                         </div>
                                                     </div>
                                                     <h2 class="sec-heading">{{ product.title }}</h2>
-                                                    <div class="select_filed size-selected">
-                                                        <select required id="shoe_size_selected"
-                                                                class="wpcf7-form-control wpcf7-select Wide"
-                                                                aria-invalid="false">
-                                                            <option value="Size">Size</option>
-                                                            {% for shoe_size in product.shoe_sizes.all %}
-                                                                <option value="{{ shoe_size.id }}"
-                                                                >{{ shoe_size }}</option>
-                                                            {% endfor %}
-                                                        </select>
-                                                    </div>
                                                     <div class="border-line"></div>
                                                     <div class="row release-date">
                                                         <div class="col-md-8 col-md-7">
@@ -76,6 +65,10 @@
                                                         <div class="col-md-4 col-md-4">
                                                             <p>SKU: <b>{{ product.sku_number }}</b></p>
                                                             <p>Retail Price:<b>${{ product.retail_price }}</b></p>
+                                                        </div>
+                                                        <div class="col-md-4 col-md-7">
+                                                            <p>Selected Size: <b
+                                                                    id="selected_size"></b></p>
                                                         </div>
                                                     </div>
                                                     {% if not can_bid %}
@@ -91,18 +84,18 @@
                                                         <li>
                                                             <button hidden type="button"
                                                                     id="shoe_size_dropdown_selected_next"
-                                                                    class="default-btn next-step text-uppercase open_sans bold_500 text-white bg_green shop_btn d-inline-block  mt-lg-2 mt-xl-4">
+                                                                    class="default-btn next-step border-0 text-uppercase open_sans bold_500 text-white bg_green shop_btn d-inline-block  mt-lg-2 mt-xl-4">
                                                                 confirm
                                                             </button>
                                                             <button type="button" id="shoe_size_dropdown_selected"
-                                                                    class="default-btn text-uppercase open_sans bold_500 text-white bg_green shop_btn d-inline-block  mt-lg-2 mt-xl-4">
+                                                                    class="default-btn text-uppercase border-0 open_sans bold_500 text-white bg_green shop_btn d-inline-block  mt-lg-2 mt-xl-4">
                                                                 confirm
                                                             </button>
                                                             <button type="button"
                                                                     data-toggle="modal"
                                                                     data-target="#size_chart_modal"
                                                                     href="javascript:void(0);"
-                                                                    class="default-btn text-uppercase open_sans bold_500 text-white bg_green shop_btn d-inline-block  mt-lg-2 mt-xl-4">
+                                                                    class="default-btn text-uppercase border-0 open_sans bold_500 text-white bg_green shop_btn d-inline-block  mt-lg-2 mt-xl-4">
                                                                 Size Chart
                                                             </button>
                                                         </li>
@@ -163,17 +156,17 @@
                                                                     data-toggle="modal"
                                                                     data-target="#exampleModal"
                                                                     href="javascript:void(0);"
-                                                                    class="text-uppercase open_sans bold_700 text-white shop_btn d-inline-block font_26">
+                                                                    class="text-uppercase open_sans border-0 bold_700 text-white shop_btn d-inline-block font_26">
                                                             </button>
                                                             <button type="button" id="create_bid"
-                                                                    class="text-uppercase open_sans bold_700 text-white shop_btn d-inline-block font_26">
+                                                                    class="text-uppercase open_sans bg-dark bold_700 border-0 text-white shop_btn d-inline-block font_26">
                                                                 Confirm
                                                                 Bid
                                                             </button>
                                                         {% elif not user.is_authenticated %}
                                                             <a href='/login/?next=/product-bid/{{ product.id }}/'>
                                                                 <button type="button"
-                                                                        class="text-uppercase open_sans bold_700 text-white shop_btn d-inline-block font_26">
+                                                                        class="text-uppercase open_sans bg-dark bold_700 border-0 text-white shop_btn d-inline-block font_26">
                                                                     Confirm Bid
                                                                 </button>
                                                             </a>
@@ -181,7 +174,7 @@
                                                         {% else %}
                                                             </p>
                                                             <button disabled
-                                                                    class="text-uppercase open_sans bold_700 text-white shop_btn d-inline-block font_26">
+                                                                    class="text-uppercase open_sans bold_700 bg-dark border-0 text-white shop_btn d-inline-block font_26">
                                                                 Confirm Bid
                                                             </button>
                                                         {% endif %}
@@ -223,7 +216,7 @@
                 </div>
                 <a href="{% url 'web_cart_bid' product.id %}" class="text-center pb-3">
                     <button type="submit" id="Done_close_modal"
-                            class="default-btn text-uppercase open_sans bold_500 text-white bg_green shop_btn d-inline-block  mt-lg-2 mt-xl-4">
+                            class="default-btn text-uppercase border-0 open_sans bold_500 text-white bg_green shop_btn d-inline-block  mt-lg-2 mt-xl-4">
                         Done
                     </button>
                 </a>
@@ -242,96 +235,19 @@
                     <div class="sell-detail m-r-20 m-l-20">
                         <h2 class="text-uppercase text-dark oswald_font font_30 bold_600 text-center">Size Chart</h2>
                         <div class="highest-size mt-3">
-                            <div class="highest-size-inner d-flex align-items-center justify-content-between mx-n2">
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us1">
-                                    <label for="us1">US4<span>$217</span></label>
+                            {% for sizes in all_sizes %}
+                                <div class="highest-size-inner d-flex align-items-center justify-content-between mx-n2 mt-2">
+                                    {% for size in sizes %}
+                                        <div class="highest-size-box mx-1">
+                                            <input type="checkbox" id="{{ size.id }}">
+                                            <label for="{{ size.id }}" data-dismiss="modal"
+                                                   onclick="set_shoe_size({{ size.id }})">
+                                                <span id="user_size_{{ size.id }}">{{ size }}</span>
+                                            </label>
+                                        </div>
+                                    {% endfor %}
                                 </div>
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us2">
-                                    <label for="us2">US4.5<span>$220</span></label>
-                                </div>
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us3">
-                                    <label for="us3">US5<span class="bid">Bid</span></label>
-                                </div>
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us4">
-                                    <label for="us4">US5.5<span>$226</span></label>
-                                </div>
-                            </div>
-                            <div class="highest-size-inner d-flex align-items-center justify-content-between mx-n2 mt-2">
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us5">
-                                    <label for="us5">US6<span>$238</span></label>
-                                </div>
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us6">
-                                    <label for="us6">US6.5<span>$240</span></label>
-                                </div>
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us7">
-                                    <label for="us7">US7<span>$246</span></label>
-                                </div>
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us8">
-                                    <label for="us8">US7.5<span>$250</span></label>
-                                </div>
-                            </div>
-                            <div class="highest-size-inner d-flex align-items-center justify-content-between mx-n2 mt-2">
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us9">
-                                    <label for="us9">US8<span>$232</span></label>
-                                </div>
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us10">
-                                    <label for="us10">US8.5<span>$230</span></label>
-                                </div>
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us11">
-                                    <label for="us11">US9<span>$242</span></label>
-                                </div>
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us12">
-                                    <label for="us12">US9.5<span>$200</span></label>
-                                </div>
-                            </div>
-                            <div class="highest-size-inner d-flex align-items-center justify-content-between mx-n2 mt-2">
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us13">
-                                    <label for="us13">US10<span class="bid">Bid</span></label>
-                                </div>
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us14">
-                                    <label for="us14">US10.5<span>$241</span></label>
-                                </div>
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us15">
-                                    <label for="us15">US11<span>$217</span></label>
-                                </div>
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us16">
-                                    <label for="us16">US11.5<span>$217</span></label>
-                                </div>
-                            </div>
-                            <div class="highest-size-inner d-flex align-items-center justify-content-between mx-n2 mt-2">
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us17">
-                                    <label for="us17">US12<span>$217</span></label>
-                                </div>
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us18">
-                                    <label for="us18">US12.5<span>$236</span></label>
-                                </div>
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us19">
-                                    <label for="us19">US13<span>$241</span></label>
-                                </div>
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us20">
-                                    <label for="us20">US13.5<span>$217</span></label>
-                                </div>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -391,11 +307,12 @@
             $('select').niceSelect();
         });
 
+        var shoe_size_id = "Size";
+
         $("#create_bid").on('click', function (e) {
 
             e.preventDefault(); // avoid to execute the actual submit of the form.
 
-            var shoe_size_id = $('#shoe_size_selected option:selected').val();
             var bid_amount = $("#bid_amount").val();
             if (shoe_size_id !== "Size" && bid_amount !== '' && bid_amount !== '0') {
                 $.ajax({
@@ -424,7 +341,6 @@
 
         });
         $("#shoe_size_dropdown_selected").on('click', function (e) {
-            var shoe_size_id = $('#shoe_size_selected option:selected').val();
             if (shoe_size_id === 'Size') {
 
                 alert("please select shoe size first");
@@ -434,6 +350,11 @@
             }
 
         });
+
+        function set_shoe_size(size) {
+            shoe_size_id = size;
+            $('#selected_size').text($('#user_size_' + size).text());
+        }
     </script>
 
 {% endblock %}

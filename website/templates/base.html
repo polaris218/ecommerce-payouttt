@@ -30,7 +30,7 @@
     <!-- Our Custom CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'web/css/style.css' %}"/>
 </head>
-<body class="bg-white home_container Signing">
+<body class="{% block body_class %}bg-white home_container Signing{% endblock %}">
 
 <!-- preloader -->
 <div id="preloader">

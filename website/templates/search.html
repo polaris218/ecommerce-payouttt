@@ -29,7 +29,7 @@
                     <div class="top_selling_slider_main categories-page">
                         <div class="row">
                             <div class="col-md-4 col-lg-3">
-                                <div class="row align-items-center">
+                                <div class="row align-items-center moblie-cate-title">
                                     <div class="col-md-6 category-title-top"><h4><b>Home/</b> Category</h4></div>
                                     <div class="col-md-6">
                                         <div class="popularity-right-sec">
@@ -153,15 +153,36 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="top_selling_slider col-md-8 col-lg-9">
-                                <div class="row" id="search_filter_products">
-                                    {% include 'search_ajax.html' %}
+                            <div class="top_selling_slider_main col-md-8 col-lg-9">
+                                <div class="row align-items-center desktop-cate-title">
+                                    <div class="col-lg-6 col-md-5 category-title-top"><h4><b>Products</b></h4>
+                                    </div>
+                                    <div class="col-lg-6 col-md-7">
+                                        <div class="popularity-right-sec">
+                                            <h4><b>Sort By:</b></h4>
+                                            <div class="nice-select Wide" tabindex="0"><span
+                                                    class="current">Popularity</span>
+                                                <ul class="list" id="selected_popularity">
+                                                    <li value="A-Z" class="option"><a>A-Z</a></li>
+                                                    <li value="Z-A" class="option"><a>Z-A</a></li>
+                                                    <li value="High" class="option"><a>Price High to Low</a></li>
+                                                    <li value="Low" class="option"><a>Price Low to High</a></li>
+                                                    {#<li value="Arrivals" class="option">New Arrivals</li>#}
+                                                    {#<li value="Reccomended" class="option">Reccomended for me</li>#}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="top_selling_slider">
+                                    <div class="row" id="search_filter_products">
+                                        {% include 'search_ajax.html' %}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
         </section>
     </main>
 

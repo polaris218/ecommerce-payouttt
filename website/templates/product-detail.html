@@ -115,17 +115,6 @@
                                                         <h2>${{ product.listing_price }}
                                                             {#                                                            <span>$70.00</span>#}
                                                         </h2>
-                                                        <div class="select_filed size-selected">
-                                                            <select class="Wide" name="Selectbox"
-                                                                    class="wpcf7-form-control wpcf7-select"
-                                                                    aria-invalid="false">
-                                                                <option value="AQI India">Size</option>
-
-                                                                {% for size in product.shoe_sizes.all %}
-                                                                    <option value="{{ size.shoe_size }}">{{ size.shoe_size }}</option>
-                                                                {% endfor %}
-                                                            </select>
-                                                        </div>
                                                     </div>
                                                     <div class="border-line"></div>
                                                     <div class="row release-date">
@@ -400,96 +389,18 @@
                     <div class="sell-detail m-r-20 m-l-20">
                         <h2 class="text-uppercase text-dark oswald_font font_30 bold_600 text-center">Size Chart</h2>
                         <div class="highest-size mt-3">
-                            <div class="highest-size-inner d-flex align-items-center justify-content-between mx-n2">
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us1">
-                                    <label for="us1">US4<span>$217</span></label>
+                            {% for sizes in all_sizes %}
+                                <div class="highest-size-inner d-flex align-items-center justify-content-between mx-n2 mt-2">
+                                    {% for size in sizes %}
+                                        <div class="highest-size-box mx-1">
+                                            <input type="checkbox" id="{{ size.id }}">
+                                            <label for="{{ size.id }}">
+                                                <span id="user_size_{{ size.id }}">{{ size }}</span>
+                                            </label>
+                                        </div>
+                                    {% endfor %}
                                 </div>
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us2">
-                                    <label for="us2">US4.5<span>$220</span></label>
-                                </div>
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us3">
-                                    <label for="us3">US5<span class="bid">Bid</span></label>
-                                </div>
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us4">
-                                    <label for="us4">US5.5<span>$226</span></label>
-                                </div>
-                            </div>
-                            <div class="highest-size-inner d-flex align-items-center justify-content-between mx-n2 mt-2">
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us5">
-                                    <label for="us5">US6<span>$238</span></label>
-                                </div>
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us6">
-                                    <label for="us6">US6.5<span>$240</span></label>
-                                </div>
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us7">
-                                    <label for="us7">US7<span>$246</span></label>
-                                </div>
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us8">
-                                    <label for="us8">US7.5<span>$250</span></label>
-                                </div>
-                            </div>
-                            <div class="highest-size-inner d-flex align-items-center justify-content-between mx-n2 mt-2">
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us9">
-                                    <label for="us9">US8<span>$232</span></label>
-                                </div>
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us10">
-                                    <label for="us10">US8.5<span>$230</span></label>
-                                </div>
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us11">
-                                    <label for="us11">US9<span>$242</span></label>
-                                </div>
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us12">
-                                    <label for="us12">US9.5<span>$200</span></label>
-                                </div>
-                            </div>
-                            <div class="highest-size-inner d-flex align-items-center justify-content-between mx-n2 mt-2">
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us13">
-                                    <label for="us13">US10<span class="bid">Bid</span></label>
-                                </div>
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us14">
-                                    <label for="us14">US10.5<span>$241</span></label>
-                                </div>
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us15">
-                                    <label for="us15">US11<span>$217</span></label>
-                                </div>
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us16">
-                                    <label for="us16">US11.5<span>$217</span></label>
-                                </div>
-                            </div>
-                            <div class="highest-size-inner d-flex align-items-center justify-content-between mx-n2 mt-2">
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us17">
-                                    <label for="us17">US12<span>$217</span></label>
-                                </div>
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us18">
-                                    <label for="us18">US12.5<span>$236</span></label>
-                                </div>
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us19">
-                                    <label for="us19">US13<span>$241</span></label>
-                                </div>
-                                <div class="highest-size-box mx-1">
-                                    <input type="checkbox" id="us20">
-                                    <label for="us20">US13.5<span>$217</span></label>
-                                </div>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
