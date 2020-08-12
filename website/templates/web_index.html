@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load web-extras %}
 {% load static %}
 {% block title %}-Home{% endblock %}
 {% block content %}
@@ -140,6 +141,7 @@
                                                 {% if user.is_authenticated %}
                                                     <div class="add-top-cart-btn">
                                                         <a data-toggle="modal"
+                                                           href="javascript:void(0);"
                                                            data-target="#shoe-modal-{{ product.id }}">
                                                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                                                             Add To Cart
@@ -166,6 +168,7 @@
                                             </div>
                                             <div class="cart-btn-mobile ">
                                                 <a data-toggle="modal"
+                                                   href="javascript:void(0);"
                                                    data-target="#shoe-modal-{{ product.id }}">
                                                     <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                                                     Add To Cart
@@ -222,6 +225,7 @@
                                                 {% if user.is_authenticated %}
                                                     <div class="add-top-cart-btn">
                                                         <a data-toggle="modal"
+                                                           href="javascript:void(0);"
                                                            data-target="#new-shoe-modal-{{ new_products.id }}">
                                                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                                                             Add To Cart
@@ -249,6 +253,7 @@
                                             </div>
                                             <div class="cart-btn-mobile ">
                                                 <a data-toggle="modal"
+                                                   href="javascript:void(0);"
                                                    data-target="#new-shoe-modal-{{ new_products.id }}">
                                                     <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                                                     Add To Cart
@@ -303,6 +308,7 @@
                                                 {% if user.is_authenticated %}
                                                     <div class="add-top-cart-btn">
                                                         <a data-toggle="modal"
+                                                           href="javascript:void(0);"
                                                            data-target="#featured-shoe-modal-{{ feature_product.featured.id }}">
                                                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                                                             Add To Cart
@@ -331,6 +337,7 @@
                                             </div>
                                             <div class="cart-btn-mobile ">
                                                 <a data-toggle="modal"
+                                                   href="javascript:void(0);"
                                                    data-target="#featured-shoe-modal-{{ feature_product.featured.id }}">
                                                     <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                                                     Add To Cart
@@ -479,11 +486,11 @@
                                 <li>SKU: <span>{{ product.sku_number }}</span></li>
                                 <li>
                                     <div class="select_filed size-selected">
-
+                                        {% get_product_sku_sizes_list_tag product.sku_number as all_sizes %}
                                         <select style="display: block" id="shoe_size_id" name="shoe_size_id" required>
                                             <option value="">Size</option>
-                                            {% for shoe_size in product.shoe_sizes.all %}
-                                                <option value="{{ shoe_size.id }}">{{ shoe_size }}</option>
+                                            {% for shoe_size in all_sizes %}
+                                                <option value="{{ shoe_size.id }}">{{ shoe_size.name }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -536,10 +543,11 @@
                                 <li>SKU: <span>{{ feature_product.featured.sku_number }}</span></li>
                                 <li>
                                     <div class="select_filed size-selected">
+                                        {% get_product_sku_sizes_list_tag feature_product.featured.sku_number as all_sizes %}
                                         <select style="display: block" id="shoe_size_id" name="shoe_size_id" required>
                                             <option value="">Size</option>
-                                            {% for shoe_size in feature_product.featured.shoe_sizes.all %}
-                                                <option value="{{ shoe_size.id }}">{{ shoe_size }}</option>
+                                            {% for shoe_size in all_sizes %}
+                                                <option value="{{ shoe_size.id }}">{{ shoe_size.name }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -595,10 +603,11 @@
                                 <li>SKU: <span>{{ product.sku_number }}</span></li>
                                 <li>
                                     <div class="select_filed size-selected">
+                                        {% get_product_sku_sizes_list_tag product.sku_number as all_sizes %}
                                         <select style="display: block" id="shoe_size_id" name="shoe_size_id" required>
                                             <option value="">Size</option>
-                                            {% for shoe_size in product.shoe_sizes.all %}
-                                                <option value="{{ shoe_size.id }}">{{ shoe_size }}</option>
+                                            {% for shoe_size in all_sizes %}
+                                                <option value="{{ shoe_size.id }}">{{ shoe_size.name }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>

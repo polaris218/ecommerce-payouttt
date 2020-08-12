@@ -116,7 +116,7 @@ class ProductDetailView(TemplateView):
     def get(self, request, *args, **kwargs):
         product_id = kwargs.get('product_id')
         product = Product.objects.filter(id=product_id, seller__is_staff=True).first()
-        all_sizes = get_product_sizes_list(product)
+        all_sizes = get_product_sku_sizes_list(product)
         highest_ask, lowest_ask = BidStatusManagement().get_lowest_highest_listing_price(product.sku_number)
         highest_bid, lowest_bid = BidStatusManagement().get_lowest_highest_bid(product.sku_number)
 
@@ -198,7 +198,7 @@ class WebCartBidView(TemplateView):
                 can_bid = False
         highest_ask, lowest_ask = BidStatusManagement().get_lowest_highest_listing_price(product.sku_number)
         highest_bid, lowest_bid = BidStatusManagement().get_lowest_highest_bid(product.sku_number)
-        all_sizes = get_product_sizes_list(product)
+        all_sizes = get_product_sku_sizes_list(product)
         context = {'product': product, 'can_bid': can_bid, 'lowest_ask': lowest_ask, 'highest_bid': highest_bid,
                    'all_sizes': all_sizes}
         if request.user.is_authenticated:
@@ -249,7 +249,7 @@ class WebCartBuyView(TemplateView):
         product = Product.objects.get(id=product_id)
         highest_ask, lowest_ask = BidStatusManagement().get_lowest_highest_listing_price(product.sku_number)
         highest_bid, lowest_bid = BidStatusManagement().get_lowest_highest_bid(product.sku_number)
-        all_sizes = get_product_sizes_list(product)
+        all_sizes = get_product_sku_sizes_list(product)
         context = {'product': product, 'lowest_ask': lowest_ask, 'highest_bid': highest_bid, 'all_sizes': all_sizes}
         product = Product.objects.get(id=product_id)
         if request.user.is_authenticated:
@@ -269,7 +269,7 @@ class WebCartSellView(TemplateView):
         product = Product.objects.get(id=product_id)
         highest_ask, lowest_ask = BidStatusManagement().get_lowest_highest_listing_price(product.sku_number)
         highest_bid, lowest_bid = BidStatusManagement().get_lowest_highest_bid(product.sku_number)
-        all_sizes = get_product_sizes_list(product)
+        all_sizes = get_product_sku_sizes_list(product)
         context = {'product': product, 'highest_bid': highest_bid, 'lowest_ask': lowest_ask, 'all_sizes': all_sizes, }
         product_suggest_form = ProductSuggestForm(request.POST or None)
         context['product_suggest_form'] = product_suggest_form
@@ -542,10 +542,44 @@ def get_parcel():
     return parcel
 
 
-def get_product_sizes_list(product):
+def get_product_sku_sizes_list(product):
+    sku = product.sku_number
+    filter_products = []
+    ids = []
     all_sizes = []
-    for i in range(4, int(product.shoe_sizes.all().count()) + 1, 4):
-        new_sizes = (product.shoe_sizes.all()[i:i + 4])
-        if new_sizes:
-            all_sizes.append(new_sizes)
+    sku_products = Product.objects.filter(sku_number=sku).values('shoe_sizes', 'shoe_sizes__country',
+                                                                 'shoe_sizes__shoe_size',
+                                                                 'shoe_sizes__product__listing_price').distinct().order_by(
+        'shoe_sizes')
+    for pro in sku_products:
+        if pro['shoe_sizes'] not in ids:
+            ids.append(pro['shoe_sizes'])
+    for ide in (ids):
+        price = Product.objects.filter(shoe_sizes__in=[ide], sku_number=sku).order_by(
+            'listing_price').values('shoe_sizes', 'shoe_sizes__country',
+                                    'shoe_sizes__shoe_size',
+                                    'shoe_sizes__product__listing_price')
+        filter_products.append(price.first())
+    for product in sku_products:
+        for nest_product in sku_products:
+            if nest_product['shoe_sizes__country'] == product['shoe_sizes__country']:
+                if nest_product['shoe_sizes__shoe_size'] == product['shoe_sizes__shoe_size']:
+                    if nest_product['shoe_sizes__product__listing_price'] < product[
+                        'shoe_sizes__product__listing_price']:
+                        for pro in filter_products:
+                            if pro['shoe_sizes__country'] == nest_product['shoe_sizes__country']:
+                                if pro['shoe_sizes__shoe_size'] == nest_product['shoe_sizes__shoe_size']:
+                                    if pro['shoe_sizes__product__listing_price'] > nest_product[
+                                        'shoe_sizes__product__listing_price']:
+                                        pro['shoe_sizes__product__listing_price'] = nest_product[
+                                            'shoe_sizes__product__listing_price']
+    for i in range(0, len(filter_products) + 1, 4):
+        new_sizes = filter_products[i:i + 4]
+        current_size = []
+        for size in new_sizes:
+            current_size.append({'id': size['shoe_sizes'],
+                                 'name': (str(size['shoe_sizes__country']) + "-" + str(
+                                     size['shoe_sizes__shoe_size'])),
+                                 "price": size['shoe_sizes__product__listing_price']})
+        all_sizes.append(current_size)
     return all_sizes

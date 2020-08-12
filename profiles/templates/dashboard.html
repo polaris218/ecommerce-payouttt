@@ -234,42 +234,22 @@
                             <div class="bg-white padd">
                                 <h2>Latest releasing sneakers</h2>
                                 <ul class="mb-0 pl-0 latest_snekers_list">
-                                    <li class="pro_font d-flex align-items-center">
-                                        <a href="#">
-                                            <img src="{% static 'web_admin/images/latestpro.png' %}" alt="" class="img-fluid mr-3">
-                                        </a>
-                                        <div class="latest_detail">
-                                            <a href="#" class="pro_title"><h3 class="gray_c">Jordan 6 Retro DMP
-                                                (2020)</h3></a>
-                                            <a href="#"><span class="light_gray">April 2018</span></a>
-                                        </div>
-                                        <a href="#" class="ml-auto"><span
-                                                class="latest_pro_price  f_18 green_c">$250.00</span></a>
-                                    </li>
-                                    <li class="pro_font d-flex align-items-center">
-                                        <a href="#">
-                                            <img src="{% static 'web_admin/images/latestpro.png' %}" alt="" class="img-fluid mr-3">
-                                        </a>
-                                        <div class="latest_detail">
-                                            <a href="#" class="pro_title"><h3 class="gray_c">Jordan 6 Retro DMP
-                                                (2020)</h3></a>
-                                            <a href="#"><span class="light_gray">April 2018</span></a>
-                                        </div>
-                                        <a href="#" class="ml-auto"><span
-                                                class="latest_pro_price  f_18 green_c">$250.00</span></a>
-                                    </li>
-                                    <li class="pro_font d-flex align-items-center">
-                                        <a href="#">
-                                            <img src="{% static 'web_admin/images/latestpro.png' %}" alt="" class="img-fluid mr-3">
-                                        </a>
-                                        <div class="latest_detail">
-                                            <a href="#" class="pro_title"><h3 class="gray_c">Jordan 6 Retro DMP
-                                                (2020)</h3></a>
-                                            <a href="#"><span class="light_gray">April 2018</span></a>
-                                        </div>
-                                        <a href="#" class="ml-auto"><span
-                                                class="latest_pro_price  f_18 green_c">$250.00</span></a>
-                                    </li>
+                                    {% for latest_product in latest_products %}
+                                        <li class="pro_font d-flex align-items-center">
+                                            <a href="#">
+                                                <img src="{{ latest_product.image }}" alt=""
+                                                     class="img-fluid mr-3">
+                                            </a>
+                                            <div class="latest_detail">
+                                                <a href="#" class="pro_title"><h3
+                                                        class="gray_c">{{ latest_product.title }}</h3></a>
+                                                <a href="#"><span
+                                                        class="light_gray">{{ latest_product.release_date }}</span></a>
+                                            </div>
+                                            <a href="#" class="ml-auto"><span
+                                                    class="latest_pro_price  f_18 green_c">${{ latest_product.listing_price }}</span></a>
+                                        </li>
+                                    {% endfor %}
                                 </ul>
                             </div>
                         </div>
@@ -479,42 +459,22 @@
                             <div class="bg-white padd">
                                 <h2>Latest releasing sneakers</h2>
                                 <ul class="mb-0 pl-0 latest_snekers_list">
-                                    <li class="pro_font d-flex align-items-center">
-                                        <a href="#">
-                                            <img src="{% static 'web_admin/images/latestpro.png' %}" alt="" class="img-fluid mr-3">
-                                        </a>
-                                        <div class="latest_detail">
-                                            <a href="#" class="pro_title"><h3 class="gray_c">Jordan 6 Retro DMP
-                                                (2020)</h3></a>
-                                            <a href="#"><span class="light_gray">April 2018</span></a>
-                                        </div>
-                                        <a href="#" class="ml-auto"><span
-                                                class="latest_pro_price  f_18 green_c">$250.00</span></a>
-                                    </li>
-                                    <li class="pro_font d-flex align-items-center">
-                                        <a href="#">
-                                            <img src="{% static 'web_admin/images/latestpro.png' %}" alt="" class="img-fluid mr-3">
-                                        </a>
-                                        <div class="latest_detail">
-                                            <a href="#" class="pro_title"><h3 class="gray_c">Jordan 6 Retro DMP
-                                                (2020)</h3></a>
-                                            <a href="#"><span class="light_gray">April 2018</span></a>
-                                        </div>
-                                        <a href="#" class="ml-auto"><span
-                                                class="latest_pro_price  f_18 green_c">$250.00</span></a>
-                                    </li>
-                                    <li class="pro_font d-flex align-items-center">
-                                        <a href="#">
-                                            <img src="{% static 'web_admin/images/latestpro.png' %}" alt="" class="img-fluid mr-3">
-                                        </a>
-                                        <div class="latest_detail">
-                                            <a href="#" class="pro_title"><h3 class="gray_c">Jordan 6 Retro DMP
-                                                (2020)</h3></a>
-                                            <a href="#"><span class="light_gray">April 2018</span></a>
-                                        </div>
-                                        <a href="#" class="ml-auto"><span
-                                                class="latest_pro_price  f_18 green_c">$250.00</span></a>
-                                    </li>
+                                    {% for latest_product in latest_products %}
+                                        <li class="pro_font d-flex align-items-center">
+                                            <a href="#">
+                                                <img src="{{ latest_product.image }}" alt=""
+                                                     class="img-fluid mr-3">
+                                            </a>
+                                            <div class="latest_detail">
+                                                <a href="#" class="pro_title"><h3
+                                                        class="gray_c">{{ latest_product.title }}</h3></a>
+                                                <a href="#"><span
+                                                        class="light_gray">{{ latest_product.release_date }}</span></a>
+                                            </div>
+                                            <a href="#" class="ml-auto"><span
+                                                    class="latest_pro_price  f_18 green_c">${{ latest_product.listing_price }}</span></a>
+                                        </li>
+                                    {% endfor %}
                                 </ul>
                             </div>
                         </div>

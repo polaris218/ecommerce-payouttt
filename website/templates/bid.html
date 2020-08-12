@@ -76,7 +76,7 @@
                                                             product</p>
                                                     {% elif not valid_address %}
                                                         {% if user.is_authenticated %}
-                                                            <p style="color: red">Kindly Add Your Address Detail
+                                                            <p style="color: red">Please Add Your Address Details
                                                                 First.</p>
                                                         {% endif %}
                                                     {% endif %}
@@ -242,7 +242,7 @@
                                             <input type="checkbox" id="{{ size.id }}">
                                             <label for="{{ size.id }}" data-dismiss="modal"
                                                    onclick="set_shoe_size({{ size.id }})">
-                                                <span id="user_size_{{ size.id }}">{{ size }}</span>
+                                                <span id="user_size_{{ size.id }}">{{ size.name }}<span>${{ size.price }}</span></span>
                                             </label>
                                         </div>
                                     {% endfor %}

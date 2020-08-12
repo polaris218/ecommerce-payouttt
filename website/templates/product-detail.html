@@ -395,7 +395,7 @@
                                         <div class="highest-size-box mx-1">
                                             <input type="checkbox" id="{{ size.id }}">
                                             <label for="{{ size.id }}">
-                                                <span id="user_size_{{ size.id }}">{{ size }}</span>
+                                                <span id="user_size_{{ size.id }}">{{ size.name }}<span>${{ size.price }}</span></span>
                                             </label>
                                         </div>
                                     {% endfor %}

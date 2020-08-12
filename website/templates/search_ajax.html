@@ -6,11 +6,12 @@
                 <div class="add-top-cart-btn">
                     <form method="post"
                           action="{% url 'web_cart_add_product' product.id %}">
-                            <a data-toggle="modal"
-                               data-target="#shoe-modal-{{ product.id }}">
-                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                Add To Cart
-                            </a>
+                        <a data-toggle="modal"
+                           href="javascript:void(0);"
+                           data-target="#shoe-modal-{{ product.id }}">
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                            Add To Cart
+                        </a>
                     </form>
                 </div>
                 <a href="javascript:void(0);"
@@ -27,6 +28,7 @@
             </div>
             <div class="cart-btn-mobile ">
                 <a data-toggle="modal"
+                   href="javascript:void(0);"
                    data-target="#shoe-modal-{{ product.id }}">
                     <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                     Add To Cart

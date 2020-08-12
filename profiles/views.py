@@ -139,6 +139,10 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         kwargs['dashboard'] = 'active'
         return kwargs
 
+    def get(self, request, *args, **kwargs):
+        latest_products = Product.objects.filter(seller__is_staff=True).order_by('-id')[:3]
+        return render(request, self.template_name, {'latest_products': latest_products})
+
 
 class SettingsView(LoginRequiredMixin, TemplateView):
     template_name = 'setting.html'

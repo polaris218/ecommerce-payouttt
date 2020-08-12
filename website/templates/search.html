@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load web-extras %}
 {% load static %}
 {% block title %}-Search{% endblock %}
 {% block content %}
@@ -208,11 +209,11 @@
                                 <li>SKU: <span>{{ product.sku_number }}</span></li>
                                 <li>
                                     <div class="select_filed size-selected">
-
+                                        {% get_product_sku_sizes_list_tag product.sku_number as all_sizes %}
                                         <select style="display: block" id="shoe_size_id" name="shoe_size_id" required>
                                             <option value="">Size</option>
-                                            {% for shoe_size in product.shoe_sizes.all %}
-                                                <option value="{{ shoe_size.id }}">{{ shoe_size }}</option>
+                                            {% for shoe_size in all_sizes %}
+                                                <option value="{{ shoe_size.id }}">{{ shoe_size.name }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
