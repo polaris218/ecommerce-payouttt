@@ -1,5 +1,7 @@
+import math
 import re
 import json
+import shippo
 from django.conf import settings
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -11,11 +13,11 @@ from django.urls import reverse
 from rest_framework import status
 
 from accounts.STRIPE_payments import StripePayment
-from accounts.models import User
+from accounts.models import User, Plaid
 from addresses.address_validation import ShippoAddressManagement
 from addresses.models import Address
 from api.bid_status_management import BidStatusManagement
-from api.models import Product, Bid, CartModel
+from api.models import Product, Bid, CartModel, BidStatus
 from core.models import FeedbackModel
 from dashboard.views import AddressView
 from profiles.forms import MyPasswordChangeForm, MyAddressForm
@@ -101,13 +103,34 @@ class BuyingView(LoginRequiredMixin, TemplateView):
 
     def get(self, request, *args, **kwargs):
         prices = {}
-        all_prices = []
-        all_bids = Bid.objects.filter(user=self.request.user, paid=False)
-        for bid in all_bids:
+        active_prices = []
+        pending_prices = []
+        complete_prices = []
+        bid_prices = []
+        complete_bids = Bid.objects.filter(user=self.request.user, paid=True)
+        all_unpaid_bids = Bid.objects.filter(user=self.request.user, paid=False, )
+        pending_bids = []
+        active_bids = []
+        [active_bids.append(bid) if bid.product_to_bid_on else pending_bids.append(bid) for bid in all_unpaid_bids]
+        stripe_key = settings.STRIPE_PUBLISHABLE_KEY
+        for bid in active_bids:
             prices['highest'], prices['lowest'] = BidStatusManagement().get_lowest_highest_bid(bid.sku_number)
-            all_prices.append(prices)
+            active_prices.append(prices)
+            bid_prices.append(math.ceil((bid.bid_amount + 13) * 100))
             prices = {}
-        return render(request, self.template_name, {'bids': zip(all_bids, all_prices)})
+        for bid in pending_bids:
+            prices['highest'], prices['lowest'] = BidStatusManagement().get_lowest_highest_bid(bid.sku_number)
+            pending_prices.append(prices)
+            prices = {}
+        for bid in complete_bids:
+            prices['highest'], prices['lowest'] = BidStatusManagement().get_lowest_highest_bid(bid.sku_number)
+            complete_prices.append(prices)
+            prices = {}
+
+        return render(request, self.template_name, {'active_bids': zip(active_bids, active_prices, bid_prices),
+                                                    'pending_bids': zip(pending_bids, pending_prices),
+                                                    'complete_bids': zip(complete_bids, complete_prices),
+                                                    'stripe_key': stripe_key})
 
 
 class OrdersView(LoginRequiredMixin, TemplateView):
@@ -123,8 +146,7 @@ class OrdersView(LoginRequiredMixin, TemplateView):
 
     def get(self, request, *args, **kwargs):
         orders = CartModel.objects.filter(user=self.request.user).order_by('-id')
-        prices = [(cart.cart_item.all().aggregate(Sum('product__listing_price')))['product__listing_price__sum'] for
-                  cart in orders]
+        prices = [(cart.cart_item.all().aggregate(Sum('price')))['price__sum'] for cart in orders]
         return render(request, self.template_name, {'orders': zip(orders, prices)})
 
 
@@ -255,3 +277,136 @@ class FeedBack(LoginRequiredMixin, View):
         feedback_description = (request.POST.get('rewardNotes'))
         FeedbackModel.objects.create(user=request.user, description=feedback_description, is_active=True)
         return redirect(reverse('home'))
+
+
+class PayForBidWebView(LoginRequiredMixin, View):
+
+    def get_admin_address(self):
+        admin_address = ShippoAddressManagement().get_adming_address()
+        admin_addr = {
+            "name": admin_address.full_name,
+            "street1": admin_address.street1,
+            "street2": "",
+            "city": admin_address.city,
+            "state": admin_address.state,
+            "zip": admin_address.zip,
+            "country": admin_address.country,
+            "phone": "+1 123 456 789",
+        }
+        return admin_addr
+
+    def get_parcel(self):
+        parcel = {
+            "length": "14",
+            "width": "10",
+            "height": "6",
+            "distance_unit": "in",
+            "weight": "3",
+            "mass_unit": "lb",
+        }
+        return parcel
+
+    def set_user_tracking(self, user, bid_payment, seller=True):
+
+        try:
+            if seller:
+                address = ShippoAddressManagement().user_valid_address(user)
+                seller_addr = {
+                    "name": address.full_name or 'Payoutttt',
+                    "street1": address.street1,
+                    "city": address.city,
+                    "state": str(address.state),
+                    "zip": int(address.zip),
+                    "country": address.country,
+                    # "phone": str(user.phone_number),
+                }
+
+                shipment = shippo.Shipment.create(
+                    address_from=seller_addr,
+                    address_to=self.get_admin_address(),
+                    parcels=[self.get_parcel()],
+                    asynchronous=False
+                )
+            else:
+                address = ShippoAddressManagement().user_valid_address(user)
+                buyer_addr = {
+                    "name": address.full_name or 'Payoutttt',
+                    "street1": address.street1,
+                    "city": address.city,
+                    "state": str(address.state),
+                    "zip": int(address.zip),
+                    "country": address.country,
+                    # "phone": str(user.phone_number),
+                }
+
+                shipment = shippo.Shipment.create(
+                    address_from=self.get_admin_address(),
+                    address_to=buyer_addr,
+                    parcels=[self.get_parcel()],
+                    asynchronous=False
+                )
+            rate = shipment.rates[0]
+            transaction = shippo.Transaction.create(
+                rate=rate.object_id, asynchronous=False)
+            if transaction.status == "SUCCESS":
+                if seller:
+                    bid_payment.seller_tracking = transaction.tracking_number
+                    bid_payment.seller_purchase_label = transaction.label_url
+                else:
+                    bid_payment.purchase_tracking = transaction.tracking_number
+                    bid_payment.purchase_label = transaction.label_url
+
+            else:
+                if seller:
+                    bid_payment.seller_shippo_error = transaction.messages[0].get('text')
+                else:
+                    bid_payment.buyer_shippo_error = transaction.messages[0].get('text')
+        except Exception as e:
+            if seller:
+                bid_payment.seller_shippo_error = str(e)
+            else:
+                bid_payment.buyer_shippo_error = str(e)
+        bid_payment.save()
+
+    def get_bid_payment(self, bid):
+        return bid.bidpayment_set.all().first()
+
+    def verify_payment_method(self, payment_method):
+        try:
+            return eval(payment_method).get('paymentMethod').get('id')
+        except:
+            return False
+
+    def post(self, request, *args, **kwargs):
+        bid = Bid.objects.filter(id=kwargs.get('bid_id'), user=self.request.user, paid=False).first()
+        if bid:
+            seller_address = ShippoAddressManagement().user_valid_address(bid.product_to_bid_on.seller)
+            buyer_address = ShippoAddressManagement().user_valid_address(bid.user)
+            if seller_address and buyer_address:
+                bid_payment = self.get_bid_payment(bid)
+                if bid.user.stripe_customer_id and self.verify_payment_method(bid.user.stripe_payment_method):
+                    if not bid_payment:
+                        bid_payment = StripePayment().bid_payment(bid, request)
+                    if bid_payment:
+                        self.set_user_tracking(bid.user, bid_payment, seller=False)
+                        self.set_user_tracking(bid.product_to_bid_on.seller, bid_payment, seller=True)
+                        BidStatusManagement().create_bid_status(bid, BidStatus.SELLER_SEND)
+                        return redirect('PayForBidViewSuccess')
+                    else:
+                        bid.paid = False
+                        bid.save()
+        return redirect('PayForBidViewFailed')
+
+
+class BidPaySuccessWeb(View):
+    template_name = 'bid_pay_success.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+
+class BidPayFailWeb(View):
+    template_name = 'bid_pay_failed.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)

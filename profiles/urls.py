@@ -25,4 +25,7 @@ urlpatterns = [
     path('payment_method_added_success/', csrf_exempt(views.PaymentMethodAddSuccess.as_view()),
          name='payment_method_added_success'),
     path('feedback/', csrf_exempt(views.FeedBack.as_view()), name='feedback'),
+    path('bid_pay_success_web', views.BidPaySuccessWeb.as_view(), name='PayForBidViewSuccess'),
+    path('bid_pay_fail_web', views.BidPayFailWeb.as_view(), name='PayForBidViewFailed'),
+    path('PayForBidWebView/<int:bid_id>/', csrf_exempt(views.PayForBidWebView.as_view()), name='PayForBidWebView'),
 ]

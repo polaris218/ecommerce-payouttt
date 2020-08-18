@@ -79,6 +79,12 @@
                                                             <p style="color: red">Please Add Your Address Details
                                                                 First.</p>
                                                         {% endif %}
+                                                    {% elif not stripe_access %}
+                                                        {% if user.is_authenticated %}
+                                                            <a style="color: red" href="{% url 'web-profile' %}">
+                                                                Please Connect Your Stripe
+                                                                Account.</a>
+                                                        {% endif %}
                                                     {% endif %}
                                                     <ul class="list-inline confirm-btn">
                                                         <li>
@@ -113,15 +119,15 @@
                                                     <div class="border-line"></div>
                                                     <div class="shiping-sec-top">
                                                         <p>Lowest Ask</p>
-                                                        <span>${{ lowest_ask }}</span>
+                                                        <span id="shoe_size_price"></span>
                                                     </div>
                                                     <div class="shiping-sec-top">
                                                         <p>Shipping </p>
-                                                        <span>Shipping</span>
+                                                        <span>$13</span>
                                                     </div>
                                                     <div class="shiping-sec-top">
                                                         <p><b>Total</b></p>
-                                                        <span><b>$105</b></span>
+                                                        <span><b id="total_sum"></b></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -150,7 +156,7 @@
                                                         {% endif %}
                                                     </div>
                                                     <div class="top_selling_product_box payouttt_offers_content">
-                                                        {% if valid_address and can_bid %}
+                                                        {% if valid_address and can_bid and stripe_access %}
                                                             <button type="button" hidden
                                                                     id="success-btn"
                                                                     data-toggle="modal"
@@ -307,14 +313,15 @@
             $('select').niceSelect();
         });
 
-        var shoe_size_id = "Size";
+        var shoe_size = "Size";
+        var shoe_size_id = 0;
 
         $("#create_bid").on('click', function (e) {
 
             e.preventDefault(); // avoid to execute the actual submit of the form.
 
             var bid_amount = $("#bid_amount").val();
-            if (shoe_size_id !== "Size" && bid_amount !== '' && bid_amount !== '0') {
+            if (shoe_size !== "Size" && bid_amount !== '' && bid_amount !== '0') {
                 $.ajax({
                     type: 'Post',
                     url: "{% url 'web_cart_bid' product.id %}",
@@ -335,13 +342,14 @@
                         }
                     }
                 });
+            } else if (shoe_size === "Size") {
+                alert("please select shoe size first");
             } else {
                 $('#bid_amount').css({'border-color': 'red'});
             }
-
         });
         $("#shoe_size_dropdown_selected").on('click', function (e) {
-            if (shoe_size_id === 'Size') {
+            if (shoe_size === 'Size') {
 
                 alert("please select shoe size first");
 
@@ -352,8 +360,12 @@
         });
 
         function set_shoe_size(size) {
+            str = ($('#user_size_' + size).text().split('$'));
+            shoe_size = str[0];
             shoe_size_id = size;
-            $('#selected_size').text($('#user_size_' + size).text());
+            $('#selected_size').text(str[0]);
+            $('#shoe_size_price').text('$' + str[1]);
+            $('#total_sum').text('$' + (parseFloat(str[1]) + parseFloat(13)));
         }
     </script>
 

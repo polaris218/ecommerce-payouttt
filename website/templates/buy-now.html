@@ -110,15 +110,11 @@
                                                     <div class="border-line"></div>
                                                     <div class="shiping-sec-top">
                                                         <p>Asking Price</p>
-                                                        <span>${{ lowest_ask }}</span>
+                                                        <span id='shoe_size_price'></span>
                                                     </div>
                                                     <div class="shiping-sec-top">
                                                         <p>Shipping </p>
-                                                        <span>Shipping</span>
-                                                    </div>
-                                                    <div class="shiping-sec-top">
-                                                        <p><b>Total</b></p>
-                                                        <span><b>$105</b></span>
+                                                        <span>$13</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -128,7 +124,7 @@
                                                     <div class="buy-now-price">
                                                         <p>Total Price</p>
                                                         <div class="inner-buy-now-price">
-                                                            <p><b>{{ product.listing_price }}</b></p>
+                                                            <p><b id="total_sum"></b></p>
                                                             <span><b>$</b></span>
                                                         </div>
                                                     </div>
@@ -287,18 +283,19 @@
             $('select').niceSelect();
         });
 
-        var shoe_size_id = "Size";
-
+        var shoe_size = "Size";
+        var price = 0;
+        var shoe_size_id = 0;
         $("#buy-item").on('click', function (e) {
 
             e.preventDefault(); // avoid to execute the actual submit of the form.
 
-            if (shoe_size_id !== "Size") {
+            if (shoe_size !== "Size") {
                 $.ajax({
                     type: 'Post',
                     url: "{% url 'web_cart_add_product' product.id %}",
                     data: {
-                        "shoe_size_id": shoe_size_id,
+                        "shoe_size_id": shoe_size_id + '-' + price,
                     },
                     success: function (data) {
                         if (data['buy_success']) {
@@ -312,11 +309,13 @@
                         }
                     }
                 });
+            } else if (shoe_size === "Size") {
+                alert("please select shoe size first");
             }
         });
         $("#shoe_size_dropdown_selected").on('click', function (e) {
             e.preventDefault();
-            if (shoe_size_id === 'Size') {
+            if (shoe_size === 'Size') {
 
                 alert("please select shoe size first");
 
@@ -327,8 +326,13 @@
         });
 
         function set_shoe_size(size) {
+            str = ($('#user_size_' + size).text().split('$'));
+            shoe_size = str[0];
             shoe_size_id = size;
-            $('#selected_size').text($('#user_size_' + size).text());
+            price = str[1];
+            $('#selected_size').text(str[0]);
+            $('#shoe_size_price').text('$' + str[1]);
+            $('#total_sum').text('$' + (parseFloat((str[1])) + parseFloat((13))));
         }
     </script>
 {% endblock %}

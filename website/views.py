@@ -133,8 +133,8 @@ class WebCartView(LoginRequiredMixin, TemplateView):
             cart = CartModel.objects.filter(user=self.request.user, is_active=True).first()
             total_price = 0
             if cart and cart.cart_item.all().count():
-                total_price = cart.cart_item.all().aggregate(Sum('product__listing_price'))
-                total_price = total_price['product__listing_price__sum']
+                total_price = cart.cart_item.all().aggregate(Sum('price'))
+                total_price = total_price['price__sum']
                 cart = cart.cart_item.all().order_by('-id')
             else:
                 return redirect('web-home')
@@ -160,9 +160,11 @@ class WebCartAddView(LoginRequiredMixin, TemplateView):
                 cart = CartModel(user=self.request.user)
                 cart.save()
             dict = {}
-            shoe_size = ShoeSize.objects.get(id=request.POST.get('shoe_size_id'))
+            shoe_size_id, price = (request.POST.get('shoe_size_id')).split('-')
+            shoe_size = ShoeSize.objects.get(id=shoe_size_id)
             dict['shoe_size'] = shoe_size
             dict['buyer'] = self.request.user
+            dict['price'] = price
             dict['product'] = Product.objects.get(id=product_id)
             cart_item_obj = CartItem.objects.create(**dict)
             cart.updated_at = datetime.today()
@@ -201,8 +203,7 @@ class WebCartBidView(TemplateView):
         all_sizes = get_product_sku_sizes_list(product)
         context = {'product': product, 'can_bid': can_bid, 'lowest_ask': lowest_ask, 'highest_bid': highest_bid,
                    'all_sizes': all_sizes}
-        if request.user.is_authenticated:
-            context['valid_address'] = ShippoAddressManagement().user_valid_address(self.request.user)
+        context['valid_address'], context['stripe_access'] = is_address_and_stripe_valid(self.request.user)
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
@@ -212,12 +213,11 @@ class WebCartBidView(TemplateView):
             sku_number = request.POST.get('sku_number')
             shoe_size = ShoeSize.objects.get(id=shoe_size_id)
             bid_success = False
-            valid_address = ShippoAddressManagement().user_valid_address(self.request.user)
             context = {}
             context['message'] = FAIL_MESSAGE
             context['bid'] = BID_FAIL
-
-            if valid_address:
+            valid_address, stripe_access = is_address_and_stripe_valid(self.request.user)
+            if valid_address and stripe_access:
                 bid = Bid.objects.filter(sku_number=sku_number, user=self.request.user)
                 if not bid:
                     obj = Bid.objects.create(sku_number=sku_number, user=self.request.user,
@@ -273,8 +273,8 @@ class WebCartSellView(TemplateView):
         context = {'product': product, 'highest_bid': highest_bid, 'lowest_ask': lowest_ask, 'all_sizes': all_sizes, }
         product_suggest_form = ProductSuggestForm(request.POST or None)
         context['product_suggest_form'] = product_suggest_form
-        if request.user.is_authenticated:
-            context['valid_address'] = ShippoAddressManagement().user_valid_address(self.request.user)
+        context['valid_address'], context['stripe_access'] = is_address_and_stripe_valid(self.request.user)
+
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
@@ -284,11 +284,11 @@ class WebCartSellView(TemplateView):
             product_id = kwargs.get('product_id')
             sku_number = request.POST.get('sku_number')
             sell_success = False
-            valid_address = ShippoAddressManagement().user_valid_address(self.request.user)
             context = {}
             context['message'] = FAIL_MESSAGE
             context['bid'] = SELL_FAIL
-            if valid_address:
+            valid_address, stripe_access = is_address_and_stripe_valid(self.request.user)
+            if valid_address and stripe_access:
                 original_product = Product.objects.get(id=product_id)
                 if original_product:
                     sell_product = Product.objects.get(pk=original_product.pk)
@@ -583,3 +583,12 @@ def get_product_sku_sizes_list(product):
                                  "price": size['shoe_sizes__product__listing_price']})
         all_sizes.append(current_size)
     return all_sizes
+
+
+def is_address_and_stripe_valid(user):
+    stripe_access = valid_address = False
+    if user.is_authenticated:
+        valid_address = ShippoAddressManagement().user_valid_address(user)
+        if user.stripe_customer_id and user.stripe_payment_method:
+            stripe_access = True
+    return valid_address, stripe_access

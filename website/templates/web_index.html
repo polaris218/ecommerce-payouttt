@@ -490,7 +490,7 @@
                                         <select style="display: block" id="shoe_size_id" name="shoe_size_id" required>
                                             <option value="">Size</option>
                                             {% for shoe_size in all_sizes %}
-                                                <option value="{{ shoe_size.id }}">{{ shoe_size.name }}</option>
+                                                <option value="{{ shoe_size.id }}-{{ shoe_size.price }}">{{ shoe_size.name }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -547,7 +547,7 @@
                                         <select style="display: block" id="shoe_size_id" name="shoe_size_id" required>
                                             <option value="">Size</option>
                                             {% for shoe_size in all_sizes %}
-                                                <option value="{{ shoe_size.id }}">{{ shoe_size.name }}</option>
+                                                <option value="{{ shoe_size.id }}-{{ shoe_size.price }}">{{ shoe_size.name }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -607,7 +607,7 @@
                                         <select style="display: block" id="shoe_size_id" name="shoe_size_id" required>
                                             <option value="">Size</option>
                                             {% for shoe_size in all_sizes %}
-                                                <option value="{{ shoe_size.id }}">{{ shoe_size.name }}</option>
+                                                <option value="{{ shoe_size.id }}-{{ shoe_size.price }}">{{ shoe_size.name }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>

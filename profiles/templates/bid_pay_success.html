@@ -1,0 +1,25 @@
+{% extends 'admin.html' %}
+{% load static %}
+{% block title %}-Thank You{% endblock %}
+
+{% block content %}
+    <main class="bg-white position-relative">
+        <!-- search bar -->
+        <div class="container">
+            <div class="thank-sec padd-top-bot row">
+                <div class="col-md-6 offset-md-3">
+                    <div class="receive-sec">
+                        <i class="flaticon-checked"></i>
+                        <h2>Paid successfully!</h2>
+                        <p>Thank you for Paying. We received your payment and will begin processing it soon.</p>
+                        <div class="thank-btn">
+                            <a class="border-btn" href="{% url 'web-home' %}">back to home</a>
+                            <a class="bg-btn" href="{% url 'web-orders' %}">view order</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- top_selling_sec -->
+    </main>
+{% endblock %}

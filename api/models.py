@@ -205,6 +205,7 @@ class CartItem(models.Model):
     buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='buyer')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     shoe_size = models.ForeignKey(ShoeSize, on_delete=models.CASCADE, null=True, blank=True)
+    price = models.FloatField(default=0)
 
 
 class CartModel(BaseModel):
@@ -229,7 +230,7 @@ class CartModel(BaseModel):
     order_note = models.TextField(max_length=700, null=True, blank=True)
     shipping_type = models.CharField(max_length=1000, null=True, blank=True)
     tracking_url = models.URLField(max_length=255, null=True, blank=True)
-    tracking_number = models.CharField(max_length=500,null=True,blank=True)
+    tracking_number = models.CharField(max_length=500, null=True, blank=True)
     shippo_error = models.TextField(max_length=700, null=True, blank=True)
 
 

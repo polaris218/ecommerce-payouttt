@@ -21,7 +21,7 @@ class BidStatusManagement(object):
                                          seller__is_superuser=False,
                                          listing_price__lte=bid.bid_amount, shoe_sizes=bid.shoe_size).order_by(
             'id').first()
-        if product:
+        if product and (product.seller != bid.user):
             product.on_hold = True
             product.save()
             bid.product_to_bid_on = product
@@ -30,7 +30,7 @@ class BidStatusManagement(object):
     def link_bid_with_product(self, product):
         bid = Bid.objects.filter(sku_number=product.sku_number, product_to_bid_on__isnull=True,
                                  shoe_size=product.shoe_sizes.all().first()).order_by('id').first()
-        if bid:
+        if bid and (product.seller != bid.user):
             bid.product_to_bid_on = product
             product.on_hold = True
             product.save()
