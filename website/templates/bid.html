@@ -77,13 +77,12 @@
                                                     {% elif not valid_address %}
                                                         {% if user.is_authenticated %}
                                                             <p style="color: red">Please Add Your Address Details
-                                                                First.</p>
+                                                                First</p>
                                                         {% endif %}
                                                     {% elif not stripe_access %}
                                                         {% if user.is_authenticated %}
                                                             <a style="color: red" href="{% url 'web-profile' %}">
-                                                                Please Connect Your Stripe
-                                                                Account.</a>
+                                                                Please Add Your Payment Method First</a>
                                                         {% endif %}
                                                     {% endif %}
                                                     <ul class="list-inline confirm-btn">

@@ -36,24 +36,24 @@
                                                 </div>
                                                 <div class="col-md-6 product-right">
                                                     <div class="buy-now-top-sec">
+                                                        <h2 class="sec-heading">{{ product.title }}</h2>
                                                         <div class="inner-buy-now inner-buy-now1">
                                                             <p>Buy or Bid</p>
-                                                            <span><b>${{ lowest_ask }} </b> lowest ask</span>
+                                                            <span><b>${{ lowest_ask }} </b> Lowest Ask</span>
                                                         </div>
                                                         <div class="inner-buy-now inner-buy-now2">
                                                             <p>Sell or Ask</p>
-                                                            <span><b>${{ highest_bid }} </b> highest BId</span>
+                                                            <span><b>${{ highest_bid }} </b> Highest Bid</span>
                                                         </div>
                                                         <div class="inner-buy-now inner-buy-now3">
                                                             <p>Last Sale</p>
                                                             <div class="last-sale-price">
                                                                 {#                                                                <h3>$273.00</h3>#}
                                                                 <a href="#"><i class="fa fa-arrow-down"
-                                                                               aria-hidden="true"></i> -$1 (0%)</a>
+                                                                               aria-hidden="true"></i> --- </a>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <h2 class="sec-heading">{{ product.title }}</h2>
                                                     <div class="border-line"></div>
                                                     <div class="row release-date">
                                                         <div class="col-md-8 col-md-7">
@@ -72,13 +72,12 @@
                                                     {% if not valid_address %}
                                                         {% if user.is_authenticated %}
                                                             <p style="color: red">Please Add Your Address Details
-                                                                First.</p>
+                                                                First</p>
                                                         {% endif %}
                                                     {% elif not stripe_access %}
                                                         {% if user.is_authenticated %}
                                                             <a style="color: red" href="{% url 'web-profile' %}">
-                                                                Please Connect Your Stripe
-                                                                Account.</a>
+                                                                Please Add Your Payment Method First</a>
                                                         {% endif %}
                                                     {% endif %}
                                                     <ul class="list-inline confirm-btn">
