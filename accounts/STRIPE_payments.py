@@ -1,3 +1,4 @@
+import ast
 import stripe
 
 from api.models import BidPayment
@@ -10,7 +11,8 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 class StripePayment(object):
 
     def bid_payment(self, bid, request):
-        payment_token = eval(request.user.stripe_payment_method).get('paymentMethod').get('id')
+        payment_method = ast.literal_eval(bid.user.stripe_payment_method)
+        payment_token = payment_method.get('paymentMethod').get('setupIntent').get('payment_method')
         charge = stripe.PaymentIntent.create(
             amount=int((bid.product_to_bid_on.listing_price + 15) * 100),
             currency='usd',
@@ -52,8 +54,9 @@ class StripePayment(object):
         return intent.client_secret
 
     def link_paymentmethod_with_customer(self, user):
-        stripe.PaymentMethod.attach(eval(str(user.stripe_payment_method)).get('paymentMethod').get('id'),
-                                    customer=user.stripe_customer_id)
+        stripe.PaymentMethod.attach(
+            eval(str(user.stripe_payment_method)).get('paymentMethod', {}).get('setupIntent', {}).get('payment_method'),
+            customer=user.stripe_customer_id)
 
     def detach_account(self, payment_id):
         stripe.PaymentMethod.detach(payment_id)

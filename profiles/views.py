@@ -1,3 +1,4 @@
+import ast
 import math
 import re
 import json
@@ -17,7 +18,7 @@ from accounts.models import User, Plaid
 from addresses.address_validation import ShippoAddressManagement
 from addresses.models import Address
 from api.bid_status_management import BidStatusManagement
-from api.models import Product, Bid, CartModel, BidStatus
+from api.models import Product, Bid, CartModel, BidStatus, BidPayment
 from core.models import FeedbackModel
 from dashboard.views import AddressView
 from profiles.forms import MyPasswordChangeForm, MyAddressForm
@@ -80,14 +81,49 @@ class SellingView(LoginRequiredMixin, TemplateView):
         return kwargs
 
     def get(self, request, *args, **kwargs):
-        products = Product.objects.filter(seller=self.request.user)
         prices = {}
         all_prices = []
-        for product in products:
+        complete_prices = []
+        complete_addresses = []
+        pending_prices = []
+        active_prices = []
+        product_ids = []
+        tracking_urls = []
+        all_products = Product.objects.filter(seller=self.request.user)
+        for product in all_products:
             prices['highest'], prices['lowest'] = BidStatusManagement().get_lowest_highest_bid(product.sku_number)
             all_prices.append(prices)
             prices = {}
-        return render(request, self.template_name, {'products': zip(products, all_prices)})
+        complete_products = Product.objects.filter(seller=self.request.user, sold=True)
+        for product in complete_products:
+            prices['highest'], prices['lowest'] = BidStatusManagement().get_lowest_highest_bid(product.sku_number)
+            complete_prices.append(prices)
+            bid = Bid.objects.filter(sku_number=product.sku_number, bid_amount=product.listing_price,
+                                     shoe_size__in=product.shoe_sizes.all()).first()
+            address = Address.objects.filter(user__email=bid.user.email, is_valid=True).first()
+            complete_addresses.append(address.user.full_name + " (" + address.full_address() + ")")
+            payment = BidPayment.objects.filter(bid=bid).first()
+            tracking_urls.append(payment.seller_purchase_label)
+            prices = {}
+
+        pending_products = Product.objects.filter(seller=self.request.user, sold=False)
+        for product in pending_products:
+            prices['highest'], prices['lowest'] = BidStatusManagement().get_lowest_highest_bid(product.sku_number)
+            pending_prices.append(prices)
+            prices = {}
+        bids = Bid.objects.filter(product_to_bid_on__seller=self.request.user)
+        for bid in bids:
+            product_ids.append(bid.product_to_bid_on.id)
+        active_products = Product.objects.filter(id__in=product_ids)
+        for product in active_products:
+            prices['highest'], prices['lowest'] = BidStatusManagement().get_lowest_highest_bid(product.sku_number)
+            active_prices.append(prices)
+            prices = {}
+        return render(request, self.template_name, {'all_products': zip(all_products, all_prices),
+                                                    'pending_products': zip(pending_products, pending_prices),
+                                                    'complete_products': zip(complete_products, complete_prices,
+                                                                             complete_addresses, tracking_urls),
+                                                    'active_products': zip(active_products, active_prices)})
 
 
 class BuyingView(LoginRequiredMixin, TemplateView):
@@ -264,7 +300,7 @@ class PaymentMethodAddSuccess(LoginRequiredMixin, View):
         payment_method = json.loads(request.body)
         user = self.request.user
         if payment_method:
-            if user.stripe_customer_id and payment_method.get('paymentMethod').get('id'):
+            if user.stripe_customer_id and payment_method.get('paymentMethod', {}).get('setupIntent', {}).get('id'):
                 user.stripe_payment_method = payment_method
                 user.save()
                 StripePayment().link_paymentmethod_with_customer(user)
@@ -373,7 +409,8 @@ class PayForBidWebView(LoginRequiredMixin, View):
 
     def verify_payment_method(self, payment_method):
         try:
-            return eval(payment_method).get('paymentMethod').get('id')
+            payment_method = ast.literal_eval(payment_method)
+            return payment_method.get('paymentMethod').get('setupIntent').get('payment_method')
         except:
             return False
 

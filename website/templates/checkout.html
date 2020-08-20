@@ -115,7 +115,7 @@
                                         <span class="input__label-content input__label-content--yoshiko"
                                               data-content=""> <sup>*</sup>Street</span>
                                     </label>
-                                    <input class="input__field input__field--yoshiko" required  type="text"
+                                    <input class="input__field input__field--yoshiko" required type="text"
                                            id="input-15" value="{{ address.street1 }}"
                                            name="Street"/>
 {#                                    <label class="input__label input__label--yoshiko" for="input-13"> #}
@@ -162,16 +162,16 @@
                                         {% for item in cart.cart_item.all %}
                                             <tr>
                                                 <td>{{ item.product.title }}</td>
-                                                <td>${{ item.product.listing_price }}</td>
+                                                <td>${{ item.price }}</td>
                                             </tr>
                                         {% endfor %}
-                                        <tr class="shipping">
-                                            <td>Shipping Charges</td>
-                                            <td id="shipping_charges">${{ cart.shipping_amount }}</td>
-                                        </tr>
                                         <tr class="sub-total">
                                             <td>Subtotal</td>
                                             <td id="product_charges">${{ total_price }}</td>
+                                        </tr>
+                                        <tr class="shipping">
+                                            <td>Shipping Charges</td>
+                                            <td id="shipping_charges">${{ cart.shipping_amount }}</td>
                                         </tr>
                                         <tr class="total">
                                             <td>Total</td>

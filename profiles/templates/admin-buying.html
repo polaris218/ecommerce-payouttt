@@ -1,6 +1,20 @@
 {% extends 'admin_base.html' %}
 {% load static %}
 {% block content %}
+    <style>
+        .pay_bid_green_c {
+            color: white;
+        }
+
+        .pay_bid_btn {
+            background: #84bb30;
+            padding: 8px 20px;
+            border: 0px;
+            border-radius: 5px;
+            font-size: 19px;
+            font-weight: 700;
+        }
+    </style>
     <div class="page_title p-30">
         <h3 class="mb-0">Buying</h3>
     </div>
@@ -65,12 +79,10 @@
                                                           method="post"
                                                           class="text-center">
                                                         {% csrf_token %}
-                                                        <script src="https://checkout.stripe.com/checkout.js"
-                                                                class="stripe-button"
-                                                                data-key="{{ stripe_key }}"
-                                                                data-description="Payouttt Charge"
-                                                                data-amount="{{ charge_price }}"
-                                                                data-locale="auto"></script>
+                                                        <button type="submit"
+                                                                class="pay_bid_btn pay_bid_green_c">
+                                                            Pay Now
+                                                        </button>
                                                     </form>
                                                 </td>
                                             </tr>

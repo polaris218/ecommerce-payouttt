@@ -50,7 +50,7 @@
                                 {% for item in cart.cart_item.all %}
                                     <tr>
                                         <td>{{ item.product.title }}</td>
-                                        <td>${{ item.product.listing_price }}</td>
+                                        <td>${{ item.price }}</td>
                                     </tr>
                                 {% endfor %}
                                 <tr>

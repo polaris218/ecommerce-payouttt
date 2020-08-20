@@ -1,3 +1,4 @@
+import ast
 import operator
 from datetime import datetime
 from functools import reduce
@@ -116,13 +117,16 @@ class ProductDetailView(TemplateView):
     def get(self, request, *args, **kwargs):
         product_id = kwargs.get('product_id')
         product = Product.objects.filter(id=product_id, seller__is_staff=True).first()
-        all_sizes = get_product_sku_sizes_list(product)
-        highest_ask, lowest_ask = BidStatusManagement().get_lowest_highest_listing_price(product.sku_number)
-        highest_bid, lowest_bid = BidStatusManagement().get_lowest_highest_bid(product.sku_number)
+        if product:
+            all_sizes = get_product_sku_sizes_list(product)
+            highest_ask, lowest_ask = BidStatusManagement().get_lowest_highest_listing_price(product.sku_number)
+            highest_bid, lowest_bid = BidStatusManagement().get_lowest_highest_bid(product.sku_number)
 
-        return render(request, self.template_name,
-                      {'product': product, 'lowest_ask': lowest_ask, 'highest_bid': highest_bid,
-                       'all_sizes': all_sizes})
+            return render(request, self.template_name,
+                          {'product': product, 'lowest_ask': lowest_ask, 'highest_bid': highest_bid,
+                           'all_sizes': all_sizes})
+        else:
+            return redirect('web-home')
 
 
 class WebCartView(LoginRequiredMixin, TemplateView):
@@ -193,18 +197,21 @@ class WebCartBidView(TemplateView):
     def get(self, request, *args, **kwargs):
         product_id = kwargs.get('product_id')
         product = Product.objects.filter(id=product_id, seller__is_staff=True).first()
-        can_bid = True
-        if request.user.is_authenticated:
-            bid = Bid.objects.filter(sku_number=product.sku_number, user=self.request.user)
-            if bid:
-                can_bid = False
-        highest_ask, lowest_ask = BidStatusManagement().get_lowest_highest_listing_price(product.sku_number)
-        highest_bid, lowest_bid = BidStatusManagement().get_lowest_highest_bid(product.sku_number)
-        all_sizes = get_product_sku_sizes_list(product)
-        context = {'product': product, 'can_bid': can_bid, 'lowest_ask': lowest_ask, 'highest_bid': highest_bid,
-                   'all_sizes': all_sizes}
-        context['valid_address'], context['stripe_access'] = is_address_and_stripe_valid(self.request.user)
-        return render(request, self.template_name, context)
+        if product:
+            can_bid = True
+            if request.user.is_authenticated:
+                bid = Bid.objects.filter(sku_number=product.sku_number, user=self.request.user)
+                if bid:
+                    can_bid = False
+            highest_ask, lowest_ask = BidStatusManagement().get_lowest_highest_listing_price(product.sku_number)
+            highest_bid, lowest_bid = BidStatusManagement().get_lowest_highest_bid(product.sku_number)
+            all_sizes = get_product_sku_sizes_list(product)
+            context = {'product': product, 'can_bid': can_bid, 'lowest_ask': lowest_ask, 'highest_bid': highest_bid,
+                       'all_sizes': all_sizes}
+            context['valid_address'], context['stripe_access'] = is_address_and_stripe_valid(self.request.user)
+            return render(request, self.template_name, context)
+        else:
+            return redirect('web-home')
 
     def post(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -246,19 +253,22 @@ class WebCartBuyView(TemplateView):
     def get(self, request, *args, **kwargs):
         product_id = kwargs.get('product_id')
         can_buy = False
-        product = Product.objects.get(id=product_id)
-        highest_ask, lowest_ask = BidStatusManagement().get_lowest_highest_listing_price(product.sku_number)
-        highest_bid, lowest_bid = BidStatusManagement().get_lowest_highest_bid(product.sku_number)
-        all_sizes = get_product_sku_sizes_list(product)
-        context = {'product': product, 'lowest_ask': lowest_ask, 'highest_bid': highest_bid, 'all_sizes': all_sizes}
-        product = Product.objects.get(id=product_id)
-        if request.user.is_authenticated:
-            context['valid_address'] = ShippoAddressManagement().user_valid_address(self.request.user)
-            cart_item_obj = CartItem.objects.filter(buyer=self.request.user, product=product)
-            if not cart_item_obj:
-                can_buy = True
-        context['can_buy'] = can_buy
-        return render(request, self.template_name, context)
+        try:
+            product = Product.objects.get(id=product_id)
+            highest_ask, lowest_ask = BidStatusManagement().get_lowest_highest_listing_price(product.sku_number)
+            highest_bid, lowest_bid = BidStatusManagement().get_lowest_highest_bid(product.sku_number)
+            all_sizes = get_product_sku_sizes_list(product)
+            context = {'product': product, 'lowest_ask': lowest_ask, 'highest_bid': highest_bid, 'all_sizes': all_sizes}
+            product = Product.objects.get(id=product_id)
+            if request.user.is_authenticated:
+                context['valid_address'] = ShippoAddressManagement().user_valid_address(self.request.user)
+                cart_item_obj = CartItem.objects.filter(buyer=self.request.user, product=product)
+                if not cart_item_obj:
+                    can_buy = True
+            context['can_buy'] = can_buy
+            return render(request, self.template_name, context)
+        except:
+            return redirect('web-home')
 
 
 class WebCartSellView(TemplateView):
@@ -266,16 +276,20 @@ class WebCartSellView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         product_id = kwargs.get('product_id')
-        product = Product.objects.get(id=product_id)
-        highest_ask, lowest_ask = BidStatusManagement().get_lowest_highest_listing_price(product.sku_number)
-        highest_bid, lowest_bid = BidStatusManagement().get_lowest_highest_bid(product.sku_number)
-        all_sizes = get_product_sku_sizes_list(product)
-        context = {'product': product, 'highest_bid': highest_bid, 'lowest_ask': lowest_ask, 'all_sizes': all_sizes, }
-        product_suggest_form = ProductSuggestForm(request.POST or None)
-        context['product_suggest_form'] = product_suggest_form
-        context['valid_address'], context['stripe_access'] = is_address_and_stripe_valid(self.request.user)
+        try:
+            product = Product.objects.get(id=product_id)
+            highest_ask, lowest_ask = BidStatusManagement().get_lowest_highest_listing_price(product.sku_number)
+            highest_bid, lowest_bid = BidStatusManagement().get_lowest_highest_bid(product.sku_number)
+            all_sizes = get_product_sku_sizes_list(product)
+            context = {'product': product, 'highest_bid': highest_bid, 'lowest_ask': lowest_ask,
+                       'all_sizes': all_sizes, }
+            product_suggest_form = ProductSuggestForm(request.POST or None)
+            context['product_suggest_form'] = product_suggest_form
+            context['valid_address'], context['stripe_access'] = is_address_and_stripe_valid(self.request.user)
 
-        return render(request, self.template_name, context)
+            return render(request, self.template_name, context)
+        except:
+            return redirect('web-home')
 
     def post(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -338,8 +352,8 @@ class WebCartConfirmationView(LoginRequiredMixin, TemplateView):
         cart = CartModel.objects.filter(user=self.request.user, is_active=True).first()
         total_price = 0
         if cart and cart.cart_item.all().count():
-            total_price = cart.cart_item.all().aggregate(Sum('product__listing_price'))
-            total_price = total_price['product__listing_price__sum']
+            total_price = cart.cart_item.all().aggregate(Sum('price'))
+            total_price = total_price['price__sum']
             grand_total = math.ceil((total_price + cart.shipping_amount) * 100)
             stripe_key = settings.STRIPE_PUBLISHABLE_KEY
             return render(request, self.template_name, {'address': address, 'cart': cart, 'total_price': total_price,
@@ -444,6 +458,9 @@ def stripe_payment_charge(request):  # new
                     return redirect('web_cart_thank_you')
                 else:
                     return redirect('web_cart_failed')
+            else:
+                msg = 'Please add Payment Method first.'
+                return render(request, "failed.html", {"msg": msg, })
         else:
             msg = 'User must have address added and validated.'
             return render(request, "failed.html", {"msg": msg, })
@@ -463,8 +480,8 @@ class WebCartCheckoutView(LoginRequiredMixin, TemplateView):
         cart = CartModel.objects.filter(user=self.request.user, is_active=True).first()
         total_price = 0
         if cart and cart.cart_item.all().count():
-            total_price = cart.cart_item.all().aggregate(Sum('product__listing_price'))
-            total_price = total_price['product__listing_price__sum']
+            total_price = cart.cart_item.all().aggregate(Sum('price'))
+            total_price = total_price['price__sum']
             grand_total = total_price + cart.shipping_amount
             return render(request, self.template_name, {'address': address, 'cart': cart, 'total_price': total_price,
                                                         'grand_total': grand_total})
@@ -474,7 +491,8 @@ class WebCartCheckoutView(LoginRequiredMixin, TemplateView):
 
 def verify_payment_method(payment_method):
     try:
-        return eval(payment_method).get('paymentMethod').get('id')
+        payment_method = ast.literal_eval(payment_method)
+        return payment_method.get('paymentMethod').get('setupIntent').get('payment_method')
     except:
         return False
 
