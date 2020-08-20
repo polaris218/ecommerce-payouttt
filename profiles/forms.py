@@ -30,7 +30,7 @@ class MyAddressForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['full_name'].widget.attrs.update({'class': 'form-control', 'placeholder': "Full Name"})
         self.fields['company'].widget.attrs.update({'class': 'form-control', 'placeholder': "Company"})
-        self.fields['street1'].widget.attrs.update({'class': 'form-control', 'placeholder': "Stareet Address"})
+        self.fields['street1'].widget.attrs.update({'class': 'form-control', 'placeholder': "Street Address"})
         self.fields['city'].widget.attrs.update({'class': 'form-control', 'placeholder': "City"})
 
         self.fields['state'].widget.attrs.update({'class': 'form-control', 'placeholder': "State"})
