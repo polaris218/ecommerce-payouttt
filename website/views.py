@@ -414,7 +414,7 @@ def signup_view(request):
                 EmailHelper.Email().send_welcome_email(user)
             except:
                 pass
-            return redirect(reverse('login'))
+            return redirect(reverse('two_factor:login'))
     else:
         signup_form = WebSignUpForm()
     return render(request, "sign-in-up.html", {"form": form, "signup_form": signup_form, 'active_form': True})

@@ -169,7 +169,7 @@
                                                                 Bid
                                                             </button>
                                                         {% elif not user.is_authenticated %}
-                                                            <a href='/login/?next=/product-bid/{{ product.id }}/'>
+                                                            <a href='{% url 'two_factor:login' %}?next=/product-bid/{{ product.id }}/'>
                                                                 <button type="button"
                                                                         class="text-uppercase open_sans bg-dark bold_700 border-0 text-white shop_btn d-inline-block font_26">
                                                                     Confirm Bid

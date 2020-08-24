@@ -27,7 +27,7 @@ urlpatterns = [
     path('packages/', include("bulk_packages.urls")),
     path('dashboard/', include("dashboard.urls")),
     path('', include("website.urls")),
-    path('profile/', include("profiles.urls")),
+    path('accounts/profile/', include("profiles.urls")),
 
 ]
 

@@ -47,10 +47,14 @@
 
     {% include 'admin-top-bar.html' %}
     {% include 'admin-sidebar.html' %}
+    <div class="row">
+        <div class="col-12 mt-5 ml-2">
+            {% block content %}
 
-    {% block content %}
+            {% endblock %}
+        </div>
+    </div>
 
-    {% endblock %}
 
 </div>
 

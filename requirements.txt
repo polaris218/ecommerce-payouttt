@@ -27,3 +27,14 @@ django-filter
 plaid-python
 django-widget-tweaks
 python-decouple
+django-crispy-forms==1.9.2
+django-formtools==2.2
+django-otp==0.9.4
+django-phonenumber-field==3.0.1
+django-phonenumbers==1.0.1
+django-two-factor-auth==1.12.1
+phonenumbers==8.12.8
+pytz==2020.1
+qrcode==6.1
+six==1.15.0
+sqlparse==0.3.1

@@ -1,0 +1,21 @@
+{% extends "admin_base.html" %}
+{% load i18n %}
+
+{% block content %}
+    <main>
+        <div class="tab-pane fade  show active" id="v-pills-2fa" role="tabpanel"
+             aria-labelledby="v-pills-settings-tab">
+            <div class="content-body">
+                <h1 class="set_up_title text-center">Enable Two-Factor Authentication</h1>
+                <i class="flaticon-checked"></i>
+
+                <p class="set_up_title text-center">Congratulations, you've successfully enabled two-factor
+                    authentication.</p>
+
+                <a href="{% url 'web-profile' %}"
+                   class="btn btn-outline-success align-self-lg-center">Profile</a>
+
+            </div>
+        </div>
+    </main>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% load i18n %}
+
+<div class="row mr-2 ml-2">
+    <div class="col-md-5 col-sm-12 col-xs-12">
+        {% if not wizard.form.username %}
+            {% if cancel_url %}
+                <a href="{{ cancel_url }}"
+                   class="uk-button uk-button-primary uk-button-large uk-width-1-1  mb-3 pull-left" style="background: red">{% trans "Cancel" %}</a>
+            {% endif %}
+        {% endif %}
+
+    </div>
+
+
+    <div class="col-md-7 col-sm-12 col-xs-12 text-right ">
+        <div class="row">
+            <div class="col-4">
+                {% if not wizard.form.username %}
+                    {% if wizard.steps.prev %}
+                        <button name="wizard_goto_step" type="submit"
+                                value="{{ wizard.steps.prev }}"
+                                class="btn btn-default align-right">{% trans "Back" %}</button>
+                    {% else %}
+                        <button disabled name="" type="button"
+                                class="uk-button uk-button-primary uk-button-large uk-width-1-1 text-center mb-3">{% trans "Back" %}</button>
+                    {% endif %}
+
+                {% endif %}
+
+            </div>
+            <div class="col-8 pull-right">
+
+                <button type="submit"
+                        class="uk-button uk-button-primary uk-button-large uk-width-1-1 text-center mb-3">{% trans "Login" %}</button>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+

@@ -142,7 +142,7 @@
                                                                 Buy now
                                                             </button>
                                                         {% elif not user.is_authenticated %}
-                                                            <a href='/login/?next=/product-buy/{{ product.id }}/'>
+                                                            <a href='{% url 'two_factor:login' %}?next=/product-buy/{{ product.id }}/'>
                                                                 <button type="button"
                                                                         class="text-uppercase open_sans bg-dark border-0 bold_700 text-white shop_btn d-inline-block font_26">
                                                                     Buy now

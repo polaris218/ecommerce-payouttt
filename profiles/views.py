@@ -100,11 +100,15 @@ class SellingView(LoginRequiredMixin, TemplateView):
             complete_prices.append(prices)
             bid = Bid.objects.filter(sku_number=product.sku_number, bid_amount=product.listing_price,
                                      shoe_size__in=product.shoe_sizes.all()).first()
-            address = Address.objects.filter(user__email=bid.user.email, is_valid=True).first()
-            complete_addresses.append(address.user.full_name + " (" + address.full_address() + ")")
-            payment = BidPayment.objects.filter(bid=bid).first()
-            tracking_urls.append(payment.seller_purchase_label)
-            prices = {}
+            if bid:
+                address = Address.objects.filter(user__email=bid.user.email, is_valid=True).first()
+                complete_addresses.append(address.user.full_name + " (" + address.full_address() + ")")
+                payment = BidPayment.objects.filter(bid=bid).first()
+                if payment:
+                    tracking_urls.append(payment.seller_purchase_label)
+                else:
+                    tracking_urls.append('')
+                prices = {}
 
         pending_products = Product.objects.filter(seller=self.request.user, sold=False)
         for product in pending_products:

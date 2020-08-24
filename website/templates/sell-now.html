@@ -155,7 +155,7 @@
                                                                 Suggest Product
                                                             </button>
                                                         {% elif not user.is_authenticated %}
-                                                            <a href='/login/?next=/product-sell/{{ product.id }}/'>
+                                                            <a href='{% url 'two_factor:login' %}?next=/product-sell/{{ product.id }}/'>
                                                                 <button type="button" id="check_input_value_login"
                                                                         class="text-uppercase open_sans border-0 bold_700 bold_500 bg_green text-white shop_btn d-inline-block font_26">
                                                                     List

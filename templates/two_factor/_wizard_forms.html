@@ -1,0 +1,47 @@
+{% load crispy_forms_tags %}
+{% load static %}
+<table>
+    {{ wizard.management_form|crispy }}
+    <!-- {{ wizard.form|crispy }} -->
+    {% if wizard.form.errors %}
+        {% for field in wizard.form %}
+            {% for error in field.errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endfor %}
+        {% for error in wizard.form.non_field_errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% for field in wizard.form %}
+        {% if field.auto_id == 'id_token-otp_token' %}
+            {{ field }}§
+            <script type="text/javascript">
+                document.getElementById("id_token-otp_token").hidden = 'hidden'
+            </script>
+            <div class="form__group form__pincode">
+                <label>Enter 6-digit code from your authenticator application</label>
+                <input type="tel" id="pincode-1" maxlength="1" pattern="[\d]*" tabindex="1" placeholder="·"
+                       autocomplete="off">
+                <input type="tel" id="pincode-2" maxlength="1" pattern="[\d]*" tabindex="2" placeholder="·"
+                       autocomplete="off">
+                <input type="tel" id="pincode-3" maxlength="1" pattern="[\d]*" tabindex="3" placeholder="·"
+                       autocomplete="off">
+                <input type="tel" id="pincode-4" maxlength="1" pattern="[\d]*" tabindex="4" placeholder="·"
+                       autocomplete="off">
+                <input type="tel" id="pincode-5" maxlength="1" pattern="[\d]*" tabindex="5" placeholder="·"
+                       autocomplete="off">
+                <input type="tel" id="pincode-6" maxlength="1" pattern="[\d]*" tabindex="6" placeholder="·"
+                       autocomplete="off">
+            </div>
+        {% else %}
+            {{ field|as_crispy_field }}
+        {% endif %}
+    {% endfor %}
+</table>
+

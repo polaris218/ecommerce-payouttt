@@ -12,8 +12,9 @@
                             <form class="uk-margin uk-width-large uk-margin-auto uk-card uk-card-default uk-card-body uk-box-shadow-large"
                                   method="post" action="{% url 'login' %}">
                                 <ul class="uk-tab uk-flex-center" uk-grid uk-switcher="animation: uk-animation-fade">
-                                    <li><a href="#" class="for_remove">Sign in</a></li>
-                                    <li><a href="#" class="for_remove">Sign up</a></li>
+                                    <li><a href="{% url 'two_factor:login' %}" class="for_remove" onclick="clicked();">Sign
+                                        in</a></li>
+                                    <li><a href="{% url 'signup' %}" class="for_remove">Sign up</a></li>
                                     <li class="uk-hidden">Forgot Password?</li>
                                     <li class="uk-hidden">Verify Account</li>
                                 </ul>
@@ -267,6 +268,9 @@
 
 {% block js_block %}
     <script>
+        function clicked() {
+            window.location.href = '{% url 'two_factor:login' %}';
+        }
         var active_form = '{{ active_form }}';
 
         if (active_form) {

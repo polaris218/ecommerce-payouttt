@@ -42,6 +42,12 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'corsheaders', 'widget_tweaks',
     'api', 'accounts', 'core', 'django_filters', 'dashboard', 'addresses', 'website', 'profiles', 'bulk_packages',
+    'django_otp',
+    'django_otp.plugins.otp_static',
+    'django_otp.plugins.otp_totp',
+    'two_factor',
+    'crispy_forms', 'otp_yubikey'
+
 ]
 
 MIDDLEWARE = [
@@ -54,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_otp.middleware.OTPMiddleware',
 ]
 
 SECURE_BROWSER_XSS_FILTER = True
@@ -63,7 +70,7 @@ ROOT_URLCONF = 'Payouttt.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -163,8 +170,9 @@ CORS_ORIGIN_WHITELIST = [
     'https://payouttt.com',
 ]
 
-LOGIN_URL = 'login'
+LOGIN_URL = 'two_factor:login'
 LOGOUT_URL = 'logout'
+LOGOUT_REDIRECT_URL = 'two_factor:login'
 
 AUTH_USER_MODEL = 'accounts.User'
 

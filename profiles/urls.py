@@ -4,13 +4,15 @@ License: MIT
 Copyright (c) 2019 - present AppSeed.us
 """
 
-from django.urls import path, re_path
+from django.urls import path, re_path, include
 from django.views.decorators.csrf import csrf_exempt
 
 from profiles import views
 from django.contrib.auth.views import LogoutView
+from two_factor.urls import urlpatterns as tf_urls
 
 urlpatterns = [
+    path('2f/', include(tf_urls)),
     path('', views.ProfileView.as_view(), name='web-profile'),
     path('security/', views.SecurityView.as_view(), name='web-security'),
     path('selling/', views.SellingView.as_view(), name='web-selling'),

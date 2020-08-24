@@ -1,4 +1,6 @@
 {% extends 'admin_base.html' %}
+{% load crispy_forms_tags %}
+{% load i18n two_factor %}
 {% load static %}
 {% block content %}
     <!-- Page Content  -->
@@ -45,100 +47,168 @@
                     </a>
                 </div>
             </div>
-            <div class="sneaker_pro">
-                <h3 class="set_up_title text-center">Set-Up Two-Factor Authentication</h3>
-                <form id="msform">
-                    <!-- progressbar -->
-                    <div class="position-relative responsive-steap step_list">
-                        <ul id="progressbar" class="d-flex justify-content-center">
-                            <li class="active">Get An App</li>
-                            <li>Scan The Code</li>
-                            <li>Enter Your Verification Code</li>
-                        </ul>
-                    </div>
-                    <!-- fieldsets -->
-                    <!-- row-1 -->
-                    <fieldset class="row-one-one text-center">
-                        <div class="get_app_content">
-                            <h4>Get An App</h4>
-                            <p class="mb-0">Download one of the following apps from the app store on your phone</p>
-                            <div class="row get_app_sec">
-                                <div class="col-md-4">
-                                    <div class="get_app">
-                                        <img src="{% static 'web_admin/images/app.png' %}" class="img-fluid" alt="">
-                                        <h4 class="mb-0">Google Authenticator</h4>
-                                        <div class="app_list d-flex justify-content-center">
-                                            <a href="#"><img src="{% static 'web_admin/images/apple.png' %}"
-                                                             class="img-fluid" alt=""></a>
-                                            <a href="#"><img src="{% static 'web_admin/images/android.png' %}"
-                                                             class="img-fluid" alt=""></a>
-                                            <a href="#"><img src="{% static 'web_admin/images/google_aythenti.png' %}"
-                                                             class="img-fluid" alt=""></a>
+            {% if user.is_verified %}
+                <a href="{% url 'two_factor:disable' %}">Disable 2fa</a>
+            {% else %}
+                <div class="sneaker_pro">
+                    <h3 class="set_up_title text-center">Set-Up Two-Factor Authentication</h3>
+                    <form id="msform">
+                        <!-- progressbar -->
+                        <div class="position-relative responsive-steap step_list">
+                            <ul id="progressbar" class="d-flex justify-content-center">
+                                <li class="active">Get An App</li>
+                                <li>Scan The Code</li>
+                                <li>Enter Your Verification Code</li>
+                            </ul>
+                        </div>
+                        <!-- fieldsets -->
+                        <!-- row-1 -->
+                        <fieldset class="row-one-one text-center">
+                            <div class="get_app_content">
+                                <h4>Get An App</h4>
+                                <p class="mb-0">Download one of the following apps from the app store on your phone</p>
+                                <div class="row get_app_sec">
+                                    <div class="col-md-4">
+                                        <div class="get_app">
+                                            <img src="{% static 'web_admin/images/app.png' %}" class="img-fluid" alt="">
+                                            <h4 class="mb-0">Google Authenticator</h4>
+                                            <div class="app_list d-flex justify-content-center">
+                                                <a href="#"><img src="{% static 'web_admin/images/apple.png' %}"
+                                                                 class="img-fluid" alt=""></a>
+                                                <a href="#"><img src="{% static 'web_admin/images/android.png' %}"
+                                                                 class="img-fluid" alt=""></a>
+                                                <a href="#"><img
+                                                        src="{% static 'web_admin/images/google_aythenti.png' %}"
+                                                        class="img-fluid" alt=""></a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="get_app">
-                                        <img src="{% static 'web_admin/images/app2.png' %}" class="img-fluid" alt="">
-                                        <h4 class="mb-0">Duo Mobile</h4>
-                                        <div class="app_list d-flex justify-content-center">
-                                            <a href="#"><img src="{% static 'web_admin/images/apple.png' %}"
-                                                             class="img-fluid" alt=""></a>
-                                            <a href="#"><img src="{% static 'web_admin/images/android.png' %}"
-                                                             class="img-fluid" alt=""></a>
+                                    <div class="col-md-4">
+                                        <div class="get_app">
+                                            <img src="{% static 'web_admin/images/app2.png' %}" class="img-fluid"
+                                                 alt="">
+                                            <h4 class="mb-0">Duo Mobile</h4>
+                                            <div class="app_list d-flex justify-content-center">
+                                                <a href="#"><img src="{% static 'web_admin/images/apple.png' %}"
+                                                                 class="img-fluid" alt=""></a>
+                                                <a href="#"><img src="{% static 'web_admin/images/android.png' %}"
+                                                                 class="img-fluid" alt=""></a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="get_app">
-                                        <img src="{% static 'web_admin/images/app3.png' %}" class="img-fluid" alt="">
-                                        <h4 class="mb-0">Authy</h4>
-                                        <div class="app_list d-flex justify-content-center">
-                                            <a href="#"><img src="{% static 'web_admin/images/apple.png' %}"
-                                                             class="img-fluid" alt=""></a>
-                                            <a href="#"><img src="{% static 'web_admin/images/android.png' %}"
-                                                             class="img-fluid" alt=""></a>
+                                    <div class="col-md-4">
+                                        <div class="get_app">
+                                            <img src="{% static 'web_admin/images/app3.png' %}" class="img-fluid"
+                                                 alt="">
+                                            <h4 class="mb-0">Authy</h4>
+                                            <div class="app_list d-flex justify-content-center">
+                                                <a href="#"><img src="{% static 'web_admin/images/apple.png' %}"
+                                                                 class="img-fluid" alt=""></a>
+                                                <a href="#"><img src="{% static 'web_admin/images/android.png' %}"
+                                                                 class="img-fluid" alt=""></a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <a href="#">
-                            <button class="cancel-btn" type="button" data-toggle="modal" data-target="#cancel-btn"
-                                    data-dismiss="variant_edit-sec">Cancel
-                            </button>
-                        </a>
-                        <input type="button" name="next" class="next action-button step-btn-one bton-gray"
-                               value="Next"/>
-                    </fieldset>
-                    <!-- row-2 -->
-                    <fieldset class="step-two text-center">
-                        <div class="get_app_content">
-                            <h4>Scan The Code</h4>
-                            <p class="mb-0">In your app, add the new account and scan the QR code</p>
-                            <img src="{% static 'web_admin/images/qr_code.png' %}" alt="" class="img-fluid light_qr">
-                            <img src="{% static 'web_admin/images/qr_code_dark.png' %}" alt=""
-                                 class="img-fluid dark_qr">
-                            <p>If you can’t scan the QR code, enter <span class="green_c">ascdas879xdws</span></p>
-                        </div>
-                        <input type="button" name="previous" class="previous action-button w-auto " value="Cancel"/>
-                        <input type="button" name="next" class="next action-button w-auto" value="Next"/>
-                    </fieldset>
-                    <!-- row-3-->
-                    <fieldset class="step-two fourth-row text-center">
-                        <div class="verification_code get_app_content">
-                            <h4>Enter Your Verification Code</h4>
-                            <p class="mb-0">Pre-fill text area with “6-digit code”</p>
-                            <div class="verify_details"><input type="text" name="code" class="verify_code w-100"
-                                                               placeholder="Enter code"></div>
-                        </div>
-                        <button type="button" class="bton variant_update_btn segment_btn_right">Turn on 2-step
-                            verification
-                            <div class="loader5"></div>
-                        </button>
-                    </fieldset>
-                </form>
-            </div>
+                            <a href="#">
+                                <button class="cancel-btn" type="button" data-toggle="modal" data-target="#cancel-btn"
+                                        data-dismiss="variant_edit-sec">Cancel
+                                </button>
+                            </a>
+                            <a href="{% url 'two_factor:setup' %}">
+                                <input type="button" name="next" class="next action-button step-btn-one bton-gray"
+                                       value="Next"/>
+                            </a>
+
+                        </fieldset>
+                        <!-- row-2 -->
+                        <fieldset class="step-two text-center">
+                            {% if default_device %}
+                                {% if default_device_type == 'TOTPDevice' %}
+                                    <p>{% trans "Tokens will be generated by your token generator." %}</p>
+                                {% elif default_device_type == 'PhoneDevice' %}
+                                    <p>{% blocktrans with primary=default_device|device_action %}Primary method:
+                                        {{ primary }}{% endblocktrans %}</p>
+                                {% endif %}
+
+                                {% if available_phone_methods %}
+                                    <h2>{% trans "Backup Phone Numbers" %}</h2>
+                                    <p>{% blocktrans trimmed %}If your primary method is not available, we are able to
+                                        send backup tokens to the phone numbers listed below.{% endblocktrans %}</p>
+                                    <ul>
+                                        {% for phone in backup_phones %}
+                                            <li>
+                                                {{ phone|device_action }}
+                                                <form method="post"
+                                                      class=""
+                                                      action="{% url 'two_factor:phone_delete' phone.id %}"
+                                                      onsubmit="return confirm('Are you sure?')">
+                                                    {% csrf_token %}
+                                                    <button class="btn btn-xs btn-warning"
+                                                            type="submit">{% trans "Unregister" %}</button>
+                                                </form>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                    <p><a href="{% url 'two_factor:phone_create' %}"
+                                          class="btn btn-info">{% trans "Add Phone Number" %}</a></p>
+                                {% endif %}
+
+                                <h2>{% trans "Backup Tokens" %}</h2>
+                                <p>
+                                    {% blocktrans trimmed %}If you don't have any device with you, you can access
+                                        your account using backup tokens.{% endblocktrans %}
+                                    {% blocktrans trimmed count counter=backup_tokens %}
+                                        You have only one backup token remaining.
+                                    {% plural %}
+                                        You have {{ counter }} backup tokens remaining.
+                                    {% endblocktrans %}
+                                </p>
+                                <p><a href="{% url 'two_factor:backup_tokens' %}"
+                                      class="btn btn-info">{% trans "Show Codes" %}</a></p>
+
+                                <h3>{% trans "Disable Two-Factor Authentication" %}</h3>
+                                <p>{% blocktrans trimmed %}However we strongly discourage you to do so, you can
+                                    also disable two-factor authentication for your account.{% endblocktrans %}</p>
+                                <p><a class="btn btn-danger" href="{% url 'two_factor:disable' %}">
+                                    {% trans "Disable Two-Factor Authentication" %}</a></p>
+                            {% else %}
+                                <p>{% blocktrans trimmed %}Two-factor authentication is not enabled for your
+                                    account. Enable two-factor authentication for enhanced account
+                                    security.{% endblocktrans %}</p>
+                                <p><a href="{% url 'two_factor:setup' %}" class="btn btn-primary">
+                                    {% trans "Enable Two-Factor Authentication" %}</a>
+                                </p>
+                            {% endif %}
+                            {#                        <div class="get_app_content">#}
+                            {#                            <h4>Scan The Code</h4>#}
+                            {#                            <p class="mb-0">In your app, add the new account and scan the QR code</p>#}
+                            {#                            <img src="{% static 'web_admin/images/qr_code.png' %}" alt="" class="img-fluid light_qr">#}
+                            {#                            <img src="{% static 'web_admin/images/qr_code_dark.png' %}" alt=""#}
+                            {#                                 class="img-fluid dark_qr">#}
+                            {#                            <p>If you can’t scan the QR code, enter <span class="green_c">ascdas879xdws</span></p>#}
+                            {#                        </div>#}
+                            {#                        <input type="button" name="previous" class="previous action-button w-auto " value="Cancel"/>#}
+                            {#                        <input type="button" name="next" class="next action-button w-auto" value="Next"/>#}
+                        </fieldset>
+                        <!-- row-3-->
+                        {#                    <fieldset class="step-two fourth-row text-center">#}
+                        {#                        <div class="verification_code get_app_content">#}
+                        {#                            <h4>Enter Your Verification Code</h4>#}
+                        {#                            <p class="mb-0">Pre-fill text area with “6-digit code”</p>#}
+                        {#                            <div class="verify_details"><input type="text" name="code" class="verify_code w-100"#}
+                        {#                                                               placeholder="Enter code"></div>#}
+                        {#                        </div>#}
+                        {#                        <button type="button" class="bton variant_update_btn segment_btn_right">Turn on 2-step#}
+                        {#                            verification#}
+                        {#                            <div class="loader5"></div>#}
+                        {#                        </button>#}
+                        {#                    </fieldset>#}
+                    </form>
+                </div>
+            {% endif %}
+
         </div>
         <!-- Footer -->
         <div class="footer bg-white">
@@ -303,7 +373,8 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-12">
-                                    <div id="card-element" class="form-group" style="border: 1px solid;padding: 8px;border-color: gray;border-radius: 6px;"></div>
+                                    <div id="card-element" class="form-group"
+                                         style="border: 1px solid;padding: 8px;border-color: gray;border-radius: 6px;"></div>
                                 </div>
 
                                 <div class="col-12">
