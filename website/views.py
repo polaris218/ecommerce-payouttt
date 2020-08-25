@@ -45,6 +45,10 @@ class CategoryDetailsView(TemplateView):
 class SellingView(TemplateView):
     template_name = 'selling.html'
 
+    def get(self, request, *args, **kwargs):
+        products = Product.objects.filter(seller__is_staff=False).order_by('-id')
+        return render(request, self.template_name, {'products': products})
+
 
 class AppView(TemplateView):
     template_name = 'app.html'
@@ -310,10 +314,14 @@ class WebCartSellView(TemplateView):
                     sell_product.seller = self.request.user
                     sell_product.listing_price = asking_price
                     sell_product.save()
-                    shoe_sizes = ShoeSize.objects.filter(id=shoe_size_id)
-                    for shoe in shoe_sizes:
-                        if shoe not in sell_product.shoe_sizes.all():
-                            sell_product.shoe_sizes.add(shoe)
+                    shoe_size = ShoeSize.objects.filter(id=shoe_size_id).first()
+                    sell_product.shoe_sizes.clear()
+                    sell_product.shoe_sizes.add(shoe_size.id)
+                    sell_product.save()
+                    # shoe_sizes = ShoeSize.objects.filter(id=shoe_size_id)
+                    # for shoe in shoe_sizes:
+                    #     if shoe not in sell_product.shoe_sizes.all():
+                    #         sell_product.shoe_sizes.add(shoe)
                     BidStatusManagement().link_bid_with_product(sell_product)
                     try:
                         Email().send_product_email_to_seller(sell_product)
@@ -371,31 +379,33 @@ class WebCartThankYouView(TemplateView):
 
 
 def login_view(request):
-    form = LoginForm(request.POST or None)
-    signup_form = WebSignUpForm(request.POST or None)
-    msg = None
+    # form = LoginForm(request.POST or None)
+    # signup_form = WebSignUpForm(request.POST or None)
+    # msg = None
     if request.user.is_authenticated:
         return redirect(reverse('web-profile'))
-    if request.method == "POST":
-        if form.is_valid():
-            username = form.cleaned_data.get("username")
-            password = form.cleaned_data.get("password")
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                if user.is_superuser:
-                    return redirect(reverse('web-profile'))
-                next_url = request.POST.get('next')
-                if next_url:
-                    return redirect(next_url)
-                return redirect(reverse('web-profile'))
+    return redirect('two_factor:login')
 
-            else:
-                msg = 'Invalid credentials'
-        else:
-            msg = 'Error validating the form'
+# if request.method == "POST":
+# if form.is_valid():
+#     username = form.cleaned_data.get("username")
+#     password = form.cleaned_data.get("password")
+#     user = authenticate(username=username, password=password)
+#     if user is not None:
+#         login(request, user)
+#         if user.is_superuser:
+#             return redirect(reverse('web-profile'))
+#         next_url = request.POST.get('next')
+#         if next_url:
+#             return redirect(next_url)
+#         return redirect(reverse('web-profile'))
+#
+#     else:
+#         msg = 'Invalid credentials'
+# else:
+#     msg = 'Error validating the form'
 
-    return render(request, "sign-in-up.html", {"form": form, "msg": msg, "signup_form": signup_form})
+# return render(request, "sign-in-up.html", {"form": form, "msg": msg, "signup_form": signup_form})
 
 
 def signup_view(request):
