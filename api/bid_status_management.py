@@ -1,9 +1,9 @@
 from api.models import BidStatus, Product, Bid
 
 BID_STATUS_MESSAGES = {
-    BidStatus.SELLER_SEND: "Seller have dispatched the item to Payouttt warehhouse",
-    BidStatus.PAYOUT_RECEIVED: "Payouttt received the items from seller",
-    BidStatus.PAYOUT_SEND: "Payouttt send the item to buyer",
+    BidStatus.SELLER_SEND: "Seller have dispatched the item to QuickKicks warehhouse",
+    BidStatus.PAYOUT_RECEIVED: "QuickKicks received the items from seller",
+    BidStatus.PAYOUT_SEND: "QuickKicks send the item to buyer",
 }
 
 
