@@ -1,2 +1,6 @@
 # QuickKicks Web Application
-QuickKicks
+QuickKicks Web Application
+
+Python Django
+Docker
+AWS EKS
