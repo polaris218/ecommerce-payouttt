@@ -1,2 +1,2 @@
-# Payouttt-ALPHA2
-alpha 2 payouttt
+# QuickKicks Web Application
+QuickKicks
