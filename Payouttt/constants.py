@@ -5,4 +5,4 @@ SELL_SUCCESS_MESSAGE = "Thank you for selling."
 SELL_COMPLETE = "SELL COMPLETED"
 SELL_FAIL = "SELL FAILED"
 
-FAIL_MESSAGE = "Something wend wrong, please try again later."
+FAIL_MESSAGE = "Something went wrong, please try again later."
