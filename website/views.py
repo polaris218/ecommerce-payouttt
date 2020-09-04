@@ -54,9 +54,11 @@ class AppView(TemplateView):
     template_name = 'app.html'
 
 
+class AboutUsView(TemplateView):
+    template_name = 'about-us.html'
+
 class NewsView(TemplateView):
     template_name = 'news.html'
-
 
 class SearchView(TemplateView):
     template_name = 'search.html'

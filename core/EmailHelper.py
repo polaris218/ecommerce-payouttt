@@ -18,14 +18,14 @@ class Email(object):
 
     def send_welcome_email(self, user):
         htmly = get_template('email_template.html')
-        d = {'email_body': 'Welcome to Payouttt, you can now buy and sell products.',
-             "email_type": "Welcome to Payouttt"}
+        d = {'email_body': 'Welcome to QuickKicks, you can now Buy, Sell & Trade Sneakers on the Live Marketplace.',
+             "email_type": "Welcome to QuickKicks"}
         html_content = htmly.render(d)
-        self.send_email('Welcome to Payouttt', '', user, html_content=html_content)
+        self.send_email('Welcome to QuickKicks', '', user, html_content=html_content)
 
     def send_buyer_email(self, bid):
         htmly = get_template('email_template.html')
-        d = {'email_body': 'You have successfully pay for the product, we will email more details',
+        d = {'email_body': 'You have successfully paid for the product, we will email more details',
              "email_type": "Successful Payment", "user": bid.user}
         html_content = htmly.render(d)
         self.send_email('Successful Payment', '', bid.user, html_content=html_content)
@@ -65,7 +65,7 @@ class Email(object):
             {"name": "Listing Price", "value": '${}'.format(product.listing_price)},
             {"name": "Processing Fee", "value": '${}'.format(processing_fee)},
             {"name": "Transaction Fee", "value": '${}'.format(transaction_fee)},
-            {"name": "Total Payouttt", "value": '${}'.format(round(listing_price, 2))},
+            {"name": "Total Payout", "value": '${}'.format(round(listing_price, 2))},
         ]
         htmly = get_template('email_template.html')
 

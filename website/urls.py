@@ -17,6 +17,7 @@ urlpatterns = [
     path('selling/', views.SellingView.as_view(), name='selling'),
     path('app/', views.AppView.as_view(), name='web_app'),
     path('news/', views.NewsView.as_view(), name='web_news'),
+    path('about/', views.AboutUsView.as_view(), name='about-us'),
     path('search/', csrf_exempt(views.SearchView.as_view()), name='web_search'),
     path('news-detail/', views.NewsDetailView.as_view(), name='web_news_detail'),
     path('product-detail/<int:product_id>/', views.ProductDetailView.as_view(), name='product_detail'),
