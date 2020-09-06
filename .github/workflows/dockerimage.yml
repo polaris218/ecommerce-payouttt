@@ -13,7 +13,7 @@ jobs:
     env:
 
       AWS_REGION: us-east-1
-      EKS_CLUSTER_NAME: aws-eks-us
+      EKS_CLUSTER_NAME: aws-eks-us-quicks
 
     steps:
     - name: Checkout
