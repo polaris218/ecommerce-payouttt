@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx-frontend
+  name: nginx-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-frontend
+  template:
+    metadata:
+      labels:
+        app: nginx-frontend
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: nginx-configs-2
+          mountPath: /etc/nginx/conf.d
+      # Load the configuration files for nginx
+      volumes:
+        - name: nginx-configs-2
+          configMap:
+            name: nginx-config-2
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-frontend
+spec:
+  selector:
+    app: nginx-frontend
+  ports:
+  - protocol: "TCP"
+    port: 80
+    nodePort: 30006
+  type: NodePort
