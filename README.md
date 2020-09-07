@@ -1,2 +1,6 @@
-# Payouttt-ALPHA2
-alpha 2 payouttt
+# QuickKicks Web Application
+QuickKicks Web Application
+
+Python Django
+Docker
+AWS EKS
