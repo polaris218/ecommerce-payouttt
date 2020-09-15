@@ -18,10 +18,10 @@ class Email(object):
 
     def send_welcome_email(self, user):
         htmly = get_template('email_template.html')
-        d = {'email_body': 'Welcome to QuickKicks, you can now Buy, Sell & Trade Sneakers on the Live Marketplace.',
-             "email_type": "Welcome to QuickKicks"}
+        d = {'email_body': 'Welcome to Payouttt, you can now Buy, Sell & Trade Sneakers on the Live Marketplace.',
+             "email_type": "Welcome to Payouttt"}
         html_content = htmly.render(d)
-        self.send_email('Welcome to QuickKicks', '', user, html_content=html_content)
+        self.send_email('Welcome to Payouttt', '', user, html_content=html_content)
 
     def send_buyer_email(self, bid):
         htmly = get_template('email_template.html')

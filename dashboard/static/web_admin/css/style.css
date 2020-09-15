@@ -48,7 +48,7 @@ ul li {
 .logo a:hover,
 #navbarSupportedContent a:hover,
 a:hover {
-    color: #04b3E7;
+    color: #6DA634;
 }
 
 a:hover {
@@ -235,12 +235,12 @@ a {
 #sidebar>ul>li.active>a,
 #sidebar ul li a:hover,
 #sidebar>ul>li.active>a .left-icon {
-    color: #04b3E7;
+    color: #6DA634;
     background: #f1f2f6;
 }
 
 #sidebar ul li a:hover .left-icon {
-    color: #04b3E7;
+    color: #6DA634;
 }
 
 #sidebar ul li a:hover .left-icon {
@@ -321,7 +321,7 @@ a {
 
 .btn_pro .btn {
     color: #fff;
-    background: #04b3E7;
+    background: #6DA634;
     font-size: 19px;
     font-weight: 600;
     padding: 0px 0 0 15px;
@@ -506,7 +506,7 @@ nav#sidebar {
 .social_icon a:hover,
 .pro_title:hover h3,
 button#sidebarCollapse:hover {
-    color: #04b3E7;
+    color: #6DA634;
 }
 
 .total_month span.blue_c,
@@ -586,7 +586,7 @@ body .nav-fill .nav-item {
 body .nav-tabs .nav-item.show .nav-link,
 body .nav-tabs .nav-link.active,
 body .nav-tabs .nav-item .nav-link:hover {
-    color: #04b3E7;
+    color: #6DA634;
     background-color: #fff;
     border: 0;
     border-radius: 5px;
@@ -757,7 +757,7 @@ body .tab_list .nav-tabs .nav-link {
 body .tab_list .nav-tabs .nav-link.active,
 body .tab_list .nav-tabs .nav-link:hover {
     background: #fff;
-    color: #04b3E7;
+    color: #6DA634;
 }
 
 
@@ -926,7 +926,7 @@ td {
     display: block;
     width: 5px;
     height: 5px;
-    background: #04b3E7;
+    background: #6DA634;
     border-radius: 5px;
     position: absolute;
     right: 2px;
@@ -955,7 +955,7 @@ body .owl-carousel button {
     transform: translateY(-50%);
     width: 20px;
     height: 30px;
-    background: #04b3E7 !important;
+    background: #6DA634 !important;
     font-size: 19px;
     box-shadow: 0 0px 12px 0 rgba(0, 0, 0, 0.2);
     color: #fff !important;
@@ -1143,7 +1143,7 @@ body .owl-carousel button.owl-prev {
 
 #progressbar li.active:before,
 #progressbar li.active:after {
-    background: #04b3E7;
+    background: #6DA634;
     color: white;
 }
 
@@ -1221,8 +1221,8 @@ fieldset a,
 
 fieldset input,
 .variant_update_btn {
-    border: 1px solid #04b3E7;
-    background: #04b3E7;
+    border: 1px solid #6DA634;
+    background: #6DA634;
     color: #fff;
     margin-left: 15px;
 }
@@ -1296,7 +1296,7 @@ fieldset input,
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: #04b3E7;
+    background: #6DA634;
     top: 50%;
     transform: translateY(-50%);
     -o-transform: translateY(-50%);
@@ -1444,7 +1444,7 @@ body .modal-content {
 
 .field_row_pop.field_btn input {
     border: 0;
-    background: #04b3E7;
+    background: #6DA634;
     color: #fff;
     width: 100%;
     border-radius: 4px;
@@ -1647,7 +1647,7 @@ body .toggle-password {
 
 .payment_icon a.active,
 .burmanRadio__input:checked~.burmanRadio__label {
-    border: 1px dashed #04b3E7;
+    border: 1px dashed #6DA634;
 }
 
 .payment_icon a img {
@@ -1717,8 +1717,8 @@ div#list-wrap {
 
 .burmanRadio__label::after {
     content: "\f00c";
-    background: #04b3E7;
-    border: 1.5px solid #04b3E7;
+    background: #6DA634;
+    border: 1.5px solid #6DA634;
     color: #FFF;
     font: normal normal normal 13px/1 FontAwesome;
     display: flex;
@@ -1812,7 +1812,7 @@ fieldset.fourth-row .variant_update_btn {
 /*----------map---------------*/
 
 body .smallipop-instance.blue {
-    background: #04b3E7;
+    background: #6DA634;
     color: #fff;
     border: none;
     border-color: none;
@@ -1831,15 +1831,15 @@ body .smallipop-instance {
 }
 
 body .smallipop-instance.blue .sipContent {
-    background: #04b3E7;
+    background: #6DA634;
 }
 
 body .smallipop-instance.blue .sipArrow {
-    border-color: #04b3E7 transparent transparent transparent;
+    border-color: #6DA634 transparent transparent transparent;
 }
 
 body .smallipop-instance.blue.sipAlignBottom .sipArrow {
-    border-color: transparent transparent #04b3E7 transparent;
+    border-color: transparent transparent #6DA634 transparent;
 }
 
 body .smallipop-instance.blue .sipArrow {
@@ -1949,7 +1949,7 @@ body .smallipop-instance .sipArrowBorder {
 }
 
 .releasing-year-top.inner-accordion .checkbox input[type="checkbox"]:checked+label {
-    background-color: #04b3E7;
+    background-color: #6DA634;
     color: #fff;
 }
 
@@ -2033,7 +2033,7 @@ body .smallipop-instance .sipArrowBorder {
 }
 
 #check-btn .checkboxs:checked~.on {
-    background-color: #04b3E7;
+    background-color: #6DA634;
 }
 
 #check-btn .checkboxs:checked+.off:before {
@@ -3366,7 +3366,7 @@ td {
     content: '';
     width: 4px;
     height: 65%;
-    background: #04b3E7;
+    background: #6DA634;
     position: absolute;
     right: 0;
     border-top-left-radius: 6px;
@@ -3376,7 +3376,7 @@ td {
 .dark-mode #sidebar>ul>li.active>a .left-icon,
 .dark-mode #sidebar ul li a:hover .left-icon {
     color: #fff;
-    background: #04b3E7;
+    background: #6DA634;
     border-radius: 5px;
 }
 
@@ -3419,7 +3419,7 @@ body.dark-mode .tab_list .nav-tabs .nav-link.active,
 body .nav-tabs .nav-item.show .nav-link,
 body .nav-tabs .nav-link.active,
 body .nav-tabs .nav-item .nav-link:hover {
-    background: #04b3E7;
+    background: #6DA634;
 }
 
 .dark-mode .footer {
@@ -3465,7 +3465,7 @@ body.dark-mode .tab_list .nav-tabs .nav-link.active {
 
 .dark-mode #sidebar>ul>li.active>a,
 .dark-mode #sidebar ul li a:hover {
-    color: #04b3E7;
+    color: #6DA634;
 }
 
 .dark-mode .modal .select .select,
@@ -3512,7 +3512,7 @@ body .nav-tabs .nav-item .nav-link:hover {
 
 .news-info .news-date {
     display: inline-block;
-    background-color: #04b3E7;
+    background-color: #6DA634;
     color: #fff;
     font-size: 16px;
     font-weight: 700;
@@ -3539,7 +3539,7 @@ body .nav-tabs .nav-item .nav-link:hover {
 }
 
 .news-info h3 a:hover {
-    color: #04b3E7;
+    color: #6DA634;
     transition: all 0.4s;
     -webkit-transition: all 0.4s;
     -o-transition: all 0.4s;
@@ -3557,7 +3557,7 @@ body .nav-tabs .nav-item .nav-link:hover {
     font-weight: 700;
     font-size: 18px;
     text-transform: uppercase;
-    color: #04b3E7;
+    color: #6DA634;
     transition: all 0.4s;
     -webkit-transition: all 0.4s;
     -o-transition: all 0.4s;
@@ -3598,7 +3598,7 @@ body .nav-tabs .nav-item .nav-link:hover {
 
 .dark-mode .search_nav input,
 .dark-mode .intro .input-group span {
-    color: #04b3E7;
+    color: #6DA634;
 }
 
 @media screen and (max-width: 767px) {

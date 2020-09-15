@@ -107,7 +107,7 @@ a,
     .footer_menu_list li>a:hover,
     .payoutt_container .shop_btn:hover,
     .top_sell_title h3 a:hover {
-        color: #04B3E7;
+        color: #6DA634;
     }
     
     a.top_sell_a_tag_2:hover,
@@ -121,11 +121,11 @@ a,
     .highest-size-box input[type="checkbox"]:checked+label,
     .highest-size-box input[type="checkbox"]:checked+label span,
     #size_chart_modal .close {
-        background-color: #04B3E7;
+        background-color: #6DA634;
     }
     
     .subscribe_btn:hover {
-        border-color: #04B3E7;
+        border-color: #6DA634;
     }
     
     .bg-dark,
@@ -273,7 +273,7 @@ a,
         cursor: pointer;
         width: 50px;
         height: 50px;
-        background-color: #04B3E7;
+        background-color: #6DA634;
         display: none;
         -webkit-border-radius: 60px;
         -moz-border-radius: 60px;
@@ -347,7 +347,7 @@ a,
     
     .dark-mode .cart-icon-right a.sreach-icon:hover .text-dark,
     .cart-icon-right a.sreach-icon:hover i {
-        color: #04B3E7;
+        color: #6DA634;
     }
     
     .cart-icon-right .inner-cart-icon-right {
@@ -791,9 +791,9 @@ a,
     }
     
     .socile-icon-footer a:hover {
-        background-color: #04B3E7;
+        background-color: #6DA634;
         color: #fff;
-        border: 1px solid #04B3E7;
+        border: 1px solid #6DA634;
     }
     
     .socile-icon-footer ul {
@@ -1891,7 +1891,7 @@ a.blog-sub-title {
 a.blog-sub-title:hover,
 #dark a.blog-sub-title:hover {
     transition: all 0.3s;
-    color: #04B3E7;
+    color: #6DA634;
 }
 .blog-inner p {
     margin-top: 15px;
@@ -1906,7 +1906,7 @@ a.blog-sub-title:hover,
     margin-bottom: 60px !important;
 }
 a.read_more {
-    color: #04B3E7;
+    color: #6DA634;
     font-size: 16px;
     transition: all 0.3s;
     display: inline-block;
@@ -1926,7 +1926,7 @@ a.read_more:hover {
     cursor: pointer;
     margin-top: -80px;
     display: inline-block;
-    background-color: #04B3E7;
+    background-color: #6DA634;
     border: 8px solid #fff;
     text-align: center;
     color: #fff;
@@ -1949,7 +1949,7 @@ a.read_more:hover {
     text-align: right;
     font-size: 26px;
     font-weight: 600;
-    color: #04B3E7;
+    color: #6DA634;
     line-height: 1;
     transition: all 0.3s;
     -webkit-transition: all 0.3s;
@@ -2093,7 +2093,7 @@ a.read_more:hover {
 }
 .search-bar-top input:focus {
     box-shadow: none;
-    border-color: #04B3E7;
+    border-color: #6DA634;
 }
 .search-bar-top button {
     width: 100px;
@@ -2130,7 +2130,7 @@ a.read_more:hover {
 .search-bar-top button.btn-secondary:focus {
     border-color: #ced4da;
     border-left: none;
-    background-color: #04B3E7;
+    background-color: #6DA634;
     box-shadow: none;
 }
 .search-bar-top button.btn-secondary:hover i {
@@ -2321,9 +2321,9 @@ span.round-tab i {
     color: #555555;
 }
 .wizard li.active span.round-tab {
-    background: #04B3E7;
+    background: #6DA634;
     color: #fff;
-    border-color: #04B3E7;
+    border-color: #6DA634;
 }
 .wizard li.active span.round-tab i {
     color: #5bc0de;
@@ -2425,7 +2425,7 @@ span.round-tab i {
 .inner-buy-now span {
     text-transform: uppercase;
     color: #fff;
-    background-color: #04B3E7;
+    background-color: #6DA634;
     padding: 11px 25px;
     display: inline-block;
     font-size: 18px;
@@ -2628,7 +2628,7 @@ form.login-box {
     position: relative;
 }
 .total-price-sec2 .payouttt_offers_content a:hover {
-    background-color: #04B3E7;
+    background-color: #6DA634;
 }
 .dark-mode .wizard .nav-tabs>li a i,
 .dark-mode .last-sale-price h3,
@@ -2658,7 +2658,7 @@ form.login-box {
     color: #000;
 }
 .dark-mode .total-price-sec2 .payouttt_offers_content a:hover {
-    background: #04B3E7;
+    background: #6DA634;
     color: #fff;
 }
 .connecting-line {
@@ -3134,7 +3134,7 @@ form.login-box {
 }
 .product-prize-sec-top h2 {
     font-weight: 700;
-    color: #04B3E7;
+    color: #6DA634;
     font-family: 'Oswald', sans-serif;
     font-size: 40px;
     display: flex;
@@ -3463,7 +3463,7 @@ form.login-box {
     padding-left: 3px;
     padding-top: 1px;
     font-size: 12px;
-    color: #04B3E7;
+    color: #6DA634;
 }
 .inner-accordion .checkbox label {
     padding-left: 12px;
@@ -3504,7 +3504,7 @@ form.login-box {
     text-align: center;
 }
 .releasing-year-top.inner-accordion .checkbox input[type="checkbox"]:checked+label {
-    background-color: #04B3E7;
+    background-color: #6DA634;
     color: #fff;
 }
 .year-input-field.releasing-year-top.inner-accordion .checkbox label {
@@ -3537,7 +3537,7 @@ form.login-box {
     -moz-transition: all 0.4s;
 }
 .releasing-year-top.inner-accordion .checkbox label:hover {
-    background-color: #04B3E7;
+    background-color: #6DA634;
     color: #fff;
 }
 .releasing-year-top.inner-accordion .checkbox label:after {
@@ -3649,7 +3649,7 @@ form.login-box {
     padding-top: 70px;
 }
 .popularity-right-sec li a:hover {
-    color: #04B3E7
+    color: #6DA634
 }
 #slick-product .column,
 #slick-product .columns {
@@ -3675,7 +3675,7 @@ form.login-box {
     cursor: pointer;
 }
 .slick-slide.is-active .product-slider-img {
-    border: 1px solid #04B3E7;
+    border: 1px solid #6DA634;
 }
 .product-slider-img-sec.product-slider-img {
     margin-bottom: 0px;
@@ -3733,7 +3733,7 @@ form.login-box {
 .add-top-cart-btn a:hover,
 .cart-btn-mobile a:hover,
 .dark-mode .cart-btn-mobile a:hover {
-    background-color: #04B3E7;
+    background-color: #6DA634;
 }
 .add-top-cart-btn a i,
 .cart-btn-mobile a i {
@@ -3778,7 +3778,7 @@ form.login-box {
     }
     
     #slick-product .slick-dots li.slick-active button {
-        background-color: #04B3E7;
+        background-color: #6DA634;
     }
     
     #slick-product .slider-single {
@@ -4270,7 +4270,7 @@ form.login-box {
     box-shadow: none;
 }
 .shipping-radio-sec .custom-radio .custom-control-input:checked~.custom-control-label::after {
-    background: #04B3E7;
+    background: #6DA634;
     width: 8px;
     height: 8px;
     border-radius: 50%;
@@ -4311,7 +4311,7 @@ form.login-box {
     font-size: 18px;
 }
 .proceed-checkout-btn a {
-    background-color: #04B3E7;
+    background-color: #6DA634;
     width: 100%;
     display: block;
     text-align: center;
@@ -4673,7 +4673,7 @@ h2.page-heading {
     content: "\f101";
 }
 .accordian-info.accordion-open i {
-    color: #04B3E7;
+    color: #6DA634;
     position: relative;
     top: 8px;
 }
@@ -4736,7 +4736,7 @@ h2.page-heading {
 }
 .receive-sec i {
     font-size: 76px;
-    color: #04B3E7;
+    color: #6DA634;
     line-height: 1;
     margin-bottom: 45px;
     display: block;
@@ -4818,8 +4818,8 @@ h2.page-heading {
 }
 .payment-btn a {
     display: inline-block;
-    background: #04B3E7;
-    border: 1px solid #04B3E7;
+    background: #6DA634;
+    border: 1px solid #6DA634;
     font-size: 20px;
     font-weight: 700;
     color: #ffffff;
@@ -4987,12 +4987,12 @@ h2.page-heading {
     -o-transition: all 0.4s;
     -ms-transition: all 0.4s;
     -moz-transition: all 0.4s;
-    border: 1px solid #04B3E7;
+    border: 1px solid #6DA634;
 }
 .thank-btn a.border-btn,
 .thank-btn a.bg-btn:hover {
-    border: 1px solid #04B3E7;
-    color: #04B3E7;
+    border: 1px solid #6DA634;
+    color: #6DA634;
     background: none
 }
 .thank-btn a.border-btn {
@@ -5000,7 +5000,7 @@ h2.page-heading {
 }
 .thank-btn a.bg-btn,
 .thank-btn a.border-btn:hover {
-    background: #04B3E7;
+    background: #6DA634;
     color: #fff;
 }
 .thank-btn {
@@ -5107,7 +5107,7 @@ h2.page-heading {
     margin: 0 13px;
 }
 .contact-social a:hover {
-    color: #04B3E7;
+    color: #6DA634;
 }
 .contact-social a:first-child {
     margin-left: 0;
@@ -5209,7 +5209,7 @@ textarea.input__field--yoshiko {
 .input__field--yoshiko:focus+.input__field--yoshiko,
 .input--filled .input__field--yoshiko {
     background-color: transparent;
-    border-color: #04B3E7;
+    border-color: #6DA634;
 }
 .input {
     position: relative;
@@ -5220,7 +5220,7 @@ textarea.input__field--yoshiko {
     vertical-align: top;
 }
 .submit-button input {
-    background: #04B3E7;
+    background: #6DA634;
     letter-spacing: 1px;
     font-size: 16px;
     color: #fff;
@@ -5228,7 +5228,7 @@ textarea.input__field--yoshiko {
     border: none;
     text-transform: uppercase;
     font-weight: 700;
-    border: 1px solid #04B3E7;
+    border: 1px solid #6DA634;
 }
 .submit-button {
     margin-top: 35px;
@@ -5419,7 +5419,7 @@ textarea.input__field--yoshiko {
     margin-right: 15px;
 }
 .custom-checkbox input:checked+label:before {
-    background: #04B3E7;
+    background: #6DA634;
 }
 .custom-checkbox input:checked+label:after {
     content: '';
@@ -5577,10 +5577,10 @@ textarea.input__field--yoshiko {
     letter-spacing: 1px;
     display: inline-block;
     font-weight: 700;
-    background: #04B3E7;
+    background: #6DA634;
     text-transform: uppercase;
     padding: 15px 49px;
-    border: 1px solid #04B3E7;
+    border: 1px solid #6DA634;
     transition: all 0.4s;
     -webkit-transition: all 0.4s;
     -o-transition: all 0.4s;
@@ -5815,7 +5815,7 @@ textarea.input__field--yoshiko {
     position: relative;
     border-radius: 50%;
     box-sizing: content-box;
-    border: 4px solid #04B3E7;
+    border: 4px solid #6DA634;
 }
 .success-checkmark .check-icon::before {
     top: 3px;
@@ -6034,7 +6034,7 @@ textarea.input__field--yoshiko {
 .author-info a {
     display: inline-block;
     font-size: 16px;
-    color: #04B3E7;
+    color: #6DA634;
     font-weight: 600;
     padding-right: 15px;
     margin-right: 15px;
@@ -6054,7 +6054,7 @@ textarea.input__field--yoshiko {
     content: '';
     height: 100%;
     width: 2px;
-    background-color: #04B3E7;
+    background-color: #6DA634;
     top: 0;
     right: 0;
 }
@@ -6099,7 +6099,7 @@ textarea.input__field--yoshiko {
     color: #212529;
 }
 .comment-left p.comment-date {
-    color: #04B3E7;
+    color: #6DA634;
     font-weight: 600;
     margin-top: 5px;
 }
@@ -6149,7 +6149,7 @@ textarea.input__field--yoshiko {
 }
 .submit-btn button {
     font-size: 18px;
-    background-color: #04B3E7;
+    background-color: #6DA634;
     color: #fff;
     border: none;
     font-weight: bold;
@@ -6221,7 +6221,7 @@ textarea.input__field--yoshiko {
     -moz-transition: all 0.4s;
 }
 .latest-info a:hover {
-    color: #04B3E7;
+    color: #6DA634;
 }
 .latest-body {
     border-bottom: 1px solid #d7d7d7;
@@ -6250,7 +6250,7 @@ textarea.input__field--yoshiko {
     -moz-transition: all 0.4s;
 }
 .tags a:hover {
-    background-color: #04B3E7;
+    background-color: #6DA634;
     color: #fff;
 }
 .blog-left {

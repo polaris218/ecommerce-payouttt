@@ -92,7 +92,7 @@ WSGI_APPLICATION = 'Payouttt.wsgi.application'
 DATABASES = {
       'default': {
           'ENGINE': 'django.db.backends.postgresql',
-          'NAME': 'quickkicks_portal',
+          'NAME': 'Payouttt_portal',
           'USER': 'postgres',
           'PASSWORD': '1234',
           'HOST': 'postgres'
@@ -178,7 +178,7 @@ AUTH_USER_MODEL = 'accounts.User'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'quickkicks.sender@gmail.com'
+EMAIL_HOST_USER = 'Payouttt.sender@gmail.com'
 EMAIL_HOST_PASSWORD = '2016Gg$$!@#$'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True

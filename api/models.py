@@ -188,7 +188,7 @@ class BidStatus(BaseModel):
     STATUS_TYPE = (
         (SELLER_SEND, 'Seller Send'),
         (PAYOUT_RECEIVED, 'Payout Received'),
-        (PAYOUT_SEND, "Send from QuickKicks"),
+        (PAYOUT_SEND, "Send from Payouttt"),
     )
     bid = models.ForeignKey(Bid, on_delete=models.CASCADE)
     status = models.CharField(choices=STATUS_TYPE, default=SELLER_SEND, max_length=20)

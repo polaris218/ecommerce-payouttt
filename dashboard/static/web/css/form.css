@@ -55,7 +55,7 @@
     outline: 0;
     background-color: #fff;
     color: #666;
-    border-color: #04b3e7
+    border-color: #6DA634
 }
 
 .uk-input:disabled,
@@ -125,20 +125,20 @@
 .uk-checkbox:focus,
 .uk-radio:focus {
     outline: 0;
-    border-color: #04b3e7
+    border-color: #6DA634
 }
 
 .uk-checkbox:checked,
 .uk-checkbox:indeterminate,
 .uk-radio:checked {
-    background-color: #04b3e7;
+    background-color: #6DA634;
     border-color: transparent
 }
 
 .uk-checkbox:checked:focus,
 .uk-checkbox:indeterminate:focus,
 .uk-radio:checked:focus {
-    background-color: #04b3e7
+    background-color: #6DA634
 }
 
 .uk-checkbox:checked {
@@ -222,7 +222,7 @@
 }
 
 .uk-button-primary {
-    background-color: #04b3e7;
+    background-color: #6DA634;
     color: #fff;
     border: 1px solid transparent
 }
@@ -235,7 +235,7 @@
 
 .uk-button-primary.uk-active,
 .uk-button-primary:active {
-    background-color: #04b3e7;
+    background-color: #6DA634;
     color: #fff
 }
 
@@ -467,7 +467,7 @@
 .uk-tab>.uk-active>a {
     color: #333;
     font-weight: bold;
-    border-color: #04b3e7;
+    border-color: #6DA634;
 }
 
 .uk-tab>* {
@@ -631,7 +631,7 @@
 }
 
 .uk-button-primary {
-    background-color: #04b3e7;
+    background-color: #6DA634;
 }
 
 .uk-button-primary:focus,
@@ -867,7 +867,7 @@
 
 #dark .uk-tab>.uk-active>a {
     color: #fff;
-    border-color: #04b3e7;
+    border-color: #6DA634;
 }
 
 #dark .or-seperator i {
@@ -888,7 +888,7 @@
 #dark .uk-input:focus,
 #dark .uk-select:focus,
 #dark .uk-textarea:focus {
-    border-color: #04b3e7;
+    border-color: #6DA634;
 }
 
 #dark .uk-form-icon svg {
@@ -900,7 +900,7 @@
 }
 
 #dark .forgot_password a:hover {
-    color: #04b3e7
+    color: #6DA634
 }
 
 #dark .uk-button-primary:focus,

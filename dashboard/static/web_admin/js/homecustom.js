@@ -7,8 +7,8 @@ var ctx = document.getElementById("myChart").getContext('2d');
                 label: 'Best Result ', // Name the series
                 data: [350,300, 518 ,   521 ,  250,  240,0],
                 fill: false,
-                borderColor: '#04b3e7', 
-                backgroundColor: '#04b3e7',
+                borderColor: '#6DA634', 
+                backgroundColor: '#6DA634',
                 borderWidth: 1,
                 weight: 100,
             }]
@@ -57,8 +57,8 @@ var ctx = document.getElementById("myChart").getContext('2d');
                 label: 'Best Result ', // Name the series
                 data: [350,300, 518 ,   521 ,  250,  240,0],
                 fill: false,
-                borderColor: '#04b3e7', 
-                backgroundColor: '#04b3e7',
+                borderColor: '#6DA634', 
+                backgroundColor: '#6DA634',
                 borderWidth: 1,
                 weight: 100,
             }]
@@ -122,7 +122,7 @@ var ctx = document.getElementById("myChart").getContext('2d');
 
           backgroundColor: [
 
-            '#04b3e7',
+            '#6DA634',
 
             '#dfe4ea'
 
@@ -178,7 +178,7 @@ var ctx = document.getElementById("myChart").getContext('2d');
 
           backgroundColor: [
 
-            '#04b3e7',
+            '#6DA634',
 
             '#dfe4ea'
 
