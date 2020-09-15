@@ -1,5 +1,5 @@
-# QuickKicks Web Application
-QuickKicks Web Application
+# Payouttt Web Application
+Payouttt Web Application
 
 Python Django
 Docker
