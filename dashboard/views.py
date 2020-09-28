@@ -11,10 +11,12 @@ from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 
 from Payouttt.decorators import staff_required
+from accounts.STRIPE_payments import StripePayment
+from accounts.models import User
 from addresses.address_validation import ShippoAddressManagement
 from addresses.models import Address
-from api.models import SuggestProduct, CartModel
-from core.models import FeedbackModel
+from api.models import SuggestProduct, CartModel, Bid
+from core.models import FeedbackModel, AdminTransaction
 from dashboard.forms import LoginForm, SignUpForm, AddressForm
 from dashboard.services import BidManagement
 
@@ -59,6 +61,23 @@ class AllOrdersView(LoginRequiredMixin, TemplateView):
         prices = [(cart.cart_item.all().aggregate(Sum('product__listing_price')))['product__listing_price__sum'] for
                   cart in orders]
         return render(request, self.template_name, {'orders': zip(orders, prices)})
+
+
+@method_decorator(staff_required, name='dispatch')
+class AllPaidOrdersView(LoginRequiredMixin, TemplateView):
+    template_name = 'paid_orders.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs.setdefault('view', self)
+        get_paid_bids = BidManagement().get_paid_bids()
+        admin_paid_bids = []
+        admin_unpaid_bids = []
+        [admin_paid_bids.append(bid) if AdminTransaction.objects.filter(bid=bid, paid=True).first()
+         else admin_unpaid_bids.append(bid) for bid in get_paid_bids]
+        kwargs['admin_unpaid_bids'] = admin_unpaid_bids
+        kwargs['admin_paid_bids'] = admin_paid_bids
+        kwargs['paid_orders'] = 'active'
+        return kwargs
 
 
 @method_decorator(staff_required, name='dispatch')
@@ -206,3 +225,15 @@ def register_user(request):
         form = SignUpForm()
 
     return render(request, "accounts/register.html", {"form": form, "msg": msg, "success": success})
+
+
+@method_decorator(staff_required, name='dispatch')
+class TransferFundsView(LoginRequiredMixin, TemplateView):
+    template_name = 'feedbacks.html'
+
+    def post(self, request, *args, **kwargs):
+        bid = Bid.objects.filter(id=request.POST.get('bid_id')).first()
+        user = User.objects.filter(id=bid.product_to_bid_on.seller.id).first()
+        transaction = AdminTransaction.objects.filter(user__id=user.id).first()
+        StripePayment().transfer_amount(transaction, bid)
+        return redirect('all_paid_orders')

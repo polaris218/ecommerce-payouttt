@@ -1,0 +1,141 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <style>
+        .transparant-button {
+            background-color: Transparent;
+            background-repeat: no-repeat;
+            border: none;
+            cursor: pointer;
+            overflow: hidden;
+            outline: none;
+        }
+    </style>
+    <div class="pcoded-content">
+        <div class="pcoded-inner-content">
+            <!-- [ breadcrumb ] start -->
+
+            <!-- [ breadcrumb ] end -->
+            <div class="main-body">
+                <div class="page-wrapper">
+                    <div class="row">
+
+                        <div class="col-xl-12 col-md-12">
+                            <div class="card Recent-Users">
+                                <div class="card-header">
+                                    <h5>Customer Paid Orders</h5>
+                                </div>
+                                <div class="card-block px-0 py-3">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th>Order</th>
+                                                <th>Order DT</th>
+                                                <th>Product</th>
+                                                <th>Contacts</th>
+                                                <th>Listing</th>
+                                                <th>Bid Amount</th>
+                                                <th>Paid</th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for bid in admin_unpaid_bids %}
+
+                                                <tr class="unread">
+                                                    <td><span title="{{ bid.order_id }}">{{ bid.id }}</span></td>
+                                                    <td>{{ bid.timestamp }}</td>
+                                                    <td><span
+                                                            title="{{ bid.product_to_bid_on.title }}">{{ bid.product_to_bid_on.title|truncatechars:20 }}</span>
+                                                    </td>
+                                                    <td>Seller: {{ bid.product_to_bid_on.seller }}
+                                                        <br>Buyer:{{ bid.user }}</td>
+                                                    <td>{{ bid.product_to_bid_on.listing_price }}</td>
+                                                    <td>{{ bid.bid_amount }}</td>
+                                                    <td>
+                                                        <form action="{% url 'transfer_fund' %}" method="post">
+                                                            {% csrf_token %}
+                                                            <input type="text" name="bid_id" value="{{ bid.id }}"
+                                                                   hidden>
+                                                            <button class="btn btn-primary" type="submit"
+                                                                    name="pay_bid">Pay
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+
+
+
+                                            {% endfor %}
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-12 col-md-12">
+                            <div class="card Recent-Users">
+                                <div class="card-header">
+                                    <h5>Admin Paid Orders</h5>
+                                </div>
+                                <div class="card-block px-0 py-3">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th>Order</th>
+                                                <th>Order DT</th>
+                                                <th>Product</th>
+                                                <th>Contacts</th>
+                                                <th>Listing</th>
+                                                <th>Bid Amount</th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for bid in admin_paid_bids %}
+
+                                                <tr class="unread">
+                                                    <td><span title="{{ bid.order_id }}">{{ bid.id }}</span></td>
+                                                    <td>{{ bid.timestamp }}</td>
+                                                    <td><span
+                                                            title="{{ bid.product_to_bid_on.title }}">{{ bid.product_to_bid_on.title|truncatechars:20 }}</span>
+                                                    </td>
+                                                    <td>Seller: {{ bid.product_to_bid_on.seller }}
+                                                        <br>Buyer:{{ bid.user }}</td>
+                                                    <td>{{ bid.product_to_bid_on.listing_price }}</td>
+                                                    <td>{{ bid.bid_amount }}</td>
+                                                </tr>
+
+
+
+                                            {% endfor %}
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}
+
+
+
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

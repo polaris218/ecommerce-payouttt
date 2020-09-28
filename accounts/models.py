@@ -41,6 +41,7 @@ class User(AbstractUser):
     ssn = models.CharField(max_length=50, null=True, blank=True)
     date_of_birth = models.DateField(null=True, blank=True)
     stripe_customer_id = models.CharField(max_length=250, null=True, blank=True)
+    stripe_account_id = models.CharField(max_length=250, null=True, blank=True)
     stripe_payment_method = models.CharField(max_length=2000, null=True, blank=True)
     return_address = models.TextField(null=True, blank=True)
     USERNAME_FIELD = 'email'

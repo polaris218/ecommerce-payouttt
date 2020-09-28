@@ -30,4 +30,6 @@ urlpatterns = [
     path('bid_pay_success_web', views.BidPaySuccessWeb.as_view(), name='PayForBidViewSuccess'),
     path('bid_pay_fail_web', views.BidPayFailWeb.as_view(), name='PayForBidViewFailed'),
     path('PayForBidWebView/<int:bid_id>/', csrf_exempt(views.PayForBidWebView.as_view()), name='PayForBidWebView'),
+    path('stripe_login_url/', views.get_user_stripe_login_url, name='stripe_login_url'),
+    path('stripe_success/', views.StripeSuccessView.as_view(), name='stripe_success'),
 ]

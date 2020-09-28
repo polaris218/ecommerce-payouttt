@@ -5,9 +5,12 @@ import json
 import shippo
 from django.conf import settings
 from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView
 from django.views import View
 from django.urls import reverse
@@ -51,10 +54,17 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         secret_key = StripePayment().get_customer_secret(self.request.user)
         strip_publish_key = settings.STRIPE_PUBLISHABLE_KEY
         is_payment_method_added = self.verify_payment_method(request.user.stripe_payment_method)
+        stripe_account = StripePayment().get_user_account(self.request.user)
+        redirect_url = '{}://{}/accounts/profile/stripe_success/'.format(
+            'https' if self.request.is_secure() else 'http',
+            self.request.get_host())
+        connect_url = StripePayment().generate_url(redirect_url, self.request.user)
+
         return render(request, self.template_name,
-                      {'form': form, 'active_password_profile': 'active-tab',
-                       'active_dashboard': 'active', 'address_form': address_form, 'secret_key': secret_key,
-                       'strip_publish_key': strip_publish_key, 'is_payment_method_added': is_payment_method_added})
+                      {'form': form, 'active_password_profile': 'active-tab', 'stripe_account': stripe_account,
+                       'connect_url': connect_url, 'active_dashboard': 'active', 'address_form': address_form,
+                       'secret_key': secret_key, 'strip_publish_key': strip_publish_key,
+                       'is_payment_method_added': is_payment_method_added})
 
 
 class SecurityView(LoginRequiredMixin, TemplateView):
@@ -451,3 +461,24 @@ class BidPayFailWeb(View):
 
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)
+
+
+@login_required
+@csrf_exempt
+def get_user_stripe_login_url(request):
+    data = {"status": False}
+    if request.method == 'POST':
+        url = StripePayment().create_login_link(request.user)
+        data['url'] = url
+        data['status'] = True
+    return JsonResponse(data)
+
+
+class StripeSuccessView(LoginRequiredMixin, TemplateView):
+    template_name = 'index.html'
+
+    def get(self, request, *args, **kwargs):
+        kwargs.setdefault('view', self)
+        if self.request.GET.get('code'):
+            StripePayment().verify_account(self.request.GET.get('code'), self.request.user)
+        return redirect(reverse('home'))

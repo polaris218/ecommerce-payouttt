@@ -1,9 +1,14 @@
 import ast
+import math
+
 import stripe
 
+from accounts.models import User
 from api.models import BidPayment
 from accounts.Dwolla_payment_management import DwollaPayment
 from django.conf import settings
+
+from core.models import AdminTransaction
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -60,3 +65,64 @@ class StripePayment(object):
 
     def detach_account(self, payment_id):
         stripe.PaymentMethod.detach(payment_id)
+
+    def verify_account(self, acount_code, user):
+        response = stripe.OAuth.token(grant_type='authorization_code', code=acount_code, )
+        connected_account_id = response.get('stripe_user_id', None)
+        if connected_account_id:
+            stripe_account = User.objects.filter(id=user.id).first()
+            stripe_account.stripe_account_id = connected_account_id
+            stripe_account.save()
+
+        return True
+
+    def get_user_account(self, user):
+        user = User.objects.filter(id=user.id).first()
+        if user:
+            try:
+                stripe.Account.create_login_link(user.stripe_account_id)
+                return user
+            except Exception as e:
+                user.stripe_account_id = None
+                user.save()
+        return False
+
+    def create_login_link(self, user):
+        user_account = self.get_user_account(user)
+
+        if user_account:
+            try:
+                response = stripe.Account.create_login_link(user_account.stripe_account_id)
+                return response.get('url')
+            except Exception as e:
+                user.stripe_customer_id = None
+                user.save()
+        return False
+
+    def generate_url(self, redirect_url, user):
+        main_url = "https://connect.stripe.com/express/oauth/authorize?redirect_uri={}&client_id={}&suggested_capabilities[]=transfers&stripe_user[email]={}".format(
+            redirect_url, settings.STRIPE_CLIENT_ID, user.email)
+        return main_url
+
+    def transfer_amount(self, transaction, bid):
+        if not transaction:
+            transaction = AdminTransaction.objects.create(bid=bid, user=bid.product_to_bid_on.seller,
+                                                          amount=bid.bid_amount)
+        if not transaction.paid and bid.product_to_bid_on.seller.stripe_account_id:
+
+            try:
+                transfer = stripe.Transfer.create(
+                    amount=math.ceil(bid.bid_amount * 100),
+                    currency="usd",
+                    destination=bid.product_to_bid_on.seller.stripe_account_id,
+                )
+                if transfer:
+                    transaction.paid = True
+                    transaction.transfer_id = transfer.id
+                    transaction.save()
+            except Exception as e:
+                transaction.stripe_error = str(e)
+                transaction.save()
+        if transaction.paid:
+            return True
+        return False
