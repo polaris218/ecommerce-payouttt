@@ -163,7 +163,8 @@ REST_FRAMEWORK = {
 
 CORS_ORIGIN_WHITELIST = [
     'https://quickkicks.app',
-    'https://quickkicks.com'
+    'https://quickkicks.com',
+    'https://quickkicks.io',
 ]
 
 LOGIN_URL = 'two_factor:login'
