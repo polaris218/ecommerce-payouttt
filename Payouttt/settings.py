@@ -162,12 +162,9 @@ REST_FRAMEWORK = {
 }
 
 CORS_ORIGIN_WHITELIST = [
-    'http://157.245.251.164',
-    'http://157.245.251.164',
-    'https://app.payouttt.com',
-    'https://payouttt.com',
-    'http://payouttt.com',
-    'https://payouttt.com',
+    'https://quickkicks.app',
+    'https://quickkicks.com',
+    'https://quickkicks.io',
 ]
 
 LOGIN_URL = 'two_factor:login'
