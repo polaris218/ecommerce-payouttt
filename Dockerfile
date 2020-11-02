@@ -15,4 +15,4 @@ ENV  PLAID_DEVELOPMENT_SECRET="ZDJiYzkxNGQ3NzM4NmJjYTgwODc0ZmQ5OWU4MGY5"
 ENV  PLAID_ENVIRONMENT="UHJvZHVjdGlvbg=="
 ENV  SHIPPO_API_KEY="shippo_live_9db8761fa8017a6d9dfcd7793217a838a4d5e95d"
 
-CMD python3 manage.py migrate &&  python3 manage.py runserver 0.0.0.0:8000
+CMD python3 manage.py makemigrations && python3 manage.py migrate &&  python3 manage.py runserver 0.0.0.0:8000
