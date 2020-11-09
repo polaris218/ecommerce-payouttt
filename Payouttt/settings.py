@@ -27,7 +27,7 @@ SECRET_KEY = '7!wg%_&mmsf44+x1d0&e7#k_!zv+z+e6l(o)v4p+v57$l7(lh&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['quickkicks.app', 'quickkicks.com', 'quickkicks.io']
 
 # Application definition
 
@@ -175,8 +175,8 @@ AUTH_USER_MODEL = 'accounts.User'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'Payouttt.sender@gmail.com'
-EMAIL_HOST_PASSWORD = '2016Gg$$!@#$'
+EMAIL_HOST_USER = 'quickkicks.sender@gmail.com'
+EMAIL_HOST_PASSWORD = 'haBYkGbhYAhLb99qxKwt'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
