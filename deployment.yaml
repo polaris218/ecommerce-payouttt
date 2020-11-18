@@ -1,17 +1,3 @@
-apiVersion: v1
-data:
-  PLAID_CLIENT_ID: TldWaVpHTXhaREptTkdVd01HUXdNREV5TlRabE5UZ3k=
-  PLAID_DEVELOPMENT_SECRET: WkRKaVl6a3hOR1EzTnpNNE5tSmpZVGd3T0RjMFptUTVPV1U0TUdZNQ==
-  PLAID_ENVIRONMENT: VUhKdlpIVmpkR2x2Ymc9PQ==
-  PLAID_PUBLIC_KEY: T0dNM1pUVXpaV1V4Wm1Oak5URTBNak5qWkRReE9URTRNamM1TnpOag==
-  PLAID_SECRET: TmpGaFpEVTNNalZsWW1JeFlUbGlOV0ZsWVdZeVlqRmxZV1UxTWpneg==
-  SHIPPO_API_KEY: YzJocGNIQnZYMnhwZG1WZk0yUXhaV0kzTkdObE9UUXpORE01TnpFek9EYzNPREk1TkRoak5USTBNbVl4WkRJM04ySTFNdz09
-  STRIPE_PUBLISHABLE_KEY: cGtfbGl2ZV95MndpOW9pREJ3UXNRMXF2cVRsSGdWY1QwMEpUTXdraG5q
-  STRIPE_SECRET_KEY: c2tfbGl2ZV81MUdlbk5ZRkVRUlVKUGdQRDhGNXFqZUl0ZkFvd010aEpyMHlsRmplcklnSXJRVEo4b3FJMFVPbnR1amJSYXNYSUdWODA0b0w1V1h6WWhoMW5USWNSY2VBSTAwQkI2eld1Ujg=
-kind: Secret
-metadata:
-  name: apisecrets
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -34,23 +20,13 @@ spec:
       terminationGracePeriodSeconds: 5
       imagePullSecrets:
       - name: regcred
+      restartPolicy: Always
       containers:
-      - image: 306300873308.dkr.ecr.us-east-1.amazonaws.com/payouttt-django-backend-us:123
-        command: ["/bin/sh", "-c", "python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"]
-        env:
-        - name:  STRIPE_SECRET_KEY
-          value: "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"
-        - name: STRIPE_PUBLISHABLE_KEY
-          value: "pk_live_y2wi9oiDBwQsQ1qvqTlHgVcT00JTMwkhnj"
-        - name: PLAID_CLIENT_ID
-          value: "NWViZGMxZDJmNGUwMGQwMDEyNTZlNTgy"
-        - name: PLAID_PUBLIC_KEY
-          value: "OGM3ZTUzZWUxZmNjNTE0MjNjZDQxOTE4Mjc5NzNj"
-        - name: STRIPE_CLIENT_ID
-          value: "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"
-        # envFrom:
-        #  - secretRef:
-        #      name: apisecrets 
+      - image: 306300873308.dkr.ecr.us-east-1.amazonaws.com/payouttt-django-backend-us:f09231fd
+        command: ["/bin/sh", "-c", " python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"]
+        envFrom:
+          - secretRef:
+              name: apisecrets 
         ports:
         - containerPort: 8000
         name: payouttt

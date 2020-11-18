@@ -6,13 +6,5 @@ EXPOSE 8000
 COPY requirements.txt /code/
 RUN pip3 install -r requirements.txt
 COPY . /code/
-ENV  STRIPE_SECRET_KEY="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"
-ENV  STRIPE_PUBLISHABLE_KEY="pk_live_y2wi9oiDBwQsQ1qvqTlHgVcT00JTMwkhnj" 
-ENV  PLAID_CLIENT_ID="NWViZGMxZDJmNGUwMGQwMDEyNTZlNTgy"
-ENV  PLAID_PUBLIC_KEY="OGM3ZTUzZWUxZmNjNTE0MjNjZDQxOTE4Mjc5NzNj"
-ENV  PLAID_SECRET="NjFhZDU3MjVlYmIxYTliNWFlYWYyYjFlYWU1Mjgz"
-ENV  PLAID_DEVELOPMENT_SECRET="ZDJiYzkxNGQ3NzM4NmJjYTgwODc0ZmQ5OWU4MGY5"
-ENV  PLAID_ENVIRONMENT="UHJvZHVjdGlvbg=="
-ENV  SHIPPO_API_KEY="shippo_live_9db8761fa8017a6d9dfcd7793217a838a4d5e95d"
 
 CMD python3 manage.py makemigrations && python3 manage.py migrate &&  python3 manage.py runserver 0.0.0.0:8000
