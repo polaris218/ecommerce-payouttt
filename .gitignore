@@ -1,2 +1,3 @@
 .env
+environment.yaml
 db.sqlite3
