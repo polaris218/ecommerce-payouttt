@@ -4,12 +4,13 @@ metadata:
   name: postgres
 
 spec:
-        #selector:
-        #    run: postgres
-        # ports:
-        #- name: postgres
-        #port: 5432
-        #targetPort: 5432
-        #nodePort: 30013
-  type: ExternalName
-  externalName: payouttt-test-old.cfvpa5al6o3r.us-east-1.rds.amazonaws.com
+   type: NodePort
+   selector:
+          run: postgres
+   ports:
+      - name: postgres
+        port: 5432
+        targetPort: 5432
+        nodePort: 30013
+        #  type: ExternalName
+        #  externalName: payouttt-test-old.cfvpa5al6o3r.us-east-1.rds.amazonaws.com

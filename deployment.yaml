@@ -25,12 +25,12 @@ spec:
       - image: 306300873308.dkr.ecr.us-east-1.amazonaws.com/payouttt-django-backend-us:s3-test-2
         command: ["/bin/sh", "-c", " python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py collectstatic &&  gunicorn Payouttt.wsgi:application -b 0.0.0.0:8000 "]
         env:
-         - name: DJANGO_APP_STATIC_URL
-           value: s3://staticfilesv1/staticfiles/
+                #   - name: DJANGO_APP_STATIC_URL
+                #   value: s3://staticfilesv1/staticfiles/
          - name: DEBUG
            value: '0'
-         - name: POSTGRES_DB
-           value: payouttt_portal
+           # - name: POSTGRES_DB
+           # value: payouttt_portal
         envFrom:
           - secretRef:
               name: apisecrets 
