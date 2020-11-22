@@ -92,11 +92,11 @@ WSGI_APPLICATION = 'Payouttt.wsgi.application'
 DATABASES = {
       'default': {
           'ENGINE': 'django.db.backends.postgresql',
-          'NAME': os.getenv('POSTGRES_DB', 'payouttt-portal'),
+          'NAME': os.getenv('POSTGRES_DB', 'Payouttt-portal'),
           'USER': os.getenv('POSTGRES_USER', 'postgres'),
-          'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'password1234'),
+          'PASSWORD': os.getenv('POSTGRES_PASSWORD', '1234'),
           'HOST': os.getenv('POSTGRES_HOST', 'postgres'),
-          'PORT': os.getenv('POSTGRES_PORT', 5432)
+       #   'PORT': os.getenv('POSTGRES_PORT', 5432)
       }
   }
 
