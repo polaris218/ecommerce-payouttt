@@ -28,7 +28,7 @@ spec:
                 #   - name: DJANGO_APP_STATIC_URL
                 #   value: s3://staticfilesv1/staticfiles/
          - name: DEBUG
-           value: '0'
+           value: '1'
            # - name: POSTGRES_DB
            # value: payouttt_portal
         envFrom:
