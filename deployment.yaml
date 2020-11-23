@@ -27,10 +27,14 @@ spec:
         env:
                 #   - name: DJANGO_APP_STATIC_URL
                 #   value: s3://staticfilesv1/staticfiles/
+         - name: POSTGRES_DB
+           value: payouttt_portal
+         - name: POSTGRES_PASSWORD
+           value: password1234
          - name: DEBUG
            value: '0'
          - name: POSTGRES_HOST
-           value: 54.164.111.69
+           value: payouttt-test-old.cfvpa5al6o3r.us-east-1.rds.amazonaws.com
         envFrom:
           - secretRef:
               name: apisecrets 
