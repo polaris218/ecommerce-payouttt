@@ -13,4 +13,4 @@ spec:
         #    targetPort: 5432
         #    nodePort: 30013
     type: ExternalName
-    externalName: payouttt-test-old.cfvpa5al6o3r.us-east-1.rds.amazonaws.com
+    externalName: postgres-quickkicks.cfvpa5al6o3r.us-east-1.rds.amazonaws.com
