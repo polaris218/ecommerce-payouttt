@@ -35,6 +35,6 @@ spec:
           - secretRef:
               name: apisecrets 
         ports:
-        - containerPort: 8000
+        - containerPort: 80
         name: payouttt
         imagePullPolicy: Always
